@@ -1,22 +1,351 @@
-<!doctype html><html lang="id"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin HIMASAKI</title><style>body{margin:0;background:#f2f6f9;color:#183247;font:15px Arial}.bar{background:#102a43;color:white;padding:20px}.wrap{max-width:950px;margin:auto}.main{max-width:950px;margin:22px auto;padding:0 15px}.box{background:white;border:1px solid #dce6ed;border-radius:14px;padding:20px;margin-bottom:15px}label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}input,textarea{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd9e2;border-radius:8px}textarea{min-height:80px}button{border:0;background:#269c91;color:white;padding:11px 14px;border-radius:8px;margin:5px 5px 5px 0;cursor:pointer}.secondary{background:#e8eff4;color:#183247}.danger{background:#b42318}.muted{color:#637789;font-size:13px;line-height:1.6}.tabs{display:flex;gap:5px;flex-wrap:wrap;margin:15px 0}.tab.active{background:#176b87}.section[hidden],#dash[hidden]{display:none}.item{border:1px solid #dce6ed;padding:12px;border-radius:9px;margin:9px 0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.status{font-size:13px;color:#16766d}@media(max-width:650px){.grid{grid-template-columns:1fr}}</style>
-<div class="bar"><div class="wrap"><b>HIMASAKI · PANEL PENGURUS</b></div></div><main class="main"><section class="box" id="login"><h2>Masuk dengan Google</h2><p class="muted">Hanya email admin yang terdaftar yang dapat mengelola website.</p><div id="gbtn"></div><p id="loginmsg" class="muted">Google OAuth Client ID harus dikonfigurasi terlebih dahulu.</p></section><section id="dash" hidden><div class="box"><button class="secondary" onclick="logout()">Keluar</button><b id="who"></b><div class="tabs"><button class="tab active" data-id="home">Beranda</button><button class="tab" data-id="announce">Pengumuman</button><button class="tab" data-id="gallery">Galeri</button><button class="tab" data-id="asp">Aspirasi</button></div>
-<div id="home" class="section"><h3>Edit beranda</h3><label>Nama organisasi</label><input id="orgName"><label>Teks logo</label><input id="logoText"><label>Judul utama</label><input id="heroTitle"><label>Deskripsi utama</label><textarea id="heroText"></textarea><label>Tentang HIMASAKI</label><textarea id="aboutText"></textarea><button onclick="save()">Simpan beranda</button></div>
-<div id="announce" class="section" hidden><h3>Tambah pengumuman</h3><label>Judul</label><input id="at"><label>Isi</label><textarea id="ax"></textarea><label>URL gambar HTTPS (opsional)</label><input id="ai"><button onclick="add('announcement')">Terbitkan</button><div id="alist"></div></div>
-<div id="gallery" class="section" hidden><h3>Tambah foto kegiatan</h3><label>Judul kegiatan</label><input id="gt"><label>Keterangan</label><textarea id="gx"></textarea><label>URL gambar HTTPS</label><input id="gi"><button onclick="add('gallery')">Tambah foto</button><div id="glist"></div></div>
-<div id="asp" class="section" hidden><h3>Daftar aspirasi</h3><div id="asplist"></div></div><p id="status" class="status"></p></div></section></main>
-<script src="https://accounts.google.com/gsi/client" async defer></script><script>
-const API="https://script.google.com/macros/s/AKfycbzdBWZxrhf8SCZ66J7wKmAHFZ1oO7uMw7X-uxru8Wke3KsP5cbeGX67v4Z9pEIJg6pZGg/exec",CLIENT_ID="80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";let token="",cache={};const $=id=>document.getElementById(id);
-window.onload=()=>{if(!CLIENT_ID.startsWith("TEMPEL_")){google.accounts.id.initialize({client_id:CLIENT_ID,callback:loginDone});google.accounts.id.renderButton($("gbtn"),{theme:"outline",size:"large",text:"signin_with"});}};
-async function loginDone(r){try{let p=JSON.parse(atob(r.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/")));if(p.email.toLowerCase()!=="adegameonly@gmail.com"||!p.email_verified)throw Error("Email tidak diizinkan.");token=r.credential;let d=await api("adminData");if(!d.ok)throw Error(d.message);$("login").hidden=true;$("dash").hidden=false;$("who").textContent=p.email;fill(d)}catch(e){$("loginmsg").textContent=e.message}}
-async function api(action,extra={}){if(API.startsWith("TEMPEL_"))throw Error("URL Apps Script belum diisi.");return await(await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({action,idToken:token,...extra})})).json()}
-function fill(d){cache=d;let s=d.settings||{};["orgName","logoText","heroTitle","heroText","aboutText"].forEach(k=>$(k).value=s[k]||"");list("alist",d.announcements,"announcement");list("glist",d.gallery,"gallery");$("asplist").innerHTML=(d.aspirations||[]).map((x,i)=>`<div class="item"><b>${esc(x[2])}</b> · ${esc(x[1])}<p>${esc(x[3])}</p><small>${esc(x[0])} · ${x[4]==="Ya"?"Anonim":esc(x[5])}</small><p>Status: ${esc(x[6])}</p><select id="s${i}"><option>Baru</option><option>Diproses</option><option>Selesai</option></select><button onclick="setst(${i})">Simpan status</button></div>`).join("")||"Belum ada aspirasi."}
-function esc(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
-function list(id,a,t){$(id).innerHTML=(a||[]).map((x,i)=>`<div class="item"><b>${esc(x.title)}</b><p>${esc(x.text)}</p><button class="danger" onclick="removeItem('${t}',${i})">Hapus</button></div>`).join("")||"Belum ada konten."}
-async function save(){let settings={};["orgName","logoText","heroTitle","heroText","aboutText"].forEach(k=>settings[k]=$(k).value);await run("saveSettings",{settings})}
-async function add(type){let p=type==="announcement"?"a":"g";await run("addContent",{type,item:{title:$(p+"t").value,text:$(p+"x").value,image:$(p+"i").value}});fill(await api("adminData"))}
-async function removeItem(type,index){await run("removeContent",{type,index});fill(await api("adminData"))}
-async function setst(index){await run("setStatus",{index,status:$("s"+index).value});fill(await api("adminData"))}
-async function run(a,x){try{let d=await api(a,x);if(!d.ok)throw Error(d.message);$("status").textContent="Berhasil disimpan."}catch(e){$("status").textContent=e.message}}
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".section").forEach(x=>x.hidden=true);$(b.dataset.id).hidden=false});
-function logout(){token="";location.reload()}
-</script></html>
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin HIMASAKI</title>
+  <style>
+    body{margin:0;background:#f2f6f9;color:#183247;font:15px Arial,sans-serif}
+    .bar{background:#102a43;color:white;padding:20px}
+    .wrap{max-width:950px;margin:auto}
+    .main{max-width:950px;margin:22px auto;padding:0 15px}
+    .box{background:white;border:1px solid #dce6ed;border-radius:14px;padding:20px;margin-bottom:15px}
+    label{display:block;font-size:13px;font-weight:bold;margin:12px 0 5px}
+    input,textarea{width:100%;box-sizing:border-box;padding:11px;border:1px solid #ccd9e2;border-radius:8px}
+    input[type=file]{background:#f8fafc}
+    textarea{min-height:80px}
+    button{border:0;background:#269c91;color:white;padding:11px 14px;border-radius:8px;margin:5px 5px 5px 0;cursor:pointer}
+    button:disabled{opacity:.55;cursor:wait}
+    .secondary{background:#e8eff4;color:#183247}
+    .danger{background:#b42318}
+    .muted{color:#637789;font-size:13px;line-height:1.6}
+    .tabs{display:flex;gap:5px;flex-wrap:wrap;margin:15px 0}
+    .tab.active{background:#176b87}
+    .section[hidden],#dash[hidden]{display:none}
+    .item{border:1px solid #dce6ed;padding:12px;border-radius:9px;margin:9px 0}
+    .status{font-size:13px;color:#16766d;white-space:pre-wrap}
+    .preview{display:none;max-width:240px;max-height:180px;object-fit:contain;margin:10px 0;border:1px solid #dce6ed;border-radius:8px;background:#f8fafc}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+    @media(max-width:650px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="bar"><div class="wrap"><b>HIMASAKI · PANEL PENGURUS</b></div></div>
+
+  <main class="main">
+    <section class="box" id="login">
+      <h2>Masuk dengan Google</h2>
+      <p class="muted">Hanya email admin yang terdaftar yang dapat mengelola website.</p>
+      <div id="gbtn"></div>
+      <p id="loginmsg" class="muted">Google OAuth Client ID harus dikonfigurasi terlebih dahulu.</p>
+    </section>
+
+    <section id="dash" hidden>
+      <div class="box">
+        <button class="secondary" onclick="logout()">Keluar</button>
+        <b id="who"></b>
+
+        <div class="tabs">
+          <button class="tab active" data-id="home">Beranda</button>
+          <button class="tab" data-id="announce">Pengumuman</button>
+          <button class="tab" data-id="gallery">Galeri</button>
+          <button class="tab" data-id="asp">Aspirasi</button>
+        </div>
+
+        <div id="home" class="section">
+          <h3>Edit beranda</h3>
+          <label>Nama organisasi</label><input id="orgName">
+          <label>Teks logo</label><input id="logoText">
+          <label>Judul utama</label><input id="heroTitle">
+          <label>Deskripsi utama</label><textarea id="heroText"></textarea>
+          <label>Tentang HIMASAKI</label><textarea id="aboutText"></textarea>
+          <button onclick="save()">Simpan beranda</button>
+        </div>
+
+        <div id="announce" class="section" hidden>
+          <h3>Tambah pengumuman</h3>
+          <label>Judul</label><input id="at">
+          <label>Isi</label><textarea id="ax"></textarea>
+          <label>Unggah gambar PNG (opsional, maksimal 5 MB)</label>
+          <input id="ai" type="file" accept="image/png,.png">
+          <img id="apreview" class="preview" alt="Pratinjau gambar pengumuman">
+          <p class="muted">Pilih file PNG dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
+          <button id="abtn" onclick="add('announcement')">Terbitkan</button>
+          <div id="alist"></div>
+        </div>
+
+        <div id="gallery" class="section" hidden>
+          <h3>Tambah foto kegiatan</h3>
+          <label>Judul kegiatan</label><input id="gt">
+          <label>Keterangan</label><textarea id="gx"></textarea>
+          <label>Unggah gambar PNG (maksimal 5 MB)</label>
+          <input id="gi" type="file" accept="image/png,.png">
+          <img id="gpreview" class="preview" alt="Pratinjau foto galeri">
+          <p class="muted">Pilih file PNG dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
+          <button id="gbtn2" onclick="add('gallery')">Tambah foto</button>
+          <div id="glist"></div>
+        </div>
+
+        <div id="asp" class="section" hidden>
+          <h3>Daftar aspirasi</h3>
+          <div id="asplist"></div>
+        </div>
+
+        <p id="status" class="status"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    const API = "https://script.google.com/macros/s/AKfycbzdBWZxrhf8SCZ66J7wKmAHFZ1oO7uMw7X-uxru8Wke3KsP5cbeGX67v4Z9pEIJg6pZGg/exec";
+    const CLIENT_ID = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
+    let token = "", cache = {};
+    const $ = id => document.getElementById(id);
+
+    window.onload = () => {
+      if (!CLIENT_ID.startsWith("TEMPEL_")) {
+        google.accounts.id.initialize({client_id:CLIENT_ID, callback:loginDone});
+        google.accounts.id.renderButton($("gbtn"), {theme:"outline", size:"large", text:"signin_with"});
+      }
+      setupPreview("ai", "apreview");
+      setupPreview("gi", "gpreview");
+    };
+
+    function setupPreview(inputId, previewId) {
+      $(inputId).addEventListener("change", () => {
+        const file = $(inputId).files[0];
+        const preview = $(previewId);
+
+        if (!file) {
+          preview.removeAttribute("src");
+          preview.style.display = "none";
+          return;
+        }
+
+        if (file.type !== "image/png" || !file.name.toLowerCase().endsWith(".png")) {
+          alert("Pilih file gambar berformat PNG.");
+          $(inputId).value = "";
+          preview.style.display = "none";
+          return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          alert("Ukuran gambar maksimal 5 MB.");
+          $(inputId).value = "";
+          preview.style.display = "none";
+          return;
+        }
+
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = "block";
+      });
+    }
+
+    async function loginDone(result) {
+      try {
+        const payload = JSON.parse(atob(result.credential.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")));
+        if (payload.email.toLowerCase() !== "adegameonly@gmail.com" || !payload.email_verified) {
+          throw new Error("Email tidak diizinkan.");
+        }
+
+        token = result.credential;
+        const data = await api("adminData");
+        if (!data.ok) throw new Error(data.message);
+
+        $("login").hidden = true;
+        $("dash").hidden = false;
+        $("who").textContent = payload.email;
+        fill(data);
+      } catch (error) {
+        $("loginmsg").textContent = error.message;
+      }
+    }
+
+    async function api(action, extra = {}) {
+      if (API.startsWith("TEMPEL_")) throw new Error("URL Apps Script belum diisi.");
+
+      const response = await fetch(API, {
+        method: "POST",
+        headers: {"Content-Type":"text/plain"},
+        body: JSON.stringify({action, idToken:token, ...extra})
+      });
+
+      return await response.json();
+    }
+
+    function fill(data) {
+      cache = data;
+      const settings = data.settings || {};
+
+      ["orgName","logoText","heroTitle","heroText","aboutText"].forEach(key => {
+        $(key).value = settings[key] || "";
+      });
+
+      list("alist", data.announcements, "announcement");
+      list("glist", data.gallery, "gallery");
+
+      $("asplist").innerHTML = (data.aspirations || []).map((item, index) => `
+        <div class="item">
+          <b>${esc(item[2])}</b> · ${esc(item[1])}
+          <p>${esc(item[3])}</p>
+          <small>${esc(item[0])} · ${item[4] === "Ya" ? "Anonim" : esc(item[5])}</small>
+          <p>Status: ${esc(item[6])}</p>
+          <select id="s${index}">
+            <option ${item[6] === "Baru" ? "selected" : ""}>Baru</option>
+            <option ${item[6] === "Diproses" ? "selected" : ""}>Diproses</option>
+            <option ${item[6] === "Selesai" ? "selected" : ""}>Selesai</option>
+          </select>
+          <button onclick="setst(${index})">Simpan status</button>
+        </div>
+      `).join("") || "Belum ada aspirasi.";
+    }
+
+    function esc(value) {
+      return String(value || "").replace(/[&<>"']/g, char => ({
+        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+      }[char]));
+    }
+
+    function list(id, items, type) {
+      $(id).innerHTML = (items || []).map((item, index) => `
+        <div class="item">
+          <b>${esc(item.title)}</b>
+          <p>${esc(item.text)}</p>
+          ${item.image ? `<img src="${esc(item.image)}" alt="" style="max-width:180px;max-height:120px;object-fit:cover">` : ""}
+          <button class="danger" onclick="removeItem('${type}',${index})">Hapus</button>
+        </div>
+      `).join("") || "Belum ada konten.";
+    }
+
+    async function save() {
+      const settings = {};
+      ["orgName","logoText","heroTitle","heroText","aboutText"].forEach(key => {
+        settings[key] = $(key).value;
+      });
+      await run("saveSettings", {settings});
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          resolve(result.substring(result.indexOf(",") + 1));
+        };
+        reader.onerror = () => reject(new Error("Gagal membaca file gambar."));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function add(type) {
+      const prefix = type === "announcement" ? "a" : "g";
+      const fileInput = $(prefix + "i");
+      const button = $(type === "announcement" ? "abtn" : "gbtn2");
+
+      const title = $(prefix + "t").value.trim();
+      const text = $(prefix + "x").value.trim();
+      const file = fileInput.files[0];
+
+      if (!title || !text) {
+        $("status").textContent = "Judul dan isi harus diisi.";
+        return;
+      }
+
+      if (type === "gallery" && !file) {
+        $("status").textContent = "Pilih foto PNG untuk galeri.";
+        return;
+      }
+
+      if (file && (file.type !== "image/png" || !file.name.toLowerCase().endsWith(".png"))) {
+        $("status").textContent = "File harus berformat PNG.";
+        return;
+      }
+
+      if (file && file.size > 5 * 1024 * 1024) {
+        $("status").textContent = "Ukuran gambar maksimal 5 MB.";
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        let imageUrl = "";
+
+        if (file) {
+          $("status").textContent = "Mengunggah gambar ke Google Drive...";
+          const base64 = await fileToBase64(file);
+          const uploaded = await api("uploadImage", {
+            fileName: file.name,
+            mimeType: file.type,
+            base64
+          });
+
+          if (!uploaded.ok) throw new Error(uploaded.message || "Gagal mengunggah gambar.");
+          imageUrl = uploaded.url;
+        }
+
+        $("status").textContent = "Menyimpan konten...";
+        const result = await api("addContent", {
+          type,
+          item: {title, text, image:imageUrl}
+        });
+
+        if (!result.ok) throw new Error(result.message || "Gagal menyimpan konten.");
+
+        const updated = await api("adminData");
+        if (!updated.ok) throw new Error(updated.message || "Konten tersimpan, tetapi daftar gagal dimuat.");
+
+        fill(updated);
+        $(prefix + "t").value = "";
+        $(prefix + "x").value = "";
+        fileInput.value = "";
+        const preview = $(type === "announcement" ? "apreview" : "gpreview");
+        preview.removeAttribute("src");
+        preview.style.display = "none";
+        $("status").textContent = "Berhasil disimpan.";
+      } catch (error) {
+        $("status").textContent = error.message;
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    async function removeItem(type, index) {
+      await run("removeContent", {type, index});
+      const updated = await api("adminData");
+      if (updated.ok) fill(updated);
+    }
+
+    async function setst(index) {
+      await run("setStatus", {index, status:$("s" + index).value});
+      const updated = await api("adminData");
+      if (updated.ok) fill(updated);
+    }
+
+    async function run(action, extra) {
+      try {
+        const result = await api(action, extra);
+        if (!result.ok) throw new Error(result.message);
+        $("status").textContent = "Berhasil disimpan.";
+      } catch (error) {
+        $("status").textContent = error.message;
+      }
+    }
+
+    document.querySelectorAll(".tab").forEach(button => {
+      button.onclick = () => {
+        document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+        button.classList.add("active");
+        document.querySelectorAll(".section").forEach(section => section.hidden = true);
+        $(button.dataset.id).hidden = false;
+      };
+    });
+
+    function logout() {
+      token = "";
+      location.reload();
+    }
+  </script>
+</body>
+</html>
