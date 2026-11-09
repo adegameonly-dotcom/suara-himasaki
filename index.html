@@ -708,13 +708,12 @@
     ============================================== */
 
     
+
 function request(payload) {
   return new Promise((resolve, reject) => {
-    const id = "pub_" + (
-      window.crypto && crypto.randomUUID
-        ? crypto.randomUUID()
-        : Date.now() + "_" + Math.random().toString(36).slice(2)
-    );
+    const id =
+      "pub_" + Date.now() + "_" +
+      Math.random().toString(36).slice(2);
 
     const frameName = "frame_" + id;
 
@@ -723,13 +722,13 @@ function request(payload) {
     const input = document.createElement("input");
 
     frame.name = frameName;
-    frame.style.display = "none";
+    frame.hidden = true;
     frame.setAttribute("aria-hidden", "true");
 
     form.method = "POST";
     form.action = API;
     form.target = frameName;
-    form.style.display = "none";
+    form.hidden = true;
 
     input.type = "hidden";
     input.name = "payload";
@@ -750,12 +749,29 @@ function request(payload) {
     }
 
     function handleMessage(event) {
-      const result = event.data;
+      const trustedOrigin =
+        event.origin === "https://script.google.com" ||
+        event.origin === "https://googleusercontent.com" ||
+        event.origin.endsWith(".googleusercontent.com");
 
-      // Cocokkan ID acak agar respons hanya diterima
-      // untuk permintaan yang sedang berjalan.
+      if (
+        event.source !== frame.contentWindow &&
+        !trustedOrigin
+      ) {
+        return;
+      }
+
+      let result = event.data;
+
+      if (typeof result === "string") {
+        try {
+          result = JSON.parse(result);
+        } catch (error) {
+          return;
+        }
+      }
+
       if (!result || result.requestId !== id) return;
-      if (typeof result.ok !== "boolean") return;
 
       completed = true;
       cleanup();
@@ -780,12 +796,11 @@ function request(payload) {
 
     window.addEventListener("message", handleMessage);
 
-    document.body.appendChild(frame);
-    document.body.appendChild(form);
-
+    document.body.append(frame, form);
     form.submit();
   });
 }
+
 
 
     /* ==============================================
