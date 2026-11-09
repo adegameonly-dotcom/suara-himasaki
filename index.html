@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#173b69">
-
   <title>SUARA HIMASAKI</title>
 
   <style>
@@ -21,13 +20,9 @@
       --danger: #a12b25;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -42,11 +37,7 @@
       text-decoration: none;
     }
 
-    img,
-    video,
-    iframe {
-      max-width: 100%;
-    }
+    img, video, iframe { max-width: 100%; }
 
     .wrap {
       width: 100%;
@@ -55,14 +46,10 @@
       padding: 0 20px;
     }
 
-    /* ==============================
-       HEADER DAN NAVIGASI
-    ============================== */
-
     header {
       position: sticky;
       top: 0;
-      z-index: 5;
+      z-index: 10;
       background: var(--white);
       border-bottom: 1px solid var(--border);
     }
@@ -90,7 +77,7 @@
       place-items: center;
       border-radius: 12px;
       background: var(--navy);
-      color: var(--white);
+      color: white;
     }
 
     nav {
@@ -99,23 +86,37 @@
       gap: 17px;
     }
 
-    nav a {
-      font-size: 14px;
+    nav a { font-size: 14px; }
+
+    main { padding-top: 26px; }
+
+    /* SISTEM HALAMAN */
+
+    .page-view { display: none; }
+
+    .page-view.active { display: block; }
+
+    .page-back {
+      display: inline-block;
+      margin: 0 0 22px;
+      padding: 10px 15px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      color: var(--navy);
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    /* ==============================
-       TAMPILAN UTAMA
-    ============================== */
+    .page-back:hover { background: #eaf0f7; }
 
-    main {
-      padding-top: 26px;
-    }
+    /* HERO */
 
     .hero {
       padding: 55px 42px;
       border-radius: 20px;
       background: linear-gradient(120deg, #15375f, #2b669b);
-      color: var(--white);
+      color: white;
     }
 
     .hero h1 {
@@ -137,58 +138,74 @@
       border: 0;
       border-radius: 9px;
       background: var(--navy);
-      color: var(--white);
+      color: white;
       font-weight: bold;
       cursor: pointer;
     }
 
     .btn.white {
-      background: var(--white);
+      background: white;
       color: var(--navy);
     }
 
     .btn:disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: .6;
     }
 
-    /* ==============================
-       KARTU DAN PANEL
-    ============================== */
+    /* PINTASAN */
 
-    .cards,
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .shortcut {
+      display: block;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: white;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .shortcut:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px #173b6915;
+    }
+
+    .shortcut-icon {
+      font-size: 29px;
+    }
+
+    .shortcut h3 {
+      margin: 6px 0;
+      color: var(--navy);
+    }
+
+    .shortcut p {
+      margin: 0;
+      color: var(--muted);
+      font-weight: normal;
+    }
+
+    /* KARTU DAN PANEL */
+
     .list {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
     }
 
-    .cards {
-      margin: 24px 0;
-    }
-
-    .card,
-    .panel,
-    .content {
+    .card, .panel, .content {
       border: 1px solid var(--border);
       border-radius: 14px;
-      background: var(--white);
+      background: white;
     }
 
-    .card,
-    .panel {
-      padding: 20px;
-    }
-
-    .card h3 {
-      margin: 6px 0;
-    }
-
-    .card p,
-    .muted {
-      margin: 0;
-      color: var(--muted);
-    }
+    .panel { padding: 20px; }
 
     section {
       margin: 34px 0;
@@ -201,9 +218,12 @@
       font-size: 26px;
     }
 
-    /* ==============================
-       FORMULIR
-    ============================== */
+    .muted {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* FORMULIR */
 
     .grid {
       display: grid;
@@ -211,13 +231,9 @@
       gap: 14px;
     }
 
-    .field {
-      margin-bottom: 13px;
-    }
+    .field { margin-bottom: 13px; }
 
-    .full {
-      grid-column: 1 / -1;
-    }
+    .full { grid-column: 1 / -1; }
 
     label {
       display: block;
@@ -226,14 +242,12 @@
       font-weight: bold;
     }
 
-    input,
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       padding: 12px;
       border: 1px solid #cbd5df;
       border-radius: 9px;
-      background: var(--white);
+      background: white;
       font: inherit;
     }
 
@@ -248,9 +262,7 @@
       gap: 9px;
     }
 
-    .check input {
-      width: auto;
-    }
+    .check input { width: auto; }
 
     .notice {
       display: none;
@@ -271,13 +283,9 @@
       color: var(--danger);
     }
 
-    /* ==============================
-       GALERI DAN DOKUMENTASI
-    ============================== */
+    /* GALERI */
 
-    .content {
-      overflow: hidden;
-    }
+    .content { overflow: hidden; }
 
     .content img {
       display: block;
@@ -295,16 +303,7 @@
       background: #111;
     }
 
-    .content video {
-      display: block;
-      width: 100%;
-      max-height: 250px;
-      background: #111;
-    }
-
-    .body {
-      padding: 15px;
-    }
+    .body { padding: 15px; }
 
     .tag {
       display: inline-block;
@@ -315,9 +314,7 @@
       font-size: 11px;
     }
 
-    .body h3 {
-      margin: 8px 0 4px;
-    }
+    .body h3 { margin: 8px 0 4px; }
 
     .body p {
       margin: 0;
@@ -325,9 +322,7 @@
       white-space: pre-wrap;
     }
 
-    /* ==============================
-       STRUKTUR DAN PROFIL
-    ============================== */
+    /* KEPENGURUSAN DAN PROFIL */
 
     .people {
       display: grid;
@@ -339,7 +334,7 @@
       padding: 16px;
       border: 1px solid var(--border);
       border-radius: 12px;
-      background: var(--white);
+      background: white;
     }
 
     .person img {
@@ -350,25 +345,19 @@
       object-fit: contain;
     }
 
-    .person h3 {
-      margin: 10px 0 3px;
-    }
+    .person h3 { margin: 10px 0 3px; }
 
     .empty {
       grid-column: 1 / -1;
       padding: 16px;
       border-radius: 10px;
-      background: var(--white);
+      background: white;
       color: var(--muted);
     }
 
-    /* ==============================
-       QR CODE
-    ============================== */
+    /* QR CODE */
 
-    .qr-panel {
-      text-align: center;
-    }
+    .qr-panel { text-align: center; }
 
     .qr-image {
       display: block;
@@ -379,9 +368,7 @@
       object-fit: contain;
     }
 
-    /* ==============================
-       FOOTER
-    ============================== */
+    /* FOOTER */
 
     footer {
       margin-top: 45px;
@@ -390,13 +377,7 @@
       color: #dce6f1;
     }
 
-    footer a {
-      color: var(--white);
-    }
-
-    /* ==============================
-       RESPONSIVE
-    ============================== */
+    footer a { color: white; }
 
     @media (max-width: 760px) {
       .nav {
@@ -406,96 +387,101 @@
         padding-bottom: 12px;
       }
 
-      nav {
-        gap: 10px;
-      }
+      nav { gap: 10px; }
 
-      .cards,
-      .list,
-      .people {
+      .cards, .list, .people {
         grid-template-columns: 1fr;
       }
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
+      .grid { grid-template-columns: 1fr; }
 
-      .full {
-        grid-column: auto;
-      }
+      .full { grid-column: auto; }
 
-      .hero {
-        padding: 36px 24px;
-      }
+      .hero { padding: 36px 24px; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
-  <header id="top">
-    <div class="wrap nav">
+<header id="top">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <div class="logo" id="logo">HK</div>
+      <span id="org">SAINS KIMIA · HIMASAKI</span>
+    </a>
 
-      <div class="brand">
-        <div class="logo" id="logo">HK</div>
-        <span id="org">SAINS KIMIA · HIMASAKI</span>
-      </div>
+    <nav aria-label="Navigasi utama">
+      <a href="#top">Beranda</a>
+      <a href="#aspirasi">Aspirasi</a>
+      <a href="#pengumuman">Pengumuman</a>
+      <a href="#galeri">Galeri</a>
+      <a href="#struktur">Kepengurusan</a>
+      <a href="#tentang">Tentang</a>
+    </nav>
+  </div>
+</header>
 
-      <nav aria-label="Navigasi utama">
-        <a href="#aspirasi">Aspirasi</a>
-        <a href="#pengumuman">Pengumuman</a>
-        <a href="#galeri">Galeri</a>
-        <a href="#struktur">Kepengurusan</a>
-        <a href="#tentang">Tentang</a>
-        <a href="#qrcode">QR Code</a>
-      </nav>
+<main class="wrap">
 
-    </div>
-  </header>
+  <!-- HALAMAN BERANDA -->
+  <div id="view-home" class="page-view active">
 
-  <main class="wrap">
-
-    <!-- HERO -->
     <section class="hero">
       <h1 id="heroTitle">Suaramu berarti untuk HIMASAKI.</h1>
-
       <p id="heroText">
         Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.
       </p>
-
       <a class="btn white" href="#aspirasi">Kirim Aspirasi</a>
     </section>
 
-    <!-- MENU UTAMA -->
-    <div class="cards">
+    <section>
+      <h2 class="heading">Jelajahi SUARA HIMASAKI</h2>
 
-      <a class="card" href="#aspirasi">
-        <div style="font-size:28px">✉️</div>
-        <h3>Kirim Aspirasi</h3>
-        <p>Sampaikan kritik, saran, dan ide.</p>
-      </a>
+      <div class="cards">
+        <a class="shortcut" href="#aspirasi">
+          <div class="shortcut-icon">✉️</div>
+          <h3>Kirim Aspirasi</h3>
+          <p>Sampaikan kritik, saran, dan ide.</p>
+        </a>
 
-      <a class="card" href="#pengumuman">
-        <div style="font-size:28px">📢</div>
-        <h3>Pengumuman</h3>
-        <p>Informasi terbaru HIMASAKI.</p>
-      </a>
+        <a class="shortcut" href="#pengumuman">
+          <div class="shortcut-icon">📢</div>
+          <h3>Pengumuman</h3>
+          <p>Informasi terbaru HIMASAKI.</p>
+        </a>
 
-      <a class="card" href="#galeri">
-        <div style="font-size:28px">🎞️</div>
-        <h3>Galeri & Dokumentasi</h3>
-        <p>Foto dan video kegiatan.</p>
-      </a>
+        <a class="shortcut" href="#galeri">
+          <div class="shortcut-icon">🎞️</div>
+          <h3>Galeri dan Dokumentasi</h3>
+          <p>Foto dan video kegiatan.</p>
+        </a>
 
-    </div>
+        <a class="shortcut" href="#struktur">
+          <div class="shortcut-icon">👥</div>
+          <h3>Kepengurusan</h3>
+          <p>Lihat struktur pengurus setiap periode.</p>
+        </a>
+
+        <a class="shortcut" href="#tentang">
+          <div class="shortcut-icon">ℹ️</div>
+          <h3>Tentang HIMASAKI</h3>
+          <p>Kenali pendiri, pengembang, dan pengelola.</p>
+        </a>
+
+        <a class="shortcut" href="#qrcode">
+          <div class="shortcut-icon">▦</div>
+          <h3>QR Code</h3>
+          <p>Akses website melalui pemindaian QR.</p>
+        </a>
+      </div>
+    </section>
 
     <!-- FORM ASPIRASI -->
     <section id="aspirasi">
       <h2 class="heading">Kotak Aspirasi</h2>
 
       <div class="panel">
-
         <p class="muted">
           Kamu dapat memilih mengirim secara anonim atau mencantumkan nama.
           Jika memilih anonim, nama tidak diminta maupun disimpan.
@@ -504,12 +490,10 @@
         <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
 
         <form id="aspForm">
-
           <div class="grid">
 
             <div class="field">
               <label for="category">Kategori</label>
-
               <select id="category" required>
                 <option value="">Pilih kategori</option>
                 <option>Kritik</option>
@@ -528,20 +512,11 @@
 
             <div class="field full">
               <label for="message">Isi aspirasi</label>
-
-              <textarea
-                id="message"
-                maxlength="2000"
-                required
-              ></textarea>
-
-              <small id="count" class="muted">
-                0/2000 karakter
-              </small>
+              <textarea id="message" maxlength="2000" required></textarea>
+              <small id="count" class="muted">0/2000 karakter</small>
             </div>
 
             <div class="field full">
-
               <label class="check">
                 <input type="checkbox" id="anonymous" checked>
                 Kirim sebagai anonim
@@ -551,7 +526,6 @@
                 <label for="name">Nama pengirim</label>
                 <input id="name" maxlength="100">
               </div>
-
             </div>
 
           </div>
@@ -559,70 +533,73 @@
           <button class="btn" id="sendBtn" type="submit">
             Kirim Aspirasi
           </button>
-
         </form>
       </div>
     </section>
+  </div>
 
-    <!-- PENGUMUMAN -->
+  <!-- HALAMAN PENGUMUMAN -->
+  <div id="view-announcements" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
     <section id="pengumuman">
-      <h2 class="heading">Pengumuman</h2>
-
+      <h2 class="heading">Pengumuman HIMASAKI</h2>
       <div class="list" id="announcements">
         <div class="empty">Memuat pengumuman...</div>
       </div>
     </section>
+  </div>
 
-    <!-- GALERI -->
+  <!-- HALAMAN GALERI -->
+  <div id="view-gallery" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
     <section id="galeri">
       <h2 class="heading">Galeri dan Dokumentasi</h2>
-
       <div class="list" id="gallery">
         <div class="empty">Memuat dokumentasi...</div>
       </div>
     </section>
+  </div>
 
-    <!-- STRUKTUR -->
+  <!-- HALAMAN KEPENGURUSAN -->
+  <div id="view-structure" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
     <section id="struktur">
       <h2 class="heading">Struktur Kepengurusan</h2>
 
       <div class="panel">
-
         <label for="periodSelect">Pilih periode</label>
         <select id="periodSelect"></select>
 
-        <div
-          id="officers"
-          class="people"
-          style="margin-top:16px"
-        ></div>
-
+        <div id="officers" class="people" style="margin-top:16px"></div>
       </div>
     </section>
+  </div>
 
-    <!-- TENTANG -->
+  <!-- HALAMAN TENTANG -->
+  <div id="view-about" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
     <section id="tentang">
       <h2 class="heading">Tentang HIMASAKI</h2>
 
       <div class="panel">
-
         <p id="about"></p>
-
-        <div
-          id="people"
-          class="people"
-          style="margin-top:18px"
-        ></div>
-
+        <div id="people" class="people" style="margin-top:18px"></div>
       </div>
     </section>
+  </div>
 
-    <!-- QR CODE -->
+  <!-- HALAMAN QR CODE -->
+  <div id="view-qrcode" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
     <section id="qrcode">
       <h2 class="heading">QR Code SUARA HIMASAKI</h2>
 
       <div class="panel qr-panel">
-
         <p class="muted">
           Pindai kode QR ini untuk membuka website SUARA HIMASAKI.
         </p>
@@ -647,526 +624,549 @@
             Buka QR Code ukuran besar
           </a>
         </p>
-
       </div>
     </section>
+  </div>
 
-  </main>
+</main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="wrap">
+<footer>
+  <div class="wrap">
+    <strong id="footerOrg">SAINS KIMIA · HIMASAKI</strong>
+    <br>
+    <span id="footerText">Himpunan Mahasiswa Sains Kimia</span>
+    <p><a href="#top">Kembali ke Beranda ↑</a></p>
+  </div>
+</footer>
 
-      <strong id="footerOrg">SAINS KIMIA · HIMASAKI</strong>
+<script>
+  /* ==============================================
+     KONFIGURASI
+  ============================================== */
 
-      <br>
+  const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
 
-      <span id="footerText">Himpunan Mahasiswa Sains Kimia</span>
+  const WEBSITE_URL =
+    "https://adegameonly-dotcom.github.io/suara-himasaki/";
 
-      <p>
-        <a href="#top">Kembali ke atas ↑</a>
-      </p>
+  const $ = id => document.getElementById(id);
 
-    </div>
-  </footer>
+  /* ==============================================
+     UTILITAS
+  ============================================== */
 
-  <script>
-    /* ==============================================
-       KONFIGURASI
-    ============================================== */
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    })[char]);
+  }
 
-    const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+  function showNotice(id, message, success) {
+    const element = $(id);
+    element.textContent = message;
+    element.className = "notice " + (success ? "ok" : "err");
+  }
 
-    const WEBSITE_URL =
-      "https://adegameonly-dotcom.github.io/suara-himasaki/";
+  /* ==============================================
+     NAVIGASI HALAMAN
+  ============================================== */
 
-    /* ==============================================
-       UTILITAS
-    ============================================== */
+  const pageMap = {
+    "#top": "home",
+    "#aspirasi": "home",
+    "#pengumuman": "announcements",
+    "#galeri": "gallery",
+    "#struktur": "structure",
+    "#tentang": "about",
+    "#qrcode": "qrcode"
+  };
 
-    const $ = id => document.getElementById(id);
+  function showView(view, targetId = "") {
+    const target = $("view-" + view);
+    if (!target) return;
 
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[char]);
-    }
-
-    function showNotice(id, message, success) {
-      const element = $(id);
-
-      element.textContent = message;
-      element.className = "notice " + (success ? "ok" : "err");
-    }
-
-    /* ==============================================
-       KOMUNIKASI APPS SCRIPT
-    ============================================== */
-
-    
-
-function request(payload) {
-  return new Promise((resolve, reject) => {
-    const id =
-      "pub_" + Date.now() + "_" +
-      Math.random().toString(36).slice(2);
-
-    const frameName = "frame_" + id;
-
-    const frame = document.createElement("iframe");
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-
-    frame.name = frameName;
-    frame.hidden = true;
-    frame.setAttribute("aria-hidden", "true");
-
-    form.method = "POST";
-    form.action = API;
-    form.target = frameName;
-    form.hidden = true;
-
-    input.type = "hidden";
-    input.name = "payload";
-    input.value = JSON.stringify({
-      ...payload,
-      requestId: id
+    document.querySelectorAll(".page-view").forEach(page => {
+      page.classList.remove("active");
     });
 
-    form.appendChild(input);
+    target.classList.add("active");
 
-    let completed = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
-    function cleanup() {
-      window.removeEventListener("message", handleMessage);
-      clearTimeout(timer);
-      frame.remove();
-      form.remove();
+    if (targetId) {
+      setTimeout(() => {
+        const element = $(targetId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        }
+      }, 150);
+    }
+  }
+
+  function navigateTo(hash, addHistory = true) {
+    const view = pageMap[hash] || "home";
+
+    showView(
+      view,
+      hash === "#aspirasi" ? "aspirasi" : ""
+    );
+
+    if (addHistory) {
+      history.pushState(null, "", hash);
+    }
+  }
+
+  document.addEventListener("click", event => {
+    const back = event.target.closest("[data-back]");
+
+    if (back) {
+      navigateTo("#top");
+      return;
     }
 
-    function handleMessage(event) {
-      const trustedOrigin =
-        event.origin === "https://script.google.com" ||
-        event.origin === "https://googleusercontent.com" ||
-        event.origin.endsWith(".googleusercontent.com");
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
 
-      if (
-        event.source !== frame.contentWindow &&
-        !trustedOrigin
-      ) {
-        return;
+    const hash = link.getAttribute("href");
+    if (!pageMap[hash]) return;
+
+    event.preventDefault();
+    navigateTo(hash);
+  });
+
+  window.addEventListener("popstate", () => {
+    navigateTo(location.hash || "#top", false);
+  });
+
+  /* ==============================================
+     KOMUNIKASI APPS SCRIPT
+  ============================================== */
+
+  function request(payload) {
+    return new Promise((resolve, reject) => {
+      const id =
+        "pub_" + Date.now() + "_" +
+        Math.random().toString(36).slice(2);
+
+      const frameName = "frame_" + id;
+
+      const frame = document.createElement("iframe");
+      const form = document.createElement("form");
+      const input = document.createElement("input");
+
+      frame.name = frameName;
+      frame.hidden = true;
+      frame.setAttribute("aria-hidden", "true");
+
+      form.method = "POST";
+      form.action = API;
+      form.target = frameName;
+      form.hidden = true;
+
+      input.type = "hidden";
+      input.name = "payload";
+      input.value = JSON.stringify({
+        ...payload,
+        requestId: id
+      });
+
+      form.appendChild(input);
+
+      let completed = false;
+
+      function cleanup() {
+        window.removeEventListener("message", handleMessage);
+        clearTimeout(timer);
+        frame.remove();
+        form.remove();
       }
 
-      let result = event.data;
+      function handleMessage(event) {
+        const trustedOrigin =
+          event.origin === "https://script.google.com" ||
+          event.origin === "https://googleusercontent.com" ||
+          event.origin.endsWith(".googleusercontent.com");
 
-      if (typeof result === "string") {
-        try {
-          result = JSON.parse(result);
-        } catch (error) {
+        if (
+          event.source !== frame.contentWindow &&
+          !trustedOrigin
+        ) {
           return;
         }
-      }
 
-      if (!result || result.requestId !== id) return;
+        let result = event.data;
 
-      completed = true;
-      cleanup();
-
-      if (result.ok) {
-        resolve(result.data);
-      } else {
-        reject(
-          new Error(result.error || "Permintaan gagal.")
-        );
-      }
-    }
-
-    const timer = setTimeout(() => {
-      if (completed) return;
-
-      cleanup();
-      reject(
-        new Error("Server belum merespons. Coba lagi.")
-      );
-    }, 45000);
-
-    window.addEventListener("message", handleMessage);
-
-    document.body.append(frame, form);
-    form.submit();
-  });
-}
-
-
-
-    /* ==============================================
-       KONTEN DAN MEDIA
-    ============================================== */
-
-    function renderItems(items, target) {
-      const container = $(target);
-
-      if (!Array.isArray(items) || !items.length) {
-        container.innerHTML =
-          '<div class="empty">Belum ada konten.</div>';
-
-        return;
-      }
-
-      container.innerHTML = items.map(item => {
-        let media = "";
-
-        if (target === "gallery") {
-          const url = escapeHTML(item.url || "");
-          const title = escapeHTML(item.title || "");
-
-          if (item.mediaType === "video") {
-            media = `
-              <video
-                controls
-                preload="metadata"
-                playsinline
-              >
-                <source src="${url}">
-                Browser tidak mendukung pemutar video.
-              </video>
-            `;
-          } else if (item.mediaType === "youtube") {
-            media = `
-              <iframe
-                src="${url}"
-                title="${title}"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-            `;
-          } else {
-            media = `
-              <img
-                src="${url}"
-                alt="${title}"
-                loading="lazy"
-              >
-            `;
+        if (typeof result === "string") {
+          try {
+            result = JSON.parse(result);
+          } catch (error) {
+            return;
           }
         }
 
-        return `
-          <article class="content">
-            ${media}
+        if (!result || result.requestId !== id) return;
 
-            <div class="body">
-              <span class="tag">
-                ${escapeHTML(item.category || "Umum")}
-              </span>
+        completed = true;
+        cleanup();
 
-              <h3>${escapeHTML(item.title || "")}</h3>
+        if (result.ok) {
+          resolve(result.data);
+        } else {
+          reject(new Error(result.error || "Permintaan gagal."));
+        }
+      }
 
-              <p>${escapeHTML(item.description || "")}</p>
-            </div>
-          </article>
-        `;
-      }).join("");
+      const timer = setTimeout(() => {
+        if (completed) return;
+
+        cleanup();
+        reject(new Error("Server belum merespons. Coba lagi."));
+      }, 45000);
+
+      window.addEventListener("message", handleMessage);
+
+      document.body.append(frame, form);
+      form.submit();
+    });
+  }
+
+  /* ==============================================
+     KONTEN DAN MEDIA
+  ============================================== */
+
+  function renderItems(items, target) {
+    const container = $(target);
+
+    if (!Array.isArray(items) || !items.length) {
+      container.innerHTML =
+        '<div class="empty">Belum ada konten.</div>';
+      return;
     }
 
-    /* ==============================================
-       STRUKTUR KEPENGURUSAN
-    ============================================== */
+    container.innerHTML = items.map(item => {
+      let media = "";
 
-    function renderOfficers(periods, officers) {
-      const select = $("periodSelect");
+      if (target === "gallery") {
+        const url = escapeHTML(item.url || "");
+        const title = escapeHTML(item.title || "");
 
-      select.innerHTML = (periods || []).map(period => `
-        <option value="${escapeHTML(period.id)}">
-          ${escapeHTML(period.name)}
-        </option>
-      `).join("");
-
-      if (!periods || !periods.length) {
-        select.innerHTML =
-          '<option value="">Belum ada periode</option>';
-
-        $("officers").innerHTML =
-          '<div class="empty">Belum ada data kepengurusan.</div>';
-
-        return;
+        if (item.mediaType === "video" ||
+            item.mediaType === "youtube") {
+          media = `
+            <iframe
+              src="${url}"
+              title="${title}"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          `;
+        } else {
+          media = `
+            <img
+              src="${url}"
+              alt="${title}"
+              loading="lazy"
+            >
+          `;
+        }
       }
 
-      const activePeriod = periods.find(period => period.active);
+      return `
+        <article class="content">
+          ${media}
+          <div class="body">
+            <span class="tag">
+              ${escapeHTML(item.category || "Umum")}
+            </span>
+            <h3>${escapeHTML(item.title || "")}</h3>
+            <p>${escapeHTML(item.description || "")}</p>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
 
-      if (activePeriod) {
-        select.value = activePeriod.id;
-      }
+  /* ==============================================
+     STRUKTUR KEPENGURUSAN
+  ============================================== */
 
-      function drawOfficers() {
-        const periodId = select.value;
+  function renderOfficers(periods, officers) {
+    const select = $("periodSelect");
 
-        const items = (officers || [])
-          .filter(officer => officer.periodId === periodId)
-          .sort((a, b) => Number(a.order || 0) - Number(b.order || 0));
+    select.innerHTML = (periods || []).map(period => `
+      <option value="${escapeHTML(period.id)}">
+        ${escapeHTML(period.name)}
+      </option>
+    `).join("");
 
-        $("officers").innerHTML = items.length
-          ? items.map(officer => `
-            <article class="person">
-
-              ${officer.photo
-                ? `<img src="${escapeHTML(officer.photo)}" alt="${escapeHTML(officer.name)}" loading="lazy">`
-                : ""}
-
-              <span class="tag">
-                ${escapeHTML(officer.division)}
-              </span>
-
-              <h3>${escapeHTML(officer.name)}</h3>
-
-              <strong>${escapeHTML(officer.position)}</strong>
-
-              <p class="muted">
-                ${escapeHTML(officer.description || "")}
-              </p>
-
-            </article>
-          `).join("")
-          : '<div class="empty">Belum ada data pengurus untuk periode ini.</div>';
-      }
-
-      select.onchange = drawOfficers;
-
-      drawOfficers();
+    if (!periods || !periods.length) {
+      select.innerHTML = '<option value="">Belum ada periode</option>';
+      $("officers").innerHTML =
+        '<div class="empty">Belum ada data kepengurusan.</div>';
+      return;
     }
 
-    /* ==============================================
-       PENDIRI, PENGEMBANG, PENGELOLA
-    ============================================== */
+    const activePeriod = periods.find(period => period.active);
 
-    function renderPeople(personData) {
-      const people = [];
+    if (activePeriod) {
+      select.value = activePeriod.id;
+    }
 
-      if (personData.founderName) {
-        people.push({
-          name: personData.founderName,
-          role: "Pendiri",
-          description: personData.founderDescription,
-          photo: personData.founderPhoto
-        });
-      }
+    function drawOfficers() {
+      const periodId = select.value;
 
-      if (personData.developerName) {
-        people.push({
-          name: personData.developerName,
-          role: "Pengembang",
-          description: personData.developerDescription,
-          photo: personData.developerPhoto
-        });
-      }
+      const items = (officers || [])
+        .filter(officer => officer.periodId === periodId)
+        .sort((a, b) =>
+          Number(a.order || 0) - Number(b.order || 0)
+        );
 
-      (personData.managers || []).forEach(manager => {
-        people.push({
-          name: manager.name,
-          role: manager.role || "Pengelola",
-          description: manager.description,
-          photo: manager.photo
-        });
-      });
-
-      $("people").innerHTML = people.length
-        ? people.map(person => `
+      $("officers").innerHTML = items.length
+        ? items.map(officer => `
           <article class="person">
-
-            ${person.photo
-              ? `<img src="${escapeHTML(person.photo)}" alt="${escapeHTML(person.name)}" loading="lazy">`
+            ${officer.photo
+              ? `<img src="${escapeHTML(officer.photo)}" alt="${escapeHTML(officer.name)}" loading="lazy">`
               : ""}
 
             <span class="tag">
-              ${escapeHTML(person.role)}
+              ${escapeHTML(officer.division)}
             </span>
 
-            <h3>${escapeHTML(person.name)}</h3>
+            <h3>${escapeHTML(officer.name)}</h3>
+            <strong>${escapeHTML(officer.position)}</strong>
 
             <p class="muted">
-              ${escapeHTML(person.description || "")}
+              ${escapeHTML(officer.description || "")}
             </p>
-
           </article>
         `).join("")
-        : '<p class="muted">Informasi pendiri, pengembang, dan pengelola belum ditambahkan.</p>';
+        : '<div class="empty">Belum ada data pengurus untuk periode ini.</div>';
     }
 
-    /* ==============================================
-       MEMUAT PENGATURAN WEBSITE
-    ============================================== */
+    select.onchange = drawOfficers;
+    drawOfficers();
+  }
 
-    async function loadWebsite() {
-      try {
-        const result = await request({
-          action: "public"
-        });
+  /* ==============================================
+     PENDIRI, PENGEMBANG, PENGELOLA
+  ============================================== */
 
-        const settings = result.settings || {};
+  function renderPeople(personData) {
+    const people = [];
 
-        $("logo").textContent = settings.logoText || "HK";
-
-        $("org").textContent =
-          settings.orgName || "SAINS KIMIA · HIMASAKI";
-
-        $("footerOrg").textContent =
-          settings.orgName || "SAINS KIMIA · HIMASAKI";
-
-        $("heroTitle").textContent =
-          settings.heroTitle || "Suaramu berarti untuk HIMASAKI.";
-
-        $("heroText").textContent =
-          settings.heroText || "Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.";
-
-        $("about").textContent =
-          settings.aboutText || "";
-
-        $("footerText").textContent =
-          settings.footerText || "Himpunan Mahasiswa Sains Kimia";
-
-        renderItems(result.announcements, "announcements");
-        renderItems(result.gallery, "gallery");
-
-        renderOfficers(
-          result.periods || [],
-          result.officers || []
-        );
-
-        renderPeople(result.people || {});
-
-      } catch (error) {
-        console.error("Gagal memuat website:", error);
-
-        [
-          "announcements",
-          "gallery",
-          "officers"
-        ].forEach(id => {
-          $(id).innerHTML = `
-            <div class="empty">
-              Data belum dapat dimuat.
-              Muat ulang halaman beberapa saat lagi.
-            </div>
-          `;
-        });
-      }
+    if (personData.founderName) {
+      people.push({
+        name: personData.founderName,
+        role: "Pendiri",
+        description: personData.founderDescription,
+        photo: personData.founderPhoto
+      });
     }
 
-    /* ==============================================
-       FORMULIR ANONIM ATAU NAMA
-    ============================================== */
+    if (personData.developerName) {
+      people.push({
+        name: personData.developerName,
+        role: "Pengembang",
+        description: personData.developerDescription,
+        photo: personData.developerPhoto
+      });
+    }
 
-    const anonymous = $("anonymous");
-    const nameArea = $("nameArea");
-    const nameInput = $("name");
-
-    anonymous.addEventListener("change", () => {
-      nameArea.hidden = anonymous.checked;
-
-      if (anonymous.checked) {
-        nameInput.value = "";
-      }
+    (personData.managers || []).forEach(manager => {
+      people.push({
+        name: manager.name,
+        role: manager.role || "Pengelola",
+        description: manager.description,
+        photo: manager.photo
+      });
     });
 
-    /* ==============================================
-       HITUNG KARAKTER
-    ============================================== */
+    $("people").innerHTML = people.length
+      ? people.map(person => `
+        <article class="person">
+          ${person.photo
+            ? `<img src="${escapeHTML(person.photo)}" alt="${escapeHTML(person.name)}" loading="lazy">`
+            : ""}
 
-    $("message").addEventListener("input", event => {
-      $("count").textContent =
-        event.target.value.length + "/2000 karakter";
-    });
+          <span class="tag">${escapeHTML(person.role)}</span>
+          <h3>${escapeHTML(person.name)}</h3>
 
-    /* ==============================================
-       KIRIM ASPIRASI
-    ============================================== */
+          <p class="muted">
+            ${escapeHTML(person.description || "")}
+          </p>
+        </article>
+      `).join("")
+      : '<p class="muted">Informasi pendiri, pengembang, dan pengelola belum ditambahkan.</p>';
+  }
 
-    $("aspForm").addEventListener("submit", async event => {
-      event.preventDefault();
+  /* ==============================================
+     MEMUAT DATA WEBSITE
+  ============================================== */
 
-      const button = $("sendBtn");
-      const isAnonymous = anonymous.checked;
+  async function loadWebsite() {
+    try {
+      const result = await request({ action: "public" });
 
-      const payload = {
-        action: "submit",
+      const settings = result.settings || {};
 
-        category: $("category").value,
+      $("logo").textContent = settings.logoText || "HK";
 
-        title: $("title").value.trim(),
+      $("org").textContent =
+        settings.orgName || "SAINS KIMIA · HIMASAKI";
 
-        message: $("message").value.trim(),
+      $("footerOrg").textContent =
+        settings.orgName || "SAINS KIMIA · HIMASAKI";
 
-        anonymous: isAnonymous,
+      $("heroTitle").textContent =
+        settings.heroTitle || "Suaramu berarti untuk HIMASAKI.";
 
-        name: isAnonymous
-          ? ""
-          : nameInput.value.trim()
-      };
+      $("heroText").textContent =
+        settings.heroText ||
+        "Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.";
 
-      if (!payload.category || !payload.title || !payload.message) {
-        showNotice(
-          "formNotice",
-          "Lengkapi seluruh bagian formulir.",
-          false
-        );
+      $("about").textContent = settings.aboutText || "";
 
-        return;
-      }
+      $("footerText").textContent =
+        settings.footerText || "Himpunan Mahasiswa Sains Kimia";
 
-      if (!isAnonymous && !payload.name) {
-        showNotice(
-          "formNotice",
-          "Isi nama atau pilih kirim anonim.",
-          false
-        );
+      renderItems(result.announcements, "announcements");
+      renderItems(result.gallery, "gallery");
 
-        return;
-      }
+      renderOfficers(
+        result.periods || [],
+        result.officers || []
+      );
 
-      button.disabled = true;
-      button.textContent = "Mengirim...";
+      renderPeople(result.people || {});
 
-      try {
-        const result = await request(payload);
+    } catch (error) {
+      console.error("Gagal memuat website:", error);
 
-        showNotice(
-          "formNotice",
-          result.message || "Aspirasi berhasil dikirim.",
-          true
-        );
+      [
+        "announcements",
+        "gallery",
+        "officers"
+      ].forEach(id => {
+        $(id).innerHTML = `
+          <div class="empty">
+            Data belum dapat dimuat.
+            Muat ulang halaman beberapa saat lagi.
+          </div>
+        `;
+      });
+    }
+  }
 
-        event.target.reset();
+  /* ==============================================
+     FORMULIR ANONIM ATAU NAMA
+  ============================================== */
 
-        anonymous.checked = true;
-        nameArea.hidden = true;
+  const anonymous = $("anonymous");
+  const nameArea = $("nameArea");
+  const nameInput = $("name");
 
-        $("count").textContent = "0/2000 karakter";
+  anonymous.addEventListener("change", () => {
+    nameArea.hidden = anonymous.checked;
 
-      } catch (error) {
-        showNotice(
-          "formNotice",
-          error.message + " Data formulir tetap tersedia untuk dicoba kembali.",
-          false
-        );
+    if (anonymous.checked) {
+      nameInput.value = "";
+    }
+  });
 
-      } finally {
-        button.disabled = false;
-        button.textContent = "Kirim Aspirasi";
-      }
-    });
+  /* ==============================================
+     HITUNG KARAKTER
+  ============================================== */
 
-    /* ==============================================
-       MULAI WEBSITE
-    ============================================== */
+  $("message").addEventListener("input", event => {
+    $("count").textContent =
+      event.target.value.length + "/2000 karakter";
+  });
 
-    loadWebsite();
+  /* ==============================================
+     KIRIM ASPIRASI
+  ============================================== */
 
-  </script>
+  $("aspForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = $("sendBtn");
+    const isAnonymous = anonymous.checked;
+
+    const payload = {
+      action: "submit",
+      category: $("category").value,
+      title: $("title").value.trim(),
+      message: $("message").value.trim(),
+      anonymous: isAnonymous,
+      name: isAnonymous ? "" : nameInput.value.trim()
+    };
+
+    if (!payload.category || !payload.title || !payload.message) {
+      showNotice(
+        "formNotice",
+        "Lengkapi seluruh bagian formulir.",
+        false
+      );
+      return;
+    }
+
+    if (!isAnonymous && !payload.name) {
+      showNotice(
+        "formNotice",
+        "Isi nama atau pilih kirim anonim.",
+        false
+      );
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Mengirim...";
+
+    try {
+      const result = await request(payload);
+
+      showNotice(
+        "formNotice",
+        result.message || "Aspirasi berhasil dikirim.",
+        true
+      );
+
+      event.target.reset();
+
+      anonymous.checked = true;
+      nameArea.hidden = true;
+      $("count").textContent = "0/2000 karakter";
+
+    } catch (error) {
+      showNotice(
+        "formNotice",
+        error.message +
+        " Data formulir tetap tersedia untuk dicoba kembali.",
+        false
+      );
+
+    } finally {
+      button.disabled = false;
+      button.textContent = "Kirim Aspirasi";
+    }
+  });
+
+  /* ==============================================
+     MULAI WEBSITE
+  ============================================== */
+
+  navigateTo(location.hash || "#top", false);
+  loadWebsite();
+
+</script>
 
 </body>
 </html>
