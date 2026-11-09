@@ -2,1744 +2,1884 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin SUARA HIMASAKI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Admin SUARA HIMASAKI</title>
 
-  <style>
-    :root {
-      --navy: #173b69;
-      --background: #f3f6fa;
-      --text: #243142;
-      --muted: #68788b;
-      --border: #e1e7ee;
-      --white: #ffffff;
-      --danger: #a12e2e;
-      --success: #176638;
-    }
+    <script
+        src="https://accounts.google.com/gsi/client"
+        async
+        defer>
+    </script>
 
-    * {
-      box-sizing: border-box;
-    }
+    <style>
+        :root {
+            --navy: #173b69;
+            --bg: #f3f6fa;
+            --ink: #243142;
+            --muted: #68788b;
+        }
 
-    body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font: 15px/1.55 Arial, sans-serif;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    header {
-      padding: 18px;
-      background: var(--navy);
-      color: var(--white);
-    }
+        body {
+            margin: 0;
+            background: var(--bg);
+            font: 15px/1.55 Arial, sans-serif;
+            color: var(--ink);
+        }
 
-    .wrap {
-      max-width: 1200px;
-      margin: auto;
-      padding: 0 18px;
-    }
+        header {
+            background: var(--navy);
+            color: white;
+            padding: 18px;
+        }
 
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+        .wrap {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 18px;
+        }
 
-    main {
-      max-width: 1200px;
-      margin: 24px auto;
-      padding: 0 18px;
-    }
+        header .wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-    .panel {
-      margin-bottom: 18px;
-      padding: 18px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
+        main {
+            max-width: 1200px;
+            margin: 24px auto;
+            padding: 0 18px;
+        }
 
-    h2 {
-      margin: 0 0 14px;
-      color: var(--navy);
-      font-size: 21px;
-    }
+        .panel {
+            background: white;
+            border: 1px solid #e1e7ee;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
 
-    h3 {
-      margin: 8px 0;
-    }
+        h2 {
+            font-size: 21px;
+            color: var(--navy);
+            margin: 0 0 14px;
+        }
 
-    label {
-      display: block;
-      margin: 7px 0 4px;
-      font-size: 13px;
-      font-weight: bold;
-    }
+        h3 {
+            margin: 8px 0;
+        }
 
-    input,
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #cbd5df;
-      border-radius: 8px;
-      font: inherit;
-    }
+        label {
+            font-size: 13px;
+            font-weight: bold;
+            display: block;
+            margin: 7px 0 4px;
+        }
 
-    textarea {
-      min-height: 85px;
-      resize: vertical;
-    }
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5df;
+            border-radius: 8px;
+            font: inherit;
+        }
 
-    input[type="checkbox"] {
-      width: auto;
-    }
+        textarea {
+            min-height: 85px;
+        }
 
-    .btn {
-      margin: 3px;
-      padding: 10px 14px;
-      border: 0;
-      border-radius: 8px;
-      background: var(--navy);
-      color: var(--white);
-      font-weight: bold;
-      cursor: pointer;
-    }
+        .btn {
+            border: 0;
+            border-radius: 8px;
+            background: var(--navy);
+            color: white;
+            padding: 10px 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 3px;
+        }
 
-    .btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
+        .btn.alt {
+            background: #e8eef5;
+            color: var(--navy);
+        }
 
-    .btn.alt {
-      background: #e8eef5;
-      color: var(--navy);
-    }
+        .btn.red {
+            background: #a12e2e;
+        }
 
-    .btn.red {
-      background: var(--danger);
-      color: var(--white);
-    }
+        .tabs {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
 
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin-bottom: 16px;
-    }
+        .tab {
+            background: #e7edf4;
+            color: var(--navy);
+        }
 
-    .tab {
-      background: #e7edf4;
-      color: var(--navy);
-    }
+        .tab.active {
+            background: var(--navy);
+            color: white;
+        }
 
-    .tab.active {
-      background: var(--navy);
-      color: var(--white);
-    }
+        .section {
+            display: none;
+        }
 
-    .section {
-      display: none;
-    }
+        .section.active {
+            display: block;
+        }
 
-    .section.active {
-      display: block;
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
+        .full {
+            grid-column: 1 / -1;
+        }
 
-    .full {
-      grid-column: 1 / -1;
-    }
+        .alert {
+            display: none;
+            padding: 11px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
 
-    .alert {
-      display: none;
-      margin: 10px 0;
-      padding: 11px;
-      border-radius: 8px;
-    }
+        .alert.ok {
+            display: block;
+            background: #e5f5e9;
+            color: #176638;
+        }
 
-    .alert.ok {
-      display: block;
-      background: #e5f5e9;
-      color: var(--success);
-    }
+        .alert.err {
+            display: block;
+            background: #fff0ef;
+            color: #a12b25;
+        }
 
-    .alert.err {
-      display: block;
-      background: #fff0ef;
-      color: #a12b25;
-    }
+        .item {
+            border: 1px solid #e2e8ef;
+            border-radius: 10px;
+            padding: 13px;
+            margin: 10px 0;
+            overflow-wrap: anywhere;
+        }
 
-    .item {
-      margin: 10px 0;
-      padding: 13px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow-wrap: anywhere;
-    }
+        .meta {
+            font-size: 12px;
+            color: var(--muted);
+        }
 
-    .meta {
-      color: var(--muted);
-      font-size: 12px;
-    }
+        .hidden {
+            display: none !important;
+        }
 
-    .hidden {
-      display: none !important;
-    }
+        #login {
+            max-width: 500px;
+            margin: 55px auto;
+            text-align: center;
+        }
 
-    .checkrow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 8px 0;
-    }
+        #googleButton {
+            display: flex;
+            justify-content: center;
+            margin: 15px;
+        }
 
-    .checkrow label {
-      margin: 0;
-    }
+        .checkrow {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
 
-    #login {
-      max-width: 500px;
-      margin: 55px auto;
-      text-align: center;
-    }
+        .checkrow input {
+            width: auto;
+        }
 
-    #googleButton {
-      display: flex;
-      justify-content: center;
-      margin: 15px;
-    }
+        .photo-preview {
+            display: block;
+            width: 112px;
+            height: 112px;
+            object-fit: contain;
+            background: #f3f6fa;
+            border: 1px solid #d8e0e8;
+            border-radius: 10px;
+            margin: 8px 0;
+        }
 
-    @media (max-width: 700px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
+        .photo-note {
+            font-size: 12px;
+            color: var(--muted);
+        }
 
-      .full {
-        grid-column: auto;
-      }
-    }
-  </style>
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<header>
-  <div class="wrap header-content">
-    <div>
-      <strong>SUARA HIMASAKI</strong>
-      <br>
-      <small>Panel Pengelolaan</small>
-    </div>
-
-    <div id="account" class="hidden">
-      <span id="who"></span>
-      <button class="btn alt" onclick="logout()">Keluar</button>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <!-- LOGIN -->
-  <section id="login" class="panel">
-    <h2>Masuk Pengurus</h2>
-
-    <p class="meta">
-      Admin utama menggunakan Google.
-      Pengurus lain menggunakan kode akses yang diberikan admin utama.
-    </p>
-
-    <div id="googleArea">
-      <div id="googleButton"></div>
-    </div>
-
-    <hr>
-
-    <label for="accessCode">Kode akses pengurus</label>
-    <input
-      id="accessCode"
-      type="password"
-      placeholder="Masukkan kode akses"
-      autocomplete="off"
-    >
-
-    <button class="btn" onclick="loginCode()">
-      Masuk dengan kode
-    </button>
-
-    <div id="loginAlert" class="alert"></div>
-  </section>
-
-  <!-- DASHBOARD -->
-  <section id="app" class="hidden">
-
-    <div id="alert" class="alert"></div>
-
-    <!-- NAVIGASI -->
-    <div class="tabs" id="tabs">
-      <button class="btn tab active" data-tab="asp">Aspirasi</button>
-      <button class="btn tab" data-tab="home">Beranda</button>
-      <button class="btn tab" data-tab="periods">Periode & Pengurus</button>
-      <button class="btn tab" data-tab="people">Pendiri & Pengelola</button>
-      <button class="btn tab" data-tab="ann">Pengumuman</button>
-      <button class="btn tab" data-tab="gallery">Dokumentasi</button>
-      <button class="btn tab" data-tab="codes" data-main>Hak Akses</button>
-      <button class="btn tab" data-tab="backup">Backup</button>
-    </div>
-
-    <!-- ASPIRASI -->
-    <section class="section active" id="asp">
-      <div class="panel">
-        <h2>Daftar Aspirasi</h2>
-        <button class="btn alt" onclick="refresh()">Muat ulang</button>
-        <div id="aspList"></div>
-      </div>
-    </section>
-
-    <!-- BERANDA -->
-    <section class="section" id="home">
-      <div class="panel">
-        <h2>Pengaturan Beranda</h2>
-
-        <div class="grid">
-          <div>
-            <label>Nama organisasi</label>
-            <input id="orgName">
-          </div>
-
-          <div>
-            <label>Teks logo</label>
-            <input id="logoText" maxlength="12">
-          </div>
-
-          <div class="full">
-            <label>Judul utama</label>
-            <input id="heroTitle">
-          </div>
-
-          <div class="full">
-            <label>Deskripsi utama</label>
-            <textarea id="heroText"></textarea>
-          </div>
-
-          <div class="full">
-            <label>Tentang HIMASAKI</label>
-            <textarea id="aboutText"></textarea>
-          </div>
-
-          <div class="full">
-            <label>Teks footer</label>
-            <input id="footerText">
-          </div>
-        </div>
-
-        <button class="btn" onclick="saveHome()">Simpan beranda</button>
-      </div>
-    </section>
-
-    <!-- PERIODE DAN PENGURUS -->
-    <section class="section" id="periods">
-
-      <div class="panel">
-        <h2>Periode Kepengurusan</h2>
-
-        <input type="hidden" id="periodId">
-
-        <div class="grid">
-          <div>
-            <label>Nama periode</label>
-            <input id="periodName" placeholder="2025–2026">
-          </div>
-
-          <div>
-            <label>Tanggal mulai</label>
-            <input type="date" id="periodStart">
-          </div>
-
-          <div>
-            <label>Tanggal selesai</label>
-            <input type="date" id="periodEnd">
-          </div>
-
-          <div class="checkrow">
-            <input type="checkbox" id="periodActive">
-            <label for="periodActive">Jadikan periode aktif</label>
-          </div>
-        </div>
-
-        <button class="btn" onclick="savePeriod()">Simpan periode</button>
-
-        <div id="periodList"></div>
-      </div>
-
-      <div class="panel">
-        <h2>Struktur Pengurus</h2>
-
-        <input type="hidden" id="officerId">
-
-        <div class="grid">
-          <div>
-            <label>Periode</label>
-            <select id="officerPeriod"></select>
-          </div>
-
-          <div>
-            <label>Divisi</label>
-            <select id="officerDivision">
-              <option>Pengurus Inti</option>
-              <option>PPD</option>
-              <option>PAO</option>
-              <option>Keagamaan</option>
-              <option>Keamanan</option>
-              <option>Lainnya</option>
-            </select>
-          </div>
-
-          <div>
-            <label>Jabatan</label>
-            <input id="officerPosition" placeholder="Ketua Umum / Anggota">
-          </div>
-
-          <div>
-            <label>Nama</label>
-            <input id="officerName">
-          </div>
-
-          <div>
-            <label>Foto URL (opsional)</label>
-            <input id="officerPhoto" placeholder="https://...">
-          </div>
-
-          <div>
-            <label>Urutan tampil</label>
-            <input id="officerOrder" type="number" value="0">
-          </div>
-
-          <div class="full">
-            <label>Keterangan</label>
-            <input id="officerDescription">
-          </div>
-        </div>
-
-        <button class="btn" onclick="saveOfficer()">Simpan pengurus</button>
-
-        <div id="officerList"></div>
-      </div>
-    </section>
-
-    <!-- PENDIRI DAN PENGELOLA -->
-    <section class="section" id="people">
-      <div class="panel">
-        <h2>Pendiri dan Pengembang</h2>
-
-        <div class="grid">
-          <div>
-            <label>Nama pendiri</label>
-            <input id="founderName">
-          </div>
-
-          <div>
-            <label>Foto pendiri URL</label>
-            <input id="founderPhoto">
-          </div>
-
-          <div class="full">
-            <label>Keterangan pendiri</label>
-            <textarea id="founderDescription"></textarea>
-          </div>
-
-          <div>
-            <label>Nama pengembang</label>
-            <input id="developerName">
-          </div>
-
-          <div>
-            <label>Foto pengembang URL</label>
-            <input id="developerPhoto">
-          </div>
-
-          <div class="full">
-            <label>Keterangan pengembang</label>
-            <textarea id="developerDescription"></textarea>
-          </div>
-        </div>
-
-        <h3>Pengelola (dapat beberapa orang)</h3>
-
-        <div id="managerRows"></div>
-
-        <button class="btn alt" onclick="addManager()">
-          Tambah pengelola
-        </button>
-
-        <br>
-
-        <button class="btn" onclick="savePeople()">Simpan data</button>
-      </div>
-    </section>
-
-    <!-- PENGUMUMAN -->
-    <section class="section" id="ann">
-
-      <div class="panel">
-        <h2>Tambah Pengumuman</h2>
-
-        <label>Judul</label>
-        <input id="annTitle">
-
-        <label>Kategori</label>
-        <input id="annCategory" placeholder="Informasi kegiatan">
-
-        <label>Isi</label>
-        <textarea id="annDescription"></textarea>
-
-        <button class="btn" onclick="addAnnouncement()">Terbitkan</button>
-      </div>
-
-      <div class="panel">
-        <h2>Daftar Pengumuman</h2>
-        <div id="annList"></div>
-      </div>
-
-    </section>
-
-    <!-- DOKUMENTASI -->
-    <section class="section" id="gallery">
-
-      <div class="panel">
-        <h2>Tambah Dokumentasi Foto / Video</h2>
-
-        <label>Judul</label>
-        <input id="mediaTitle">
-
-        <label>Kategori</label>
-        <input id="mediaCategory" placeholder="Pengodokan, seminar, kegiatan, dll.">
-
-        <label>Deskripsi</label>
-        <textarea id="mediaDescription"></textarea>
-
-        <label>Periode (opsional)</label>
-        <select id="mediaPeriod"></select>
-
-        <label>Pilih foto atau video</label>
-        <input
-          id="mediaFile"
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg"
-        >
-
-        <p class="meta">
-          Foto maksimal 5 MB. Video maksimal 20 MB.
-          Format video: MP4, WEBM, atau OGG.
-        </p>
-
-        <button class="btn" id="uploadBtn" onclick="uploadMedia()">
-          Unggah media
-        </button>
-
-        <hr>
-
-        <h3>Tambahkan video YouTube</h3>
-
-        <label>Judul</label>
-        <input id="ytTitle">
-
-        <label>Kategori</label>
-        <input id="ytCategory">
-
-        <label>Deskripsi</label>
-        <textarea id="ytDescription"></textarea>
-
-        <label>URL YouTube</label>
-        <input id="ytUrl" placeholder="https://www.youtube.com/watch?v=...">
-
-        <button class="btn" onclick="addYoutube()">
-          Terbitkan video YouTube
-        </button>
-      </div>
-
-      <div class="panel">
-        <h2>Daftar Dokumentasi</h2>
-        <div id="galleryList"></div>
-      </div>
-
-    </section>
-
-    <!-- HAK AKSES -->
-    <section class="section" id="codes">
-
-      <div class="panel">
-        <h2>Buat Kode Akses Pengurus</h2>
-
-        <label>Nama / keterangan kode</label>
-        <input id="codeLabel" placeholder="Contoh: Tim Dokumentasi">
-
-        <div class="checkrow">
-          <input type="checkbox" id="permAsp">
-          <label for="permAsp">Akses aspirasi</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permHome">
-          <label for="permHome">Akses pengaturan beranda</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permPeriods">
-          <label for="permPeriods">Akses periode dan struktur pengurus</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permPeople">
-          <label for="permPeople">Akses pendiri dan pengelola</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permAnn" checked>
-          <label for="permAnn">Akses pengumuman</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permGallery" checked>
-          <label for="permGallery">Akses dokumentasi</label>
-        </div>
-
-        <div class="checkrow">
-          <input type="checkbox" id="permBackup">
-          <label for="permBackup">Akses backup</label>
-        </div>
-
-        <p class="meta">
-          Kode akses pengurus tidak dapat membuat atau mengelola kode akses baru.
-        </p>
-
-        <label>Masa berlaku sampai</label>
-        <input type="date" id="codeExpiry">
-
-        <label>Maksimal jumlah penggunaan / pengguna</label>
-        <input type="number" id="codeMax" min="1" max="500" value="3">
-
-        <button class="btn" onclick="createCode()">Buat kode akses</button>
-
-        <div id="newCode" class="alert"></div>
-      </div>
-
-      <div class="panel">
-        <h2>Daftar Kode Akses</h2>
-        <div id="codeList"></div>
-      </div>
-
-    </section>
-
-    <!-- BACKUP -->
-    <section class="section" id="backup">
-      <div class="panel">
-        <h2>Backup Data</h2>
-
-        <p>
-          Backup otomatis dijadwalkan setiap hari sekitar pukul 02.00
-          berdasarkan zona waktu proyek Apps Script.
-          Backup manual juga dapat dibuat di sini.
-        </p>
-
-        <button class="btn" onclick="runBackup()">Buat backup sekarang</button>
-      </div>
-    </section>
-
-  </section>
-</main>
-
-<script>
-/* =====================================================
-   KONFIGURASI
-===================================================== */
-
-const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
-
-const CLIENT = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
-const ADMIN = "adegameonly@gmail.com";
-
-let googleToken = "";
-let sessionToken = "";
-let isMain = false;
-let data = null;
-let officerPermissions = [];
-
-
-/* =====================================================
-   UTILITAS
-===================================================== */
-
-const $ = id => document.getElementById(id);
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
-}
-
-function showAlert(id, message, success = true) {
-  const element = $(id);
-  element.textContent = message;
-  element.className = "alert " + (success ? "ok" : "err");
-}
-
-function clearAlert(id) {
-  $(id).textContent = "";
-  $(id).className = "alert";
-}
-
-function deviceId() {
-  let id = localStorage.getItem("himasaki_access_device");
-
-  if (!id) {
-    id = window.crypto?.randomUUID
-      ? crypto.randomUUID()
-      : "device-" + Date.now() + "-" + Math.random().toString(36).slice(2);
-
-    localStorage.setItem("himasaki_access_device", id);
-  }
-
-  return id;
-}
-
-function readFile(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error("File gagal dibaca."));
-
-    reader.readAsDataURL(file);
-  });
-}
-
-
-/* =====================================================
-   KOMUNIKASI GOOGLE APPS SCRIPT
-===================================================== */
-
-function request(payload) {
-  return new Promise((resolve, reject) => {
-    const id = "adm_" + Date.now() + "_" + Math.random().toString(36).slice(2);
-    const frameName = "frame_" + id;
-
-    const frame = document.createElement("iframe");
-    const form = document.createElement("form");
-    const input = document.createElement("input");
-
-    frame.name = frameName;
-    frame.hidden = true;
-
-    form.method = "POST";
-    form.action = API;
-    form.target = frameName;
-    form.hidden = true;
-
-    input.name = "payload";
-    input.value = JSON.stringify({
-      ...payload,
-      requestId: id
-    });
-
-    form.appendChild(input);
-
-    let completed = false;
-
-    function cleanup() {
-      window.removeEventListener("message", onMessage);
-      clearTimeout(timer);
-      frame.remove();
-      form.remove();
-    }
-
-    function onMessage(event) {
-      if (event.source !== frame.contentWindow) return;
-
-      const result = event.data;
-
-      if (!result || result.requestId !== id) return;
-
-      completed = true;
-      cleanup();
-
-      if (result.ok) {
-        resolve(result.data);
-      } else {
-        reject(new Error(result.error || "Permintaan gagal."));
-      }
-    }
-
-    const timer = setTimeout(() => {
-      if (completed) return;
-
-      cleanup();
-      reject(new Error("Server tidak merespons. Silakan coba kembali."));
-    }, 60000);
-
-    window.addEventListener("message", onMessage);
-
-    document.body.append(frame, form);
-    form.submit();
-  });
-}
-
-function authData() {
-  return isMain
-    ? { token: googleToken }
-    : { session: sessionToken };
-}
-
-async function api(action, extra = {}) {
-  return request({
-    action,
-    ...authData(),
-    ...extra
-  });
-}
-
-
-/* =====================================================
-   LOGIN DAN SESI
-===================================================== */
-
-function showApp(label) {
-  $("login").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("account").classList.remove("hidden");
-  $("who").textContent = label;
-
-  document.querySelectorAll("[data-main]").forEach(button => {
-    button.classList.toggle("hidden", !isMain);
-  });
-
-  const permissions = {
-    asp: "aspirations",
-    home: "home",
-    periods: "periods",
-    people: "people",
-    ann: "announcements",
-    gallery: "gallery",
-    backup: "backup"
-  };
-
-  Object.entries(permissions).forEach(([tab, permission]) => {
-    const button = document.querySelector(`[data-tab="${tab}"]`);
-
-    if (button) {
-      button.classList.toggle(
-        "hidden",
-        !isMain && !officerPermissions.includes(permission)
-      );
-    }
-  });
-
-  document.querySelectorAll(".tab").forEach(button => {
-    button.classList.remove("active");
-  });
-
-  document.querySelectorAll(".section").forEach(section => {
-    section.classList.remove("active");
-  });
-
-  const firstTab = isMain
-    ? "asp"
-    : Object.keys(permissions).find(tab =>
-        officerPermissions.includes(permissions[tab])
-      );
-
-  if (!firstTab) {
-    throw new Error("Kode akses ini belum memiliki hak akses.");
-  }
-
-  document.querySelector(`[data-tab="${firstTab}"]`).classList.add("active");
-  $(firstTab).classList.add("active");
-}
-
-async function loginCode() {
-  try {
-    clearAlert("loginAlert");
-
-    const result = await request({
-      action: "codeLogin",
-      code: $("accessCode").value.trim(),
-      deviceId: deviceId()
-    });
-
-    sessionToken = result.session;
-    officerPermissions = result.permissions || [];
-    isMain = false;
-
-    showApp(result.label);
-    await refresh();
-
-  } catch (error) {
-    showAlert("loginAlert", error.message, false);
-  }
-}
-
-function googleInit() {
-  if (!window.google?.accounts?.id) {
-    setTimeout(googleInit, 400);
-    return;
-  }
-
-  google.accounts.id.initialize({
-    client_id: CLIENT,
-    callback: handleGoogleLogin
-  });
-
-  google.accounts.id.renderButton(
-    $("googleButton"),
-    {
-      theme: "outline",
-      size: "large",
-      width: 260,
-      text: "signin_with"
-    }
-  );
-}
-
-async function handleGoogleLogin(response) {
-  try {
-    const payload = response.credential.split(".")[1]
-      .replace(/-/g, "+")
-      .replace(/_/g, "/");
-
-    const padded = payload + "=".repeat((4 - payload.length % 4) % 4);
-    const claims = JSON.parse(atob(padded));
-
-    if (String(claims.email).toLowerCase() !== ADMIN.toLowerCase()) {
-      throw new Error("Akun ini bukan admin utama.");
-    }
-
-    googleToken = response.credential;
-    isMain = true;
-
-    showApp(claims.email);
-    await refresh();
-
-  } catch (error) {
-    googleToken = "";
-    showAlert("loginAlert", error.message, false);
-  }
-}
-
-function logout() {
-  googleToken = "";
-  sessionToken = "";
-  isMain = false;
-  officerPermissions = [];
-  data = null;
-
-  $("app").classList.add("hidden");
-  $("account").classList.add("hidden");
-  $("login").classList.remove("hidden");
-  $("accessCode").value = "";
-
-  document.querySelectorAll(".tab").forEach(button => {
-    button.classList.remove("active");
-  });
-
-  document.querySelectorAll(".section").forEach(section => {
-    section.classList.remove("active");
-  });
-
-  $("asp").classList.add("active");
-  document.querySelector('[data-tab="asp"]').classList.add("active");
-}
-
-
-/* =====================================================
-   MEMUAT DATA
-===================================================== */
-
-async function refresh() {
-  try {
-    data = isMain
-      ? await api("adminData")
-      : await api("officerData");
-
-    if (!isMain) {
-      data.codes = [];
-    }
-
-    renderAll();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-    throw error;
-  }
-}
-
-function renderAll() {
-  const settings = data.settings || {};
-
-  renderAspirations(data.aspirations || []);
-
-  [
-    "orgName",
-    "logoText",
-    "heroTitle",
-    "heroText",
-    "aboutText",
-    "footerText"
-  ].forEach(key => {
-    $(key).value = settings[key] || "";
-  });
-
-  renderPeriods();
-  renderOfficers();
-  renderContent();
-  renderCodes();
-  renderManagers();
-
-  $("mediaPeriod").innerHTML =
-    '<option value="">Tanpa periode</option>' +
-    (data.periods || []).map(period => `
-      <option value="${escapeHTML(period.id)}">
-        ${escapeHTML(period.name)}
-      </option>
-    `).join("");
-}
-
-
-/* =====================================================
-   ASPIRASI
-===================================================== */
-
-function renderAspirations(items) {
-  $("aspList").innerHTML = items.length
-    ? items.map(item => `
-      <article class="item">
-        <div class="meta">
-          ${escapeHTML(item.time)} · ${escapeHTML(item.category)}
-        </div>
-
-        <h3>${escapeHTML(item.title)}</h3>
-
-        <p>${escapeHTML(item.message)}</p>
-
-        <p class="meta">
-          Pengirim:
-          ${item.anonymous
-            ? "Anonim"
-            : escapeHTML(item.name || "Tidak dicantumkan")}
-        </p>
-
-        <label>Status</label>
-
-        <select id="st_${escapeHTML(item.id)}">
-          <option ${item.status === "Baru" ? "selected" : ""}>Baru</option>
-          <option ${item.status === "Diproses" ? "selected" : ""}>Diproses</option>
-          <option ${item.status === "Selesai" ? "selected" : ""}>Selesai</option>
-        </select>
-
-        <button class="btn" onclick="setStatus('${escapeHTML(item.id)}')">
-          Simpan status
-        </button>
-      </article>
-    `).join("")
-    : "<p>Belum ada aspirasi.</p>";
-}
-
-async function setStatus(id) {
-  try {
-    const status = $("st_" + id).value;
-    const result = await api("setStatus", { id, status });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   BERANDA
-===================================================== */
-
-async function saveHome() {
-  try {
-    const settings = {};
-
-    [
-      "orgName",
-      "logoText",
-      "heroTitle",
-      "heroText",
-      "aboutText",
-      "footerText"
-    ].forEach(key => {
-      settings[key] = $(key).value.trim();
-    });
-
-    const result = await api("saveSettings", { settings });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   PERIODE KEPENGURUSAN
-===================================================== */
-
-function renderPeriods() {
-  const periods = data.periods || [];
-
-  $("officerPeriod").innerHTML = periods.map(period => `
-    <option value="${escapeHTML(period.id)}">
-      ${escapeHTML(period.name)}
-    </option>
-  `).join("");
-
-  $("periodList").innerHTML = periods.length
-    ? periods.map(period => `
-      <article class="item">
-        <b>${escapeHTML(period.name)}</b>
-
-        ${period.active
-          ? '<span class="meta"> · Aktif</span>'
-          : ""}
-
-        <div class="meta">
-          ${escapeHTML(period.start)} – ${escapeHTML(period.end)}
-        </div>
-
-        <button class="btn alt" onclick="editPeriod('${escapeHTML(period.id)}')">
-          Edit
-        </button>
-
-        <button class="btn red" onclick="deletePeriod('${escapeHTML(period.id)}')">
-          Hapus
-        </button>
-      </article>
-    `).join("")
-    : "<p>Belum ada periode.</p>";
-}
-
-function editPeriod(id) {
-  const period = (data.periods || []).find(item => item.id === id);
-
-  if (!period) return;
-
-  $("periodId").value = period.id;
-  $("periodName").value = period.name;
-  $("periodStart").value = period.start;
-  $("periodEnd").value = period.end;
-  $("periodActive").checked = period.active;
-}
-
-async function savePeriod() {
-  try {
-    const period = {
-      id: $("periodId").value,
-      name: $("periodName").value.trim(),
-      start: $("periodStart").value,
-      end: $("periodEnd").value,
-      active: $("periodActive").checked
-    };
-
-    const result = await api("savePeriod", { period });
-
-    showAlert("alert", result.message);
-
-    [
-      "periodId",
-      "periodName",
-      "periodStart",
-      "periodEnd"
-    ].forEach(id => $(id).value = "");
-
-    $("periodActive").checked = false;
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-async function deletePeriod(id) {
-  if (!confirm("Hapus periode ini?")) return;
-
-  try {
-    const result = await api("deletePeriod", { id });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   STRUKTUR PENGURUS
-===================================================== */
-
-function renderOfficers() {
-  const officers = data.officers || [];
-
-  $("officerList").innerHTML = officers.length
-    ? officers.map(officer => {
-        const period = (data.periods || []).find(
-          item => item.id === officer.periodId
-        );
-
-        return `
-          <article class="item">
-            <b>${escapeHTML(officer.name)}</b>
-            · ${escapeHTML(officer.position)}
-
-            <div class="meta">
-              ${escapeHTML(officer.division)}
-              — ${escapeHTML(period?.name || "")}
+    <header>
+        <div class="wrap">
+            <div>
+                <strong>SUARA HIMASAKI</strong>
+                <br>
+                <small>Panel Pengelolaan</small>
             </div>
 
-            <button class="btn alt" onclick="editOfficer('${escapeHTML(officer.id)}')">
-              Edit
+            <div id="account" class="hidden">
+                <span id="who"></span>
+                <button class="btn alt" onclick="logout()">Keluar</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- LOGIN -->
+        <section id="login" class="panel">
+            <h2>Masuk Pengurus</h2>
+
+            <p class="meta">
+                Admin utama menggunakan Google.
+                Pengurus lain menggunakan kode akses yang diberikan admin utama.
+            </p>
+
+            <div id="googleArea">
+                <div id="googleButton"></div>
+            </div>
+
+            <hr>
+
+            <label for="accessCode">Kode akses pengurus</label>
+            <input
+                id="accessCode"
+                placeholder="Masukkan kode akses"
+            >
+
+            <button class="btn" onclick="loginCode()">
+                Masuk dengan kode
             </button>
 
-            <button class="btn red" onclick="deleteOfficer('${escapeHTML(officer.id)}')">
-              Hapus
-            </button>
-          </article>
-        `;
-      }).join("")
-    : "<p>Belum ada pengurus.</p>";
-}
-
-function editOfficer(id) {
-  const officer = (data.officers || []).find(item => item.id === id);
-
-  if (!officer) return;
-
-  $("officerId").value = officer.id;
-  $("officerPeriod").value = officer.periodId;
-  $("officerDivision").value = officer.division;
-  $("officerPosition").value = officer.position;
-  $("officerName").value = officer.name;
-  $("officerPhoto").value = officer.photo;
-  $("officerDescription").value = officer.description;
-  $("officerOrder").value = officer.order;
-}
-
-async function saveOfficer() {
-  try {
-    const officer = {
-      id: $("officerId").value,
-      periodId: $("officerPeriod").value,
-      division: $("officerDivision").value,
-      position: $("officerPosition").value.trim(),
-      name: $("officerName").value.trim(),
-      photo: $("officerPhoto").value.trim(),
-      description: $("officerDescription").value.trim(),
-      order: $("officerOrder").value
-    };
-
-    const result = await api("saveOfficer", { officer });
-
-    showAlert("alert", result.message);
-
-    [
-      "officerId",
-      "officerPosition",
-      "officerName",
-      "officerPhoto",
-      "officerDescription"
-    ].forEach(id => $(id).value = "");
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-async function deleteOfficer(id) {
-  if (!confirm("Hapus data pengurus?")) return;
-
-  try {
-    const result = await api("deleteOfficer", { id });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   PENDIRI, PENGEMBANG, DAN PENGELOLA
-===================================================== */
-
-function renderManagers() {
-  const settings = data.settings || {};
-
-  $("founderName").value = settings.founderName || "";
-  $("founderPhoto").value = settings.founderPhoto || "";
-  $("founderDescription").value = settings.founderDescription || "";
-
-  $("developerName").value = settings.developerName || "";
-  $("developerPhoto").value = settings.developerPhoto || "";
-  $("developerDescription").value = settings.developerDescription || "";
-
-  let managers = [];
-
-  try {
-    managers = JSON.parse(settings.managers || "[]");
-  } catch (error) {
-    managers = [];
-  }
-
-  $("managerRows").innerHTML = "";
-
-  (managers.length ? managers : [{}]).forEach(addManager);
-}
-
-function addManager(manager = {}) {
-  const container = document.createElement("div");
-
-  container.className = "item manager-row";
-
-  const fields = [
-    ["Nama pengelola", "name", manager.name],
-    ["Jabatan", "role", manager.role],
-    ["Foto URL", "photo", manager.photo],
-    ["Keterangan", "description", manager.description]
-  ];
-
-  fields.forEach(([label, className, value]) => {
-    const title = document.createElement("label");
-    title.textContent = label;
-
-    const input = document.createElement("input");
-    input.className = "m-" + className;
-    input.value = value || "";
-
-    container.append(title, input);
-  });
-
-  const removeButton = document.createElement("button");
-
-  removeButton.type = "button";
-  removeButton.className = "btn red";
-  removeButton.textContent = "Hapus baris";
-
-  removeButton.addEventListener("click", () => container.remove());
-
-  container.appendChild(removeButton);
-  $("managerRows").appendChild(container);
-}
-
-async function savePeople() {
-  try {
-    const managers = [...document.querySelectorAll(".manager-row")]
-      .map(row => ({
-        name: row.querySelector(".m-name").value.trim(),
-        role: row.querySelector(".m-role").value.trim(),
-        photo: row.querySelector(".m-photo").value.trim(),
-        description: row.querySelector(".m-description").value.trim()
-      }))
-      .filter(manager => manager.name);
-
-    const people = {
-      founderName: $("founderName").value.trim(),
-      founderPhoto: $("founderPhoto").value.trim(),
-      founderDescription: $("founderDescription").value.trim(),
-
-      developerName: $("developerName").value.trim(),
-      developerPhoto: $("developerPhoto").value.trim(),
-      developerDescription: $("developerDescription").value.trim(),
-
-      managers
-    };
-
-    const result = await api("savePeople", { people });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   PENGUMUMAN DAN DOKUMENTASI
-===================================================== */
-
-function renderContent() {
-  const items = data.content || [];
-
-  $("annList").innerHTML = items
-    .filter(item => item.type === "announcement")
-    .map(renderContentItem)
-    .join("") || "<p>Belum ada pengumuman.</p>";
-
-  $("galleryList").innerHTML = items
-    .filter(item => item.type === "gallery")
-    .map(renderContentItem)
-    .join("") || "<p>Belum ada dokumentasi.</p>";
-}
-
-function renderContentItem(item) {
-  return `
-    <article class="item">
-      <b>${escapeHTML(item.title)}</b>
-
-      <div class="meta">
-        ${escapeHTML(item.category)}
-        · ${escapeHTML(item.mediaType || "")}
-      </div>
-
-      <p>${escapeHTML(item.description)}</p>
-
-      ${item.url
-        ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener">Lihat media</a>`
-        : ""}
-
-      <br>
-
-      <button
-        class="btn red"
-        onclick="deleteContent('${escapeHTML(item.id)}','${escapeHTML(item.type)}')"
-      >
-        Hapus
-      </button>
-    </article>
-  `;
-}
-
-async function addAnnouncement() {
-  try {
-    const content = {
-      type: "announcement",
-      title: $("annTitle").value.trim(),
-      category: $("annCategory").value.trim(),
-      description: $("annDescription").value.trim()
-    };
-
-    const result = await api("addContent", { content });
-
-    showAlert("alert", result.message);
-
-    $("annTitle").value = "";
-    $("annCategory").value = "";
-    $("annDescription").value = "";
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-async function deleteContent(id, type) {
-  if (!confirm("Hapus konten ini?")) return;
-
-  try {
-    const result = await api("deleteContent", { id, type });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   UPLOAD FOTO DAN VIDEO
-===================================================== */
-
-async function uploadMedia() {
-  const button = $("uploadBtn");
-
-  try {
-    const file = $("mediaFile").files[0];
-
-    if (!file) {
-      throw new Error("Pilih file media terlebih dahulu.");
-    }
-
-    if (!$("mediaTitle").value.trim()) {
-      throw new Error("Judul dokumentasi wajib diisi.");
-    }
-
-    const isImage = file.type.startsWith("image/");
-    const isVideo = file.type.startsWith("video/");
-
-    if (!isImage && !isVideo) {
-      throw new Error("Format media tidak didukung.");
-    }
-
-    const maxSize = isImage
-      ? 5 * 1024 * 1024
-      : 20 * 1024 * 1024;
-
-    if (file.size > maxSize) {
-      throw new Error(
-        isImage
-          ? "Ukuran foto maksimal 5 MB."
-          : "Ukuran video maksimal 20 MB."
-      );
-    }
-
-    button.disabled = true;
-    button.textContent = "Mengunggah...";
-
-    const uploaded = await api("uploadMedia", {
-      file: {
-        name: file.name,
-        mimeType: file.type,
-        data: await readFile(file)
-      }
-    });
-
-    const content = {
-      type: "gallery",
-      title: $("mediaTitle").value.trim(),
-      category: $("mediaCategory").value.trim(),
-      description: $("mediaDescription").value.trim(),
-      url: uploaded.url,
-      mediaType: uploaded.mediaType,
-      periodId: $("mediaPeriod").value
-    };
-
-    const result = await api("addContent", { content });
-
-    showAlert("alert", result.message);
-
-    [
-      "mediaTitle",
-      "mediaCategory",
-      "mediaDescription",
-      "mediaFile"
-    ].forEach(id => $(id).value = "");
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-
-  } finally {
-    button.disabled = false;
-    button.textContent = "Unggah media";
-  }
-}
-
-function youtubeEmbed(url) {
-  const match = String(url).match(
-    /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
-  );
-
-  if (!match) {
-    throw new Error("URL YouTube tidak dikenali.");
-  }
-
-  return "https://www.youtube.com/embed/" + match[1];
-}
-
-async function addYoutube() {
-  try {
-    const content = {
-      type: "gallery",
-      title: $("ytTitle").value.trim(),
-      category: $("ytCategory").value.trim(),
-      description: $("ytDescription").value.trim(),
-      url: youtubeEmbed($("ytUrl").value),
-      mediaType: "youtube"
-    };
-
-    if (!content.title) {
-      throw new Error("Judul video harus diisi.");
-    }
-
-    const result = await api("addContent", { content });
-
-    showAlert("alert", result.message);
-
-    [
-      "ytTitle",
-      "ytCategory",
-      "ytDescription",
-      "ytUrl"
-    ].forEach(id => $(id).value = "");
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   KODE AKSES PENGURUS
-===================================================== */
-
-function renderCodes() {
-  const codes = data.codes || [];
-
-  $("codeList").innerHTML = codes.length
-    ? codes.map(code => `
-      <article class="item">
-        <b>${escapeHTML(code.label)}</b>
-
-        <div class="meta">
-          Izin:
-          ${(code.permissions || []).map(escapeHTML).join(", ")}
-        </div>
-
-        <div class="meta">
-          Berlaku sampai ${escapeHTML(code.expires)}
-        </div>
-
-        <div class="meta">
-          Penggunaan: ${escapeHTML(code.used)}/${escapeHTML(code.maxUsers)}
-          · ${code.active ? "Aktif" : "Nonaktif"}
-        </div>
-
-        ${code.active
-          ? `<button class="btn red" onclick="deactivateCode('${escapeHTML(code.id)}')">Nonaktifkan</button>`
-          : ""}
-      </article>
-    `).join("")
-    : "<p>Belum ada kode akses.</p>";
-}
-
-async function createCode() {
-  try {
-    const permissions = [];
-
-    const permissionOptions = {
-      permAsp: "aspirations",
-      permHome: "home",
-      permPeriods: "periods",
-      permPeople: "people",
-      permAnn: "announcements",
-      permGallery: "gallery",
-      permBackup: "backup"
-    };
-
-    Object.entries(permissionOptions).forEach(([id, permission]) => {
-      if ($(id).checked) permissions.push(permission);
-    });
-
-    const codeData = {
-      label: $("codeLabel").value.trim(),
-      permissions,
-      expires: $("codeExpiry").value,
-      maxUsers: $("codeMax").value
-    };
-
-    const result = await api("createAccessCode", { codeData });
-
-    showAlert(
-      "newCode",
-      result.message + " KODE: " + result.code
-    );
-
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-async function deactivateCode(id) {
-  if (!confirm("Nonaktifkan kode ini?")) return;
-
-  try {
-    const result = await api("deactivateAccessCode", { id });
-
-    showAlert("alert", result.message);
-    await refresh();
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   BACKUP
-===================================================== */
-
-async function runBackup() {
-  try {
-    const result = await api("runBackup");
-
-    showAlert(
-      "alert",
-      result.message + " " + (result.name || "")
-    );
-
-  } catch (error) {
-    showAlert("alert", error.message, false);
-  }
-}
-
-
-/* =====================================================
-   NAVIGASI MENU
-===================================================== */
-
-document.querySelectorAll(".tab").forEach(button => {
-  button.addEventListener("click", () => {
-    if (button.classList.contains("hidden")) return;
-
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.classList.remove("active");
-    });
-
-    document.querySelectorAll(".section").forEach(section => {
-      section.classList.remove("active");
-    });
-
-    button.classList.add("active");
-    $(button.dataset.tab).classList.add("active");
-  });
-});
-
-
-/* =====================================================
-   MULAI APLIKASI
-===================================================== */
-
-googleInit();
-
-</script>
+            <div id="loginAlert" class="alert"></div>
+        </section>
+
+        <!-- APLIKASI ADMIN -->
+        <section id="app" class="hidden">
+
+            <div id="alert" class="alert"></div>
+
+            <!-- NAVIGASI -->
+            <div class="tabs" id="tabs">
+                <button class="btn tab active" data-tab="asp">Aspirasi</button>
+                <button class="btn tab" data-tab="home">Beranda</button>
+                <button class="btn tab" data-tab="periods">Periode & Pengurus</button>
+                <button class="btn tab" data-tab="people">Pendiri & Pengelola</button>
+                <button class="btn tab" data-tab="ann">Pengumuman</button>
+                <button class="btn tab" data-tab="gallery">Dokumentasi</button>
+                <button class="btn tab" data-tab="codes" data-main>Hak Akses</button>
+                <button class="btn tab" data-tab="backup">Backup</button>
+            </div>
+
+            <!-- ASPIRASI -->
+            <section class="section active" id="asp">
+                <div class="panel">
+                    <h2>Daftar Aspirasi</h2>
+
+                    <button class="btn alt" onclick="refresh()">
+                        Muat ulang
+                    </button>
+
+                    <div id="aspList"></div>
+                </div>
+            </section>
+
+            <!-- BERANDA -->
+            <section class="section" id="home">
+                <div class="panel">
+                    <h2>Pengaturan Beranda</h2>
+
+                    <div class="grid">
+                        <div>
+                            <label>Nama organisasi</label>
+                            <input id="orgName">
+                        </div>
+
+                        <div>
+                            <label>Teks logo</label>
+                            <input id="logoText" maxlength="12">
+                        </div>
+
+                        <div class="full">
+                            <label>Judul utama</label>
+                            <input id="heroTitle">
+                        </div>
+
+                        <div class="full">
+                            <label>Deskripsi utama</label>
+                            <textarea id="heroText"></textarea>
+                        </div>
+
+                        <div class="full">
+                            <label>Tentang HIMASAKI</label>
+                            <textarea id="aboutText"></textarea>
+                        </div>
+
+                        <div class="full">
+                            <label>Teks footer</label>
+                            <input id="footerText">
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="saveHome()">
+                        Simpan beranda
+                    </button>
+                </div>
+            </section>
+
+            <!-- PERIODE DAN PENGURUS -->
+            <section class="section" id="periods">
+
+                <div class="panel">
+                    <h2>Periode Kepengurusan</h2>
+
+                    <input type="hidden" id="periodId">
+
+                    <div class="grid">
+                        <div>
+                            <label>Nama periode</label>
+                            <input id="periodName" placeholder="2025–2026">
+                        </div>
+
+                        <div>
+                            <label>Tanggal mulai</label>
+                            <input type="date" id="periodStart">
+                        </div>
+
+                        <div>
+                            <label>Tanggal selesai</label>
+                            <input type="date" id="periodEnd">
+                        </div>
+
+                        <div class="checkrow">
+                            <input type="checkbox" id="periodActive">
+                            <label for="periodActive">Jadikan periode aktif</label>
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="savePeriod()">
+                        Simpan periode
+                    </button>
+
+                    <div id="periodList"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Struktur Pengurus</h2>
+
+                    <input type="hidden" id="officerId">
+
+                    <div class="grid">
+                        <div>
+                            <label>Periode</label>
+                            <select id="officerPeriod"></select>
+                        </div>
+
+                        <div>
+                            <label>Divisi</label>
+                            <select id="officerDivision">
+                                <option>Pengurus Inti</option>
+                                <option>PPD</option>
+                                <option>PAO</option>
+                                <option>Keagamaan</option>
+                                <option>Keamanan</option>
+                                <option>Lainnya</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label>Jabatan</label>
+                            <input id="officerPosition" placeholder="Ketua Umum / Anggota">
+                        </div>
+
+                        <div>
+                            <label>Nama</label>
+                            <input id="officerName">
+                        </div>
+
+                        <div>
+                            <label>Foto pengurus (opsional, maksimal 5 MB)</label>
+                            <input
+                                id="officerPhotoFile"
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif"
+                            >
+
+                            <input id="officerPhoto" type="hidden">
+
+                            <img
+                                id="officerPhotoPreview"
+                                class="photo-preview hidden"
+                                alt="Pratinjau foto pengurus"
+                            >
+
+                            <span class="photo-note">
+                                Pilih foto langsung dari perangkat.
+                                Jika tidak memilih foto baru, foto lama tetap digunakan.
+                            </span>
+                        </div>
+
+                        <div>
+                            <label>Urutan tampil</label>
+                            <input id="officerOrder" type="number" value="0">
+                        </div>
+
+                        <div class="full">
+                            <label>Keterangan</label>
+                            <input id="officerDescription">
+                        </div>
+                    </div>
+
+                    <button class="btn" onclick="saveOfficer()">
+                        Simpan pengurus
+                    </button>
+
+                    <div id="officerList"></div>
+                </div>
+            </section>
+
+            <!-- PENDIRI DAN PENGELOLA -->
+            <section class="section" id="people">
+                <div class="panel">
+                    <h2>Pendiri dan Pengembang</h2>
+
+                    <div class="grid">
+                        <div>
+                            <label>Nama pendiri</label>
+                            <input id="founderName">
+                        </div>
+
+                        <div>
+                            <label>Foto pendiri (maksimal 5 MB)</label>
+                            <input
+                                id="founderPhotoFile"
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif"
+                            >
+
+                            <input id="founderPhoto" type="hidden">
+
+                            <img
+                                id="founderPhotoPreview"
+                                class="photo-preview hidden"
+                                alt="Pratinjau foto pendiri"
+                            >
+                        </div>
+
+                        <div class="full">
+                            <label>Keterangan pendiri</label>
+                            <textarea id="founderDescription"></textarea>
+                        </div>
+
+                        <div>
+                            <label>Nama pengembang</label>
+                            <input id="developerName">
+                        </div>
+
+                        <div>
+                            <label>Foto pengembang (maksimal 5 MB)</label>
+                            <input
+                                id="developerPhotoFile"
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif"
+                            >
+
+                            <input id="developerPhoto" type="hidden">
+
+                            <img
+                                id="developerPhotoPreview"
+                                class="photo-preview hidden"
+                                alt="Pratinjau foto pengembang"
+                            >
+                        </div>
+
+                        <div class="full">
+                            <label>Keterangan pengembang</label>
+                            <textarea id="developerDescription"></textarea>
+                        </div>
+                    </div>
+
+                    <h3>Pengelola (dapat beberapa orang)</h3>
+
+                    <div id="managerRows"></div>
+
+                    <button class="btn alt" onclick="addManager()">
+                        Tambah pengelola
+                    </button>
+
+                    <br>
+
+                    <button class="btn" onclick="savePeople()">
+                        Simpan data
+                    </button>
+                </div>
+            </section>
+
+            <!-- PENGUMUMAN -->
+            <section class="section" id="ann">
+
+                <div class="panel">
+                    <h2>Tambah Pengumuman</h2>
+
+                    <label>Judul</label>
+                    <input id="annTitle">
+
+                    <label>Kategori</label>
+                    <input id="annCategory" placeholder="Informasi kegiatan">
+
+                    <label>Isi</label>
+                    <textarea id="annDescription"></textarea>
+
+                    <button class="btn" onclick="addAnnouncement()">
+                        Terbitkan
+                    </button>
+                </div>
+
+                <div class="panel">
+                    <h2>Daftar Pengumuman</h2>
+                    <div id="annList"></div>
+                </div>
+            </section>
+
+            <!-- DOKUMENTASI -->
+            <section class="section" id="gallery">
+
+                <div class="panel">
+                    <h2>Tambah Dokumentasi Foto / Video</h2>
+
+                    <label>Judul</label>
+                    <input id="mediaTitle">
+
+                    <label>Kategori</label>
+                    <input
+                        id="mediaCategory"
+                        placeholder="Pengodokan, seminar, kegiatan, dll."
+                    >
+
+                    <label>Deskripsi</label>
+                    <textarea id="mediaDescription"></textarea>
+
+                    <label>Periode (opsional)</label>
+                    <select id="mediaPeriod"></select>
+
+                    <label>
+                        Pilih foto atau video
+                        (foto maksimal 5 MB, video maksimal 20 MB)
+                    </label>
+
+                    <input
+                        id="mediaFile"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg"
+                    >
+
+                    <p class="meta">
+                        Video dapat berupa MP4, WEBM, atau OGG.
+                        Kamu juga dapat menambahkan tautan YouTube.
+                    </p>
+
+                    <button class="btn" id="uploadBtn" onclick="uploadMedia()">
+                        Unggah media
+                    </button>
+
+                    <hr>
+
+                    <h3>Tambahkan video YouTube</h3>
+
+                    <label>Judul</label>
+                    <input id="ytTitle">
+
+                    <label>Kategori</label>
+                    <input id="ytCategory">
+
+                    <label>Deskripsi</label>
+                    <textarea id="ytDescription"></textarea>
+
+                    <label>URL YouTube</label>
+                    <input
+                        id="ytUrl"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                    >
+
+                    <button class="btn" onclick="addYoutube()">
+                        Terbitkan video YouTube
+                    </button>
+                </div>
+
+                <div class="panel">
+                    <h2>Daftar Dokumentasi</h2>
+                    <div id="galleryList"></div>
+                </div>
+            </section>
+
+            <!-- HAK AKSES -->
+            <section class="section" id="codes">
+
+                <div class="panel">
+                    <h2>Buat Kode Akses Pengurus</h2>
+
+                    <label>Nama / keterangan kode</label>
+                    <input
+                        id="codeLabel"
+                        placeholder="Contoh: Tim Dokumentasi"
+                    >
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permAsp">
+                        <label for="permAsp">Akses aspirasi</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permHome">
+                        <label for="permHome">Akses pengaturan beranda</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permPeriods">
+                        <label for="permPeriods">Akses periode dan struktur pengurus</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permPeople">
+                        <label for="permPeople">Akses pendiri dan pengelola</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permAnn" checked>
+                        <label for="permAnn">Akses pengumuman</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permGallery" checked>
+                        <label for="permGallery">Akses dokumentasi</label>
+                    </div>
+
+                    <div class="checkrow">
+                        <input type="checkbox" id="permBackup">
+                        <label for="permBackup">Akses backup</label>
+                    </div>
+
+                    <p class="meta">
+                        Tidak ada kode akses yang dapat membuat
+                        atau mengelola kode akses baru.
+                    </p>
+
+                    <label>Masa berlaku sampai</label>
+                    <input type="date" id="codeExpiry">
+
+                    <label>Maksimal jumlah penggunaan / pengguna</label>
+                    <input
+                        type="number"
+                        id="codeMax"
+                        min="1"
+                        max="500"
+                        value="3"
+                    >
+
+                    <button class="btn" onclick="createCode()">
+                        Buat kode akses
+                    </button>
+
+                    <div id="newCode" class="alert"></div>
+                </div>
+
+                <div class="panel">
+                    <h2>Daftar Kode Akses</h2>
+                    <div id="codeList"></div>
+                </div>
+            </section>
+
+            <!-- BACKUP -->
+            <section class="section" id="backup">
+                <div class="panel">
+                    <h2>Backup Data</h2>
+
+                    <p>
+                        Backup otomatis dijadwalkan setiap hari sekitar
+                        pukul 02.00 berdasarkan zona waktu proyek Apps Script.
+                        Backup manual juga dapat dibuat di sini.
+                    </p>
+
+                    <button class="btn" onclick="runBackup()">
+                        Buat backup sekarang
+                    </button>
+                </div>
+            </section>
+
+        </section>
+    </main>
+
+    <script>
+        const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+
+        const CLIENT = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
+        const ADMIN = "adegameonly@gmail.com";
+
+        let googleToken = "";
+        let sessionToken = "";
+        let isMain = false;
+        let data = null;
+        let officerPermissions = [];
+
+        /* =========================
+           KOMUNIKASI API
+        ========================= */
+
+        function request(payload) {
+            return new Promise((resolve, reject) => {
+                const id = "adm_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+                const name = "f_" + id;
+
+                const frame = document.createElement("iframe");
+                const form = document.createElement("form");
+                const input = document.createElement("input");
+
+                frame.name = name;
+                frame.hidden = true;
+
+                form.method = "POST";
+                form.action = API;
+                form.target = name;
+                form.hidden = true;
+
+                input.name = "payload";
+                input.value = JSON.stringify({
+                    ...payload,
+                    requestId: id
+                });
+
+                form.appendChild(input);
+
+                let done = false;
+
+                const clean = () => {
+                    removeEventListener("message", msg);
+                    clearTimeout(timer);
+                    frame.remove();
+                    form.remove();
+                };
+
+                const msg = e => {
+                    if (
+                        e.source !== frame.contentWindow ||
+                        !e.data ||
+                        e.data.requestId !== id
+                    ) return;
+
+                    done = true;
+                    clean();
+
+                    e.data.ok
+                        ? resolve(e.data.data)
+                        : reject(Error(e.data.error || "Permintaan gagal"));
+                };
+
+                const timer = setTimeout(() => {
+                    if (!done) {
+                        clean();
+                        reject(Error("Server tidak merespons. Coba kembali."));
+                    }
+                }, 60000);
+
+                addEventListener("message", msg);
+                document.body.append(frame, form);
+                form.submit();
+            });
+        }
+
+        function auth() {
+            return isMain
+                ? { token: googleToken }
+                : { session: sessionToken };
+        }
+
+        async function api(action, extra = {}) {
+            return request({
+                action,
+                ...auth(),
+                ...extra
+            });
+        }
+
+        /* =========================
+           UTILITAS
+        ========================= */
+
+        function esc(s) {
+            return String(s ?? "").replace(/[&<>"']/g, c => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[c]));
+        }
+
+        function alertBox(id, msg, ok = true) {
+            const e = document.getElementById(id);
+            e.textContent = msg;
+            e.className = "alert " + (ok ? "ok" : "err");
+        }
+
+        function localDeviceId() {
+            let id = localStorage.getItem("himasaki_access_device");
+
+            if (!id) {
+                id = (window.crypto && crypto.randomUUID)
+                    ? crypto.randomUUID()
+                    : "dev-" + Date.now() + "-" + Math.random().toString(36).slice(2);
+
+                localStorage.setItem("himasaki_access_device", id);
+            }
+
+            return id;
+        }
+
+        /* =========================
+           LOGIN DAN HAK AKSES
+        ========================= */
+
+        function showApp(label) {
+            document.getElementById("login").classList.add("hidden");
+            document.getElementById("app").classList.remove("hidden");
+            document.getElementById("account").classList.remove("hidden");
+            document.getElementById("who").textContent = label;
+
+            document.querySelectorAll("[data-main]").forEach(x => {
+                x.classList.toggle("hidden", !isMain);
+            });
+
+            const menuPermissions = {
+                asp: "aspirations",
+                home: "home",
+                periods: "periods",
+                people: "people",
+                ann: "announcements",
+                gallery: "gallery",
+                backup: "backup"
+            };
+
+            Object.keys(menuPermissions).forEach(tab => {
+                const el = document.querySelector('[data-tab="' + tab + '"]');
+
+                if (el) {
+                    el.classList.toggle(
+                        "hidden",
+                        !isMain && !officerPermissions.includes(menuPermissions[tab])
+                    );
+                }
+            });
+
+            document.querySelectorAll(".tab").forEach(x => {
+                x.classList.remove("active");
+            });
+
+            document.querySelectorAll(".section").forEach(x => {
+                x.classList.remove("active");
+            });
+
+            const first = isMain
+                ? "asp"
+                : Object.keys(menuPermissions).find(
+                    k => officerPermissions.includes(menuPermissions[k])
+                );
+
+            if (!first) {
+                throw Error("Kode akses ini belum memiliki hak akses.");
+            }
+
+            document.querySelector('[data-tab="' + first + '"]').classList.add("active");
+            document.getElementById(first).classList.add("active");
+        }
+
+        async function loginCode() {
+            try {
+                const r = await request({
+                    action: "codeLogin",
+                    code: document.getElementById("accessCode").value,
+                    deviceId: localDeviceId()
+                });
+
+                sessionToken = r.session;
+                officerPermissions = r.permissions || [];
+                isMain = false;
+
+                showApp(r.label);
+                await refresh();
+
+            } catch (e) {
+                alertBox("loginAlert", e.message, false);
+            }
+        }
+
+        function logout() {
+            googleToken = "";
+            sessionToken = "";
+            isMain = false;
+            officerPermissions = [];
+            data = null;
+
+            document.getElementById("app").classList.add("hidden");
+            document.getElementById("account").classList.add("hidden");
+            document.getElementById("login").classList.remove("hidden");
+        }
+
+        function boot() {
+            if (!window.google?.accounts?.id) {
+                setTimeout(boot, 400);
+                return;
+            }
+
+            google.accounts.id.initialize({
+                client_id: CLIENT,
+
+                callback: async r => {
+                    try {
+                        const part = r.credential
+                            .split(".")[1]
+                            .replace(/-/g, "+")
+                            .replace(/_/g, "/");
+
+                        const claims = JSON.parse(
+                            atob(part + "=".repeat((4 - part.length % 4) % 4))
+                        );
+
+                        if (String(claims.email).toLowerCase() !== ADMIN) {
+                            throw Error("Akun bukan admin utama.");
+                        }
+
+                        googleToken = r.credential;
+                        isMain = true;
+
+                        showApp(claims.email);
+                        await refresh();
+
+                    } catch (e) {
+                        alertBox("loginAlert", e.message, false);
+                    }
+                }
+            });
+
+            google.accounts.id.renderButton(
+                document.getElementById("googleButton"),
+                {
+                    theme: "outline",
+                    size: "large",
+                    width: 260
+                }
+            );
+        }
+
+        /* =========================
+           MEMUAT DATA
+        ========================= */
+
+        async function refresh() {
+            try {
+                data = isMain
+                    ? await api("adminData")
+                    : await api("officerData");
+
+                if (!isMain) {
+                    data.codes = [];
+                }
+
+                renderAll();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+                throw e;
+            }
+        }
+
+        function renderAll() {
+            const a = data.aspirations || [];
+
+            document.getElementById("aspList").innerHTML = a.length
+                ? a.map(x => `
+                    <article class="item">
+                        <div class="meta">
+                            ${esc(x.time)} · ${esc(x.category)}
+                        </div>
+
+                        <h3>${esc(x.title)}</h3>
+                        <p>${esc(x.message)}</p>
+
+                        <p class="meta">
+                            Pengirim:
+                            ${x.anonymous ? "Anonim" : esc(x.name || "Tidak dicantumkan")}
+                        </p>
+
+                        <label>Status</label>
+
+                        <select id="st_${esc(x.id)}">
+                            <option ${x.status === "Baru" ? "selected" : ""}>Baru</option>
+                            <option ${x.status === "Diproses" ? "selected" : ""}>Diproses</option>
+                            <option ${x.status === "Selesai" ? "selected" : ""}>Selesai</option>
+                        </select>
+
+                        <button class="btn" onclick="setStatus('${esc(x.id)}')">
+                            Simpan status
+                        </button>
+                    </article>
+                `).join("")
+                : "<p>Belum ada aspirasi.</p>";
+
+            const s = data.settings || {};
+
+            ["orgName", "logoText", "heroTitle", "heroText", "aboutText", "footerText"]
+                .forEach(k => {
+                    document.getElementById(k).value = s[k] || "";
+                });
+
+            renderPeriods();
+            renderOfficers();
+            renderContent();
+            renderCodes();
+            renderManagers();
+
+            document.getElementById("mediaPeriod").innerHTML =
+                '<option value="">Tanpa periode</option>' +
+                (data.periods || []).map(p => `
+                    <option value="${esc(p.id)}">${esc(p.name)}</option>
+                `).join("");
+        }
+
+        /* =========================
+           ASPIRASI
+        ========================= */
+
+        async function setStatus(id) {
+            try {
+                const r = await api("setStatus", {
+                    id,
+                    status: document.getElementById("st_" + id).value
+                });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           BERANDA
+        ========================= */
+
+        async function saveHome() {
+            try {
+                const settings = {};
+
+                ["orgName", "logoText", "heroTitle", "heroText", "aboutText", "footerText"]
+                    .forEach(k => {
+                        settings[k] = document.getElementById(k).value;
+                    });
+
+                const r = await api("saveSettings", { settings });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           PERIODE
+        ========================= */
+
+        function renderPeriods() {
+            const list = document.getElementById("periodList");
+            const sel = document.getElementById("officerPeriod");
+
+            sel.innerHTML = (data.periods || []).map(p => `
+                <option value="${esc(p.id)}">${esc(p.name)}</option>
+            `).join("");
+
+            list.innerHTML = (data.periods || []).map(p => `
+                <article class="item">
+                    <b>${esc(p.name)}</b>
+                    ${p.active ? "<span class='meta'>· Aktif</span>" : ""}
+
+                    <div class="meta">
+                        ${esc(p.start)} – ${esc(p.end)}
+                    </div>
+
+                    <button class="btn alt" onclick="editPeriod('${esc(p.id)}')">
+                        Edit
+                    </button>
+
+                    <button class="btn red" onclick="deletePeriod('${esc(p.id)}')">
+                        Hapus
+                    </button>
+                </article>
+            `).join("") || "<p>Belum ada periode.</p>";
+        }
+
+        function editPeriod(id) {
+            const p = data.periods.find(x => x.id === id);
+            if (!p) return;
+
+            periodId.value = p.id;
+            periodName.value = p.name;
+            periodStart.value = p.start;
+            periodEnd.value = p.end;
+            periodActive.checked = p.active;
+        }
+
+        async function savePeriod() {
+            try {
+                const period = {
+                    id: periodId.value,
+                    name: periodName.value,
+                    start: periodStart.value,
+                    end: periodEnd.value,
+                    active: periodActive.checked
+                };
+
+                const r = await api("savePeriod", { period });
+
+                alertBox("alert", r.message);
+
+                ["periodId", "periodName", "periodStart", "periodEnd"].forEach(id => {
+                    document.getElementById(id).value = "";
+                });
+
+                periodActive.checked = false;
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        async function deletePeriod(id) {
+            if (!confirm("Hapus periode ini?")) return;
+
+            try {
+                const r = await api("deletePeriod", { id });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           PENGURUS
+        ========================= */
+
+        function renderOfficers() {
+            document.getElementById("officerList").innerHTML =
+                (data.officers || []).map(o => `
+                    <article class="item">
+                        <b>${esc(o.name)}</b> · ${esc(o.position)}
+
+                        <div class="meta">
+                            ${esc(o.division)} —
+                            ${(data.periods || []).find(p => p.id === o.periodId)?.name || ""}
+                        </div>
+
+                        <button class="btn alt" onclick="editOfficer('${esc(o.id)}')">
+                            Edit
+                        </button>
+
+                        <button class="btn red" onclick="deleteOfficer('${esc(o.id)}')">
+                            Hapus
+                        </button>
+                    </article>
+                `).join("") || "<p>Belum ada pengurus.</p>";
+        }
+
+        function editOfficer(id) {
+            const o = data.officers.find(x => x.id === id);
+            if (!o) return;
+
+            officerId.value = o.id;
+            officerPeriod.value = o.periodId;
+            officerDivision.value = o.division;
+            officerPosition.value = o.position;
+            officerName.value = o.name;
+            officerPhoto.value = o.photo || "";
+            officerPhotoFile.value = "";
+
+            showPhotoPreview("officerPhotoPreview", o.photo);
+
+            officerDescription.value = o.description;
+            officerOrder.value = o.order;
+        }
+
+        async function saveOfficer() {
+            try {
+                const photo = await uploadProfileIfSelected(
+                    "officerPhotoFile",
+                    "officerPhoto",
+                    "periods"
+                );
+
+                const officer = {
+                    id: officerId.value,
+                    periodId: officerPeriod.value,
+                    division: officerDivision.value,
+                    position: officerPosition.value,
+                    name: officerName.value,
+                    photo,
+                    description: officerDescription.value,
+                    order: officerOrder.value
+                };
+
+                const r = await api("saveOfficer", { officer });
+
+                alertBox("alert", r.message);
+
+                [
+                    "officerId",
+                    "officerPosition",
+                    "officerName",
+                    "officerPhoto",
+                    "officerDescription"
+                ].forEach(id => {
+                    document.getElementById(id).value = "";
+                });
+
+                officerPhotoFile.value = "";
+                showPhotoPreview("officerPhotoPreview", "");
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        async function deleteOfficer(id) {
+            if (!confirm("Hapus data pengurus?")) return;
+
+            try {
+                const r = await api("deleteOfficer", { id });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           PENDIRI DAN PENGELOLA
+        ========================= */
+
+        function renderManagers() {
+            const s = data.settings || {};
+
+            const managers = (() => {
+                try {
+                    return JSON.parse(s.managers || "[]");
+                } catch (e) {
+                    return [];
+                }
+            })();
+
+            founderName.value = s.founderName || "";
+            founderPhoto.value = s.founderPhoto || "";
+            founderPhotoFile.value = "";
+
+            showPhotoPreview("founderPhotoPreview", s.founderPhoto || "");
+
+            founderDescription.value = s.founderDescription || "";
+
+            developerName.value = s.developerName || "";
+            developerPhoto.value = s.developerPhoto || "";
+            developerPhotoFile.value = "";
+
+            showPhotoPreview("developerPhotoPreview", s.developerPhoto || "");
+
+            developerDescription.value = s.developerDescription || "";
+
+            document.getElementById("managerRows").innerHTML = "";
+
+            (managers.length ? managers : [{}]).forEach(m => addManager(m));
+        }
+
+        function addManager(m = {}) {
+            const d = document.createElement("div");
+
+            d.className = "item manager-row";
+
+            d.innerHTML = `
+                <label>Nama pengelola</label>
+                <input class="m-name" value="${esc(m.name || "")}">
+
+                <label>Jabatan</label>
+                <input class="m-role" value="${esc(m.role || "")}">
+
+                <label>Foto pengelola (maksimal 5 MB)</label>
+                <input
+                    class="m-photo-file"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                >
+
+                <input
+                    class="m-photo"
+                    type="hidden"
+                    value="${esc(m.photo || "")}"
+                >
+
+                <img
+                    class="photo-preview m-photo-preview ${m.photo ? "" : "hidden"}"
+                    alt="Pratinjau foto pengelola"
+                >
+
+                <label>Keterangan</label>
+                <input class="m-desc" value="${esc(m.description || "")}">
+
+                <button
+                    type="button"
+                    class="btn red"
+                    onclick="this.parentElement.remove()"
+                >
+                    Hapus baris
+                </button>
+            `;
+
+            const file = d.querySelector(".m-photo-file");
+            const preview = d.querySelector(".m-photo-preview");
+
+            if (m.photo) {
+                preview.src = m.photo;
+                preview.classList.remove("hidden");
+            }
+
+            file.addEventListener("change", () => {
+                try {
+                    previewSelectedFile(file, preview);
+                } catch (e) {
+                    alertBox("alert", e.message, false);
+                }
+            });
+
+            document.getElementById("managerRows").appendChild(d);
+        }
+
+        async function savePeople() {
+            try {
+                const founderPhotoUrl = await uploadProfileIfSelected(
+                    "founderPhotoFile",
+                    "founderPhoto",
+                    "people"
+                );
+
+                const developerPhotoUrl = await uploadProfileIfSelected(
+                    "developerPhotoFile",
+                    "developerPhoto",
+                    "people"
+                );
+
+                const managers = [];
+
+                for (const d of document.querySelectorAll(".manager-row")) {
+                    const name = d.querySelector(".m-name").value;
+
+                    if (!name.trim()) continue;
+
+                    let photo = d.querySelector(".m-photo").value;
+                    const file = d.querySelector(".m-photo-file").files[0];
+
+                    if (file) {
+                        photo = await uploadProfileFile(file, "people");
+                    }
+
+                    managers.push({
+                        name,
+                        role: d.querySelector(".m-role").value,
+                        photo,
+                        description: d.querySelector(".m-desc").value
+                    });
+                }
+
+                const people = {
+                    founderName: founderName.value,
+                    founderPhoto: founderPhotoUrl,
+                    founderDescription: founderDescription.value,
+
+                    developerName: developerName.value,
+                    developerPhoto: developerPhotoUrl,
+                    developerDescription: developerDescription.value,
+
+                    managers
+                };
+
+                const r = await api("savePeople", { people });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           PENGUMUMAN DAN DOKUMENTASI
+        ========================= */
+
+        function renderContent() {
+            const items = data.content || [];
+
+            document.getElementById("annList").innerHTML =
+                items.filter(x => x.type === "announcement")
+                    .map(contentItem)
+                    .join("") || "<p>Belum ada pengumuman.</p>";
+
+            document.getElementById("galleryList").innerHTML =
+                items.filter(x => x.type === "gallery")
+                    .map(contentItem)
+                    .join("") || "<p>Belum ada dokumentasi.</p>";
+        }
+
+        function contentItem(x) {
+            return `
+                <article class="item">
+                    <b>${esc(x.title)}</b>
+
+                    <div class="meta">
+                        ${esc(x.category)} · ${esc(x.mediaType || "")}
+                    </div>
+
+                    <p>${esc(x.description)}</p>
+
+                    ${x.url
+                        ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Lihat media</a>`
+                        : ""
+                    }
+
+                    <br>
+
+                    <button
+                        class="btn red"
+                        onclick="deleteContent('${esc(x.id)}','${esc(x.type)}')"
+                    >
+                        Hapus
+                    </button>
+                </article>
+            `;
+        }
+
+        async function addAnnouncement() {
+            try {
+                const content = {
+                    type: "announcement",
+                    title: annTitle.value,
+                    category: annCategory.value,
+                    description: annDescription.value
+                };
+
+                const r = await api("addContent", { content });
+
+                alertBox("alert", r.message);
+
+                annTitle.value = "";
+                annCategory.value = "";
+                annDescription.value = "";
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        async function deleteContent(id, type) {
+            if (!confirm("Hapus konten ini?")) return;
+
+            try {
+                const r = await api("deleteContent", { id, type });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           FOTO PROFIL
+        ========================= */
+
+        function readDataUrl(file) {
+            return new Promise((resolve, reject) => {
+                const r = new FileReader();
+
+                r.onload = () => resolve(r.result);
+                r.onerror = () => reject(Error("File gagal dibaca."));
+
+                r.readAsDataURL(file);
+            });
+        }
+
+        function showPhotoPreview(id, url) {
+            const img = document.getElementById(id);
+
+            if (!img) return;
+
+            if (url) {
+                img.src = url;
+                img.classList.remove("hidden");
+            } else {
+                img.removeAttribute("src");
+                img.classList.add("hidden");
+            }
+        }
+
+        function previewSelectedFile(input, img) {
+            const file = input.files && input.files[0];
+
+            if (!file) {
+                img.classList.add("hidden");
+                img.removeAttribute("src");
+                return;
+            }
+
+            if (![
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/gif"
+            ].includes(file.type)) {
+                input.value = "";
+                throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                input.value = "";
+                throw Error("Ukuran foto maksimal 5 MB.");
+            }
+
+            img.src = URL.createObjectURL(file);
+            img.classList.remove("hidden");
+        }
+
+        async function uploadProfileFile(file, permission) {
+            if (!file) return "";
+
+            if (![
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "image/gif"
+            ].includes(file.type)) {
+                throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                throw Error("Ukuran foto maksimal 5 MB.");
+            }
+
+            const uploaded = await api("uploadProfilePhoto", {
+                permission,
+                file: {
+                    name: file.name,
+                    mimeType: file.type,
+                    data: await readDataUrl(file)
+                }
+            });
+
+            return uploaded.url;
+        }
+
+        async function uploadProfileIfSelected(fileId, urlId, permission) {
+            const input = document.getElementById(fileId);
+            const hidden = document.getElementById(urlId);
+
+            const file = input.files && input.files[0];
+
+            if (!file) return hidden.value || "";
+
+            const url = await uploadProfileFile(file, permission);
+
+            hidden.value = url;
+
+            return url;
+        }
+
+        /* =========================
+           UNGGAH FOTO DAN VIDEO
+        ========================= */
+
+        async function uploadMedia() {
+            const b = document.getElementById("uploadBtn");
+
+            try {
+                const file = mediaFile.files[0];
+
+                if (!file) {
+                    throw Error("Pilih file media.");
+                }
+
+                if (!mediaTitle.value.trim()) {
+                    throw Error("Judul wajib diisi.");
+                }
+
+                b.disabled = true;
+                b.textContent = "Mengunggah...";
+
+                const uploaded = await api("uploadMedia", {
+                    file: {
+                        name: file.name,
+                        mimeType: file.type,
+                        data: await readDataUrl(file)
+                    }
+                });
+
+                const content = {
+                    type: "gallery",
+                    title: mediaTitle.value,
+                    category: mediaCategory.value,
+                    description: mediaDescription.value,
+                    url: uploaded.url,
+                    mediaType: uploaded.mediaType,
+                    periodId: mediaPeriod.value
+                };
+
+                const r = await api("addContent", { content });
+
+                alertBox("alert", r.message);
+
+                [
+                    "mediaTitle",
+                    "mediaCategory",
+                    "mediaDescription",
+                    "mediaFile"
+                ].forEach(id => {
+                    document.getElementById(id).value = "";
+                });
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+
+            } finally {
+                b.disabled = false;
+                b.textContent = "Unggah media";
+            }
+        }
+
+        function youtubeEmbed(url) {
+            const m = String(url).match(
+                /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+            );
+
+            if (!m) {
+                throw Error("URL YouTube tidak dikenali.");
+            }
+
+            return "https://www.youtube.com/embed/" + m[1];
+        }
+
+        async function addYoutube() {
+            try {
+                const content = {
+                    type: "gallery",
+                    title: ytTitle.value,
+                    category: ytCategory.value,
+                    description: ytDescription.value,
+                    url: youtubeEmbed(ytUrl.value),
+                    mediaType: "youtube"
+                };
+
+                const r = await api("addContent", { content });
+
+                alertBox("alert", r.message);
+
+                ["ytTitle", "ytCategory", "ytDescription", "ytUrl"].forEach(id => {
+                    document.getElementById(id).value = "";
+                });
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           KODE AKSES
+        ========================= */
+
+        function renderCodes() {
+            document.getElementById("codeList").innerHTML =
+                (data.codes || []).map(c => `
+                    <article class="item">
+                        <b>${esc(c.label)}</b>
+
+                        <div class="meta">
+                            Izin: ${c.permissions.map(esc).join(", ")}
+                            · Berlaku sampai ${esc(c.expires)}
+                        </div>
+
+                        <div class="meta">
+                            Penggunaan: ${c.used}/${c.maxUsers}
+                            · ${c.active ? "Aktif" : "Nonaktif"}
+                        </div>
+
+                        ${c.active
+                            ? `<button class="btn red" onclick="deactivateCode('${esc(c.id)}')">Nonaktifkan</button>`
+                            : ""
+                        }
+                    </article>
+                `).join("") || "<p>Belum ada kode akses.</p>";
+        }
+
+        async function createCode() {
+            try {
+                const permissions = [];
+
+                if (permAsp.checked) permissions.push("aspirations");
+                if (permHome.checked) permissions.push("home");
+                if (permPeriods.checked) permissions.push("periods");
+                if (permPeople.checked) permissions.push("people");
+                if (permAnn.checked) permissions.push("announcements");
+                if (permGallery.checked) permissions.push("gallery");
+                if (permBackup.checked) permissions.push("backup");
+
+                const codeData = {
+                    label: codeLabel.value,
+                    permissions,
+                    expires: codeExpiry.value,
+                    maxUsers: codeMax.value
+                };
+
+                const r = await api("createAccessCode", { codeData });
+
+                alertBox("newCode", r.message + " KODE: " + r.code);
+
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        async function deactivateCode(id) {
+            if (!confirm("Nonaktifkan kode ini?")) return;
+
+            try {
+                const r = await api("deactivateAccessCode", { id });
+
+                alertBox("alert", r.message);
+                await refresh();
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           BACKUP
+        ========================= */
+
+        async function runBackup() {
+            try {
+                const r = await api("runBackup");
+
+                alertBox("alert", r.message + " " + r.name);
+
+            } catch (e) {
+                alertBox("alert", e.message, false);
+            }
+        }
+
+        /* =========================
+           NAVIGASI TAB
+        ========================= */
+
+        document.querySelectorAll(".tab").forEach(b => {
+            b.addEventListener("click", () => {
+                document.querySelectorAll(".tab").forEach(x => {
+                    x.classList.remove("active");
+                });
+
+                document.querySelectorAll(".section").forEach(x => {
+                    x.classList.remove("active");
+                });
+
+                b.classList.add("active");
+
+                document.getElementById(b.dataset.tab).classList.add("active");
+            });
+        });
+
+        /* =========================
+           PRATINJAU FOTO
+        ========================= */
+
+        [
+            ["officerPhotoFile", "officerPhotoPreview"],
+            ["founderPhotoFile", "founderPhotoPreview"],
+            ["developerPhotoFile", "developerPhotoPreview"]
+        ].forEach(([inputId, imgId]) => {
+            const input = document.getElementById(inputId);
+
+            input.addEventListener("change", () => {
+                try {
+                    previewSelectedFile(
+                        input,
+                        document.getElementById(imgId)
+                    );
+
+                } catch (e) {
+                    alertBox("alert", e.message, false);
+                }
+            });
+        });
+
+        /* =========================
+           MULAI APLIKASI
+        ========================= */
+
+        boot();
+    </script>
 
 </body>
 </html>
