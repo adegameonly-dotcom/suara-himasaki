@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -10,396 +9,546 @@
 
   <style>
     :root {
-      --navy: #173b69;
-      --blue: #2b669b;
-      --background: #f3f6fa;
-      --text: #243142;
-      --muted: #68788b;
-      --border: #e3e9ef;
-      --white: #ffffff;
-      --success: #176638;
-      --danger: #a12b25;
+      --navy:#173b69;
+      --blue:#2b669b;
+      --background:#f3f6fa;
+      --text:#243142;
+      --muted:#68788b;
+      --border:#e3e9ef;
+      --white:#fff;
+      --success:#176638;
+      --danger:#a12b25;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    * { box-sizing:border-box; }
+
+    html {
+      scroll-behavior:smooth;
+      scroll-padding-top:90px;
+    }
 
     body {
-      margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font: 16px/1.6 Arial, sans-serif;
+      margin:0;
+      background:var(--background);
+      color:var(--text);
+      font:16px/1.6 Arial,sans-serif;
     }
 
     a {
-      color: var(--navy);
-      font-weight: bold;
-      text-decoration: none;
+      color:var(--navy);
+      font-weight:bold;
+      text-decoration:none;
     }
 
-    img, video, iframe { max-width: 100%; }
+    img,video,iframe { max-width:100%; }
 
     .wrap {
-      width: 100%;
-      max-width: 1120px;
-      margin: auto;
-      padding: 0 20px;
+      width:100%;
+      max-width:1120px;
+      margin:auto;
+      padding:0 20px;
     }
 
     header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
+      position:sticky;
+      top:0;
+      z-index:10;
+      background:var(--white);
+      border-bottom:1px solid var(--border);
     }
 
     .nav {
-      display: flex;
-      min-height: 72px;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
+      display:flex;
+      min-height:72px;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--navy);
-      font-weight: bold;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+      color:var(--navy);
+      font-weight:bold;
     }
 
+    .brand span { overflow-wrap:anywhere; }
+
     .logo {
-      display: grid;
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-      place-items: center;
-      border-radius: 12px;
-      background: var(--navy);
-      color: white;
+      display:grid;
+      width:42px;
+      height:42px;
+      flex-shrink:0;
+      place-items:center;
+      overflow:hidden;
+      border-radius:12px;
+      background:var(--navy);
+      color:white;
+    }
+
+    .logo img {
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      background:white;
     }
 
     nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 17px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:17px;
     }
 
-    nav a { font-size: 14px; }
-    nav a:hover { color: var(--blue); }
-    main { padding-top: 26px; }
+    nav a { font-size:14px; }
+    nav a:hover { color:var(--blue); }
 
-    .page-view { display: none; }
-    .page-view.active { display: block; }
+    main { padding-top:26px; }
+
+    .page-view { display:none; }
+    .page-view.active { display:block; }
 
     .page-back {
-      display: inline-block;
-      margin: 0 0 22px;
-      padding: 10px 15px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: white;
-      color: var(--navy);
-      font-weight: bold;
-      cursor: pointer;
+      display:inline-block;
+      margin:0 0 22px;
+      padding:10px 15px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:white;
+      color:var(--navy);
+      font-weight:bold;
+      cursor:pointer;
     }
 
-    .page-back:hover { background: #eaf0f7; }
+    .page-back:hover { background:#eaf0f7; }
 
     .hero {
-      padding: 55px 42px;
-      border-radius: 20px;
-      background: linear-gradient(120deg, #15375f, #2b669b);
-      color: white;
+      position:relative;
+      overflow:hidden;
+      padding:55px 42px;
+      border-radius:20px;
+      background:linear-gradient(120deg,#15375f,#2b669b);
+      background-position:center;
+      background-size:cover;
+      color:white;
+    }
+
+    .hero::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+        100deg,
+        rgba(15,39,68,.90),
+        rgba(23,59,105,.62)
+      );
+    }
+
+    .hero-content {
+      position:relative;
+      z-index:1;
     }
 
     .hero h1 {
-      max-width: 720px;
-      margin: 0 0 15px;
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.14;
+      max-width:720px;
+      margin:0 0 15px;
+      font-size:clamp(30px,5vw,48px);
+      line-height:1.14;
     }
 
     .hero p {
-      max-width: 650px;
-      margin: 0 0 22px;
-      color: #e5eef8;
+      max-width:650px;
+      margin:0 0 22px;
+      color:#e5eef8;
     }
 
     .btn {
-      display: inline-block;
-      padding: 12px 18px;
-      border: 0;
-      border-radius: 9px;
-      background: var(--navy);
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
+      display:inline-block;
+      padding:12px 18px;
+      border:0;
+      border-radius:9px;
+      background:var(--navy);
+      color:white;
+      font-weight:bold;
+      cursor:pointer;
     }
 
     .btn.white {
-      background: white;
-      color: var(--navy);
+      background:white;
+      color:var(--navy);
     }
 
     .btn:disabled {
-      cursor: not-allowed;
-      opacity: .6;
+      cursor:not-allowed;
+      opacity:.6;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin: 24px 0;
+    .carousel-shell {
+      position:relative;
+      margin:24px 0;
+    }
+
+    .carousel-track,
+    .answer-track {
+      display:grid;
+      grid-auto-flow:column;
+      grid-auto-columns:calc((100% - 32px)/3);
+      gap:16px;
+      overflow-x:auto;
+      overscroll-behavior-x:contain;
+      scroll-snap-type:x mandatory;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+      padding:3px 2px 12px;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .carousel-track::-webkit-scrollbar,
+    .answer-track::-webkit-scrollbar {
+      display:none;
     }
 
     .shortcut {
-      display: block;
-      padding: 20px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: white;
-      transition: transform .2s, box-shadow .2s;
+      display:block;
+      min-width:0;
+      padding:20px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:white;
+      scroll-snap-align:start;
+      transition:transform .2s,box-shadow .2s;
     }
 
     .shortcut:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 7px 20px #173b6915;
+      transform:translateY(-3px);
+      box-shadow:0 7px 20px #173b6915;
     }
 
-    .shortcut-icon { font-size: 29px; }
+    .shortcut-icon { font-size:29px; }
 
     .shortcut h3 {
-      margin: 6px 0;
-      color: var(--navy);
+      margin:6px 0;
+      color:var(--navy);
     }
 
     .shortcut p {
-      margin: 0;
-      color: var(--muted);
-      font-weight: normal;
+      margin:0;
+      color:var(--muted);
+      font-weight:normal;
     }
+
+    .carousel-controls {
+      display:flex;
+      justify-content:flex-end;
+      gap:9px;
+      margin-top:8px;
+    }
+
+    .carousel-button {
+      display:grid;
+      width:38px;
+      height:38px;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:50%;
+      background:white;
+      color:var(--navy);
+      font-size:20px;
+      cursor:pointer;
+    }
+
+    .carousel-button:hover { background:#eaf0f7; }
 
     .list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
     }
 
-    .card, .panel, .content {
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: white;
+    .panel,.content {
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:white;
     }
 
-    .panel { padding: 20px; }
+    .panel { padding:20px; }
 
     section {
-      margin: 34px 0;
-      scroll-margin-top: 90px;
+      margin:34px 0;
+      scroll-margin-top:90px;
     }
 
     .heading {
-      margin: 0 0 15px;
-      color: var(--navy);
-      font-size: 26px;
+      margin:0 0 8px;
+      color:var(--navy);
+      font-size:26px;
+    }
+
+    .section-description {
+      margin:0 0 16px;
+      color:var(--muted);
     }
 
     .muted {
-      margin: 0;
-      color: var(--muted);
+      margin:0;
+      color:var(--muted);
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
     }
 
-    .field { margin-bottom: 13px; }
-    .full { grid-column: 1 / -1; }
+    .field { margin-bottom:13px; }
+    .full { grid-column:1/-1; }
 
     label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-      font-weight: bold;
+      display:block;
+      margin-bottom:5px;
+      font-size:14px;
+      font-weight:bold;
     }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5df;
-      border-radius: 9px;
-      background: white;
-      font: inherit;
+    input,select,textarea {
+      width:100%;
+      padding:12px;
+      border:1px solid #cbd5df;
+      border-radius:9px;
+      background:white;
+      font:inherit;
     }
 
-    input:focus, select:focus, textarea:focus {
-      outline: 2px solid #2b669944;
-      border-color: var(--blue);
+    input:focus,select:focus,textarea:focus {
+      outline:2px solid #2b669944;
+      border-color:var(--blue);
     }
 
     textarea {
-      min-height: 140px;
-      resize: vertical;
+      min-height:140px;
+      resize:vertical;
     }
 
     .check {
-      display: flex;
-      align-items: center;
-      gap: 9px;
+      display:flex;
+      align-items:center;
+      gap:9px;
     }
 
-    .check input { width: auto; }
+    .check input { width:auto; }
 
     .notice {
-      display: none;
-      margin: 12px 0;
-      padding: 12px;
-      border-radius: 8px;
+      display:none;
+      margin:12px 0;
+      padding:12px;
+      border-radius:8px;
     }
 
     .notice.ok {
-      display: block;
-      background: #e5f5e9;
-      color: var(--success);
+      display:block;
+      background:#e5f5e9;
+      color:var(--success);
     }
 
     .notice.err {
-      display: block;
-      background: #fff0ef;
-      color: var(--danger);
+      display:block;
+      background:#fff0ef;
+      color:var(--danger);
     }
 
-    .content { overflow: hidden; }
+    .content { overflow:hidden; }
 
     .content img {
-      display: block;
-      width: 100%;
-      height: 220px;
-      object-fit: contain;
-      background: #edf1f5;
+      display:block;
+      width:100%;
+      height:220px;
+      object-fit:contain;
+      background:#edf1f5;
     }
 
     .content iframe {
-      display: block;
-      width: 100%;
-      height: 220px;
-      border: 0;
-      background: #111;
+      display:block;
+      width:100%;
+      height:220px;
+      border:0;
+      background:#111;
     }
 
-    .body { padding: 15px; }
+    .body { padding:15px; }
 
     .tag {
-      display: inline-block;
-      padding: 4px 8px;
-      border-radius: 20px;
-      background: #eaf0f7;
-      color: var(--navy);
-      font-size: 11px;
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:20px;
+      background:#eaf0f7;
+      color:var(--navy);
+      font-size:11px;
     }
 
-    .body h3 { margin: 8px 0 4px; }
+    .body h3 { margin:8px 0 4px; }
 
     .body p {
-      margin: 0;
-      color: var(--muted);
-      white-space: pre-wrap;
+      margin:0;
+      color:var(--muted);
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
     }
 
     .image-fallback {
-      display: none;
-      width: 100%;
-      height: 220px;
-      place-items: center;
-      padding: 15px;
-      background: #edf1f5;
-      color: var(--muted);
-      text-align: center;
-      font-size: 13px;
+      display:none;
+      width:100%;
+      height:220px;
+      place-items:center;
+      padding:15px;
+      background:#edf1f5;
+      color:var(--muted);
+      text-align:center;
+      font-size:13px;
     }
 
     .people {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 15px;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:15px;
     }
 
     .person {
-      min-width: 0;
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: white;
+      min-width:0;
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius:12px;
+      background:white;
     }
 
     .person img {
-      display: block;
-      width: 100%;
-      height: 180px;
-      border-radius: 8px;
-      background: #f0f3f7;
-      object-fit: contain;
+      display:block;
+      width:100%;
+      height:180px;
+      border-radius:8px;
+      background:#f0f3f7;
+      object-fit:contain;
     }
 
     .person .image-fallback {
-      height: 180px;
-      border-radius: 8px;
+      height:180px;
+      border-radius:8px;
     }
 
-    .person h3 { margin: 10px 0 3px; }
-    .person p { overflow-wrap: anywhere; }
+    .person h3 { margin:10px 0 3px; }
+    .person p { overflow-wrap:anywhere; }
 
     .empty {
-      grid-column: 1 / -1;
-      padding: 16px;
-      border-radius: 10px;
-      background: white;
-      color: var(--muted);
+      grid-column:1/-1;
+      padding:16px;
+      border-radius:10px;
+      background:white;
+      color:var(--muted);
     }
 
-    .qr-panel { text-align: center; }
+    .answer-card {
+      min-width:0;
+      padding:19px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:white;
+      scroll-snap-align:start;
+      overflow-wrap:anywhere;
+    }
+
+    .answer-card h3 {
+      margin:10px 0 8px;
+      color:var(--navy);
+      font-size:18px;
+    }
+
+    .answer-card p {
+      margin:0;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere;
+    }
+
+    .answer-message {
+      padding:12px;
+      margin:12px 0;
+      border-radius:9px;
+      background:#f3f6fa;
+    }
+
+    .answer-reply {
+      padding:12px;
+      border-left:3px solid var(--blue);
+      border-radius:5px;
+      background:#edf4fb;
+    }
+
+    .answer-reply strong {
+      display:block;
+      margin-bottom:5px;
+      color:var(--navy);
+    }
+
+    .answer-meta {
+      margin-top:12px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .answer-empty {
+      grid-column:1/-1;
+      padding:20px;
+      border:1px dashed #cbd5df;
+      border-radius:12px;
+      background:white;
+      color:var(--muted);
+      text-align:center;
+    }
+
+    .qr-panel { text-align:center; }
 
     .qr-image {
-      display: block;
-      width: 220px;
-      height: 220px;
-      max-width: 100%;
-      margin: 18px auto;
-      object-fit: contain;
+      display:block;
+      width:220px;
+      height:220px;
+      max-width:100%;
+      margin:18px auto;
+      object-fit:contain;
     }
 
     footer {
-      margin-top: 45px;
-      padding: 28px 0;
-      background: #142d4b;
-      color: #dce6f1;
+      margin-top:45px;
+      padding:28px 0;
+      background:#142d4b;
+      color:#dce6f1;
     }
 
-    footer a { color: white; }
+    footer a { color:white; }
 
-    @media (max-width: 760px) {
+    @media(max-width:760px) {
       .nav {
-        align-items: flex-start;
-        flex-direction: column;
-        padding-top: 12px;
-        padding-bottom: 12px;
+        align-items:flex-start;
+        flex-direction:column;
+        padding-top:12px;
+        padding-bottom:12px;
       }
 
-      nav { gap: 10px; }
+      nav { gap:10px; }
 
-      .cards, .list, .people {
-        grid-template-columns: 1fr;
+      .list,.people { grid-template-columns:1fr; }
+
+      .carousel-track,.answer-track {
+        grid-auto-columns:85%;
       }
 
-      .grid { grid-template-columns: 1fr; }
-      .full { grid-column: auto; }
-      .hero { padding: 36px 24px; }
+      .grid { grid-template-columns:1fr; }
+      .full { grid-column:auto; }
+      .hero { padding:36px 24px; }
+    }
+
+    @media(min-width:761px) and (max-width:950px) {
+      .carousel-track,.answer-track {
+        grid-auto-columns:calc((100% - 16px)/2);
+      }
     }
   </style>
 </head>
@@ -418,68 +567,95 @@
       <a href="#aspirasi">Aspirasi</a>
       <a href="#pengumuman">Pengumuman</a>
       <a href="#galeri">Galeri</a>
+      <a href="#jawaban">Jawaban Aspirasimu</a>
       <a href="#struktur">Kepengurusan</a>
       <a href="#tentang">Tentang</a>
+      <a href="#qrcode">QR Code</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
 
+  <!-- BERANDA -->
   <div id="view-home" class="page-view active">
 
-    <section class="hero">
-      <h1 id="heroTitle">Suaramu berarti untuk HIMASAKI.</h1>
-      <p id="heroText">
-        Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.
-      </p>
-      <a class="btn white" href="#aspirasi">Kirim Aspirasi</a>
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <h1 id="heroTitle">Suaramu berarti untuk HIMASAKI.</h1>
+        <p id="heroText">
+          Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.
+        </p>
+        <a class="btn white" href="#aspirasi">Kirim Aspirasi</a>
+      </div>
     </section>
 
     <section>
       <h2 class="heading">Jelajahi SUARA HIMASAKI</h2>
 
-      <div class="cards">
-        <a class="shortcut" href="#aspirasi">
-          <div class="shortcut-icon">✉️</div>
-          <h3>Kirim Aspirasi</h3>
-          <p>Sampaikan kritik, saran, dan ide.</p>
-        </a>
+      <div class="carousel-shell">
+        <div class="carousel-track" id="shortcutTrack">
 
-        <a class="shortcut" href="#pengumuman">
-          <div class="shortcut-icon">📢</div>
-          <h3>Pengumuman</h3>
-          <p>Informasi terbaru HIMASAKI.</p>
-        </a>
+          <a class="shortcut" href="#aspirasi">
+            <div class="shortcut-icon">✉️</div>
+            <h3>Kirim Aspirasi</h3>
+            <p>Sampaikan kritik, saran, dan ide.</p>
+          </a>
 
-        <a class="shortcut" href="#galeri">
-          <div class="shortcut-icon">🎞️</div>
-          <h3>Galeri dan Dokumentasi</h3>
-          <p>Foto dan video kegiatan.</p>
-        </a>
+          <a class="shortcut" href="#pengumuman">
+            <div class="shortcut-icon">📢</div>
+            <h3>Pengumuman</h3>
+            <p>Informasi terbaru HIMASAKI.</p>
+          </a>
 
-        <a class="shortcut" href="#struktur">
-          <div class="shortcut-icon">👥</div>
-          <h3>Kepengurusan</h3>
-          <p>Lihat struktur pengurus setiap periode.</p>
-        </a>
+          <a class="shortcut" href="#galeri">
+            <div class="shortcut-icon">🎞️</div>
+            <h3>Galeri dan Dokumentasi</h3>
+            <p>Foto dan video kegiatan.</p>
+          </a>
 
-        <a class="shortcut" href="#tentang">
-          <div class="shortcut-icon">ℹ️</div>
-          <h3>Tentang HIMASAKI</h3>
-          <p>Kenali pendiri, pengembang, dan pengelola.</p>
-        </a>
+          <a class="shortcut" href="#jawaban">
+            <div class="shortcut-icon">💬</div>
+            <h3>Jawaban Aspirasimu</h3>
+            <p>Lihat aspirasi yang telah dijawab HIMASAKI.</p>
+          </a>
 
-        <a class="shortcut" href="#qrcode">
-          <div class="shortcut-icon">▦</div>
-          <h3>QR Code</h3>
-          <p>Akses website melalui pemindaian QR.</p>
-        </a>
+          <a class="shortcut" href="#struktur">
+            <div class="shortcut-icon">👥</div>
+            <h3>Kepengurusan</h3>
+            <p>Lihat struktur pengurus setiap periode.</p>
+          </a>
+
+          <a class="shortcut" href="#tentang">
+            <div class="shortcut-icon">ℹ️</div>
+            <h3>Tentang HIMASAKI</h3>
+            <p>Kenali pendiri, pengembang, dan pengelola.</p>
+          </a>
+
+          <a class="shortcut" href="#qrcode">
+            <div class="shortcut-icon">▦</div>
+            <h3>QR Code</h3>
+            <p>Akses website melalui pemindaian QR.</p>
+          </a>
+
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-button" type="button"
+            aria-label="Geser menu ke kiri"
+            onclick="scrollCarousel('shortcutTrack',-1)">‹</button>
+
+          <button class="carousel-button" type="button"
+            aria-label="Geser menu ke kanan"
+            onclick="scrollCarousel('shortcutTrack',1)">›</button>
+        </div>
       </div>
     </section>
 
+    <!-- FORM ASPIRASI -->
     <section id="aspirasi">
       <h2 class="heading">Kotak Aspirasi</h2>
+      <p class="section-description" id="aspirationDescription"></p>
 
       <div class="panel">
         <p class="muted">
@@ -487,7 +663,8 @@
           Jika memilih anonim, nama tidak diminta maupun disimpan.
         </p>
 
-        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+        <div id="formNotice" class="notice"
+          role="status" aria-live="polite"></div>
 
         <form id="aspForm">
           <div class="grid">
@@ -496,12 +673,6 @@
               <label for="category">Kategori</label>
               <select id="category" required>
                 <option value="">Pilih kategori</option>
-                <option>Kritik</option>
-                <option>Saran</option>
-                <option>Ide dan Gagasan</option>
-                <option>Pertanyaan</option>
-                <option>Apresiasi</option>
-                <option>Lainnya</option>
               </select>
             </div>
 
@@ -538,33 +709,65 @@
     </section>
   </div>
 
+  <!-- PENGUMUMAN -->
   <div id="view-announcements" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
     <section id="pengumuman">
       <h2 class="heading">Pengumuman HIMASAKI</h2>
+      <p class="section-description" id="announcementDescription"></p>
       <div class="list" id="announcements">
         <div class="empty">Memuat pengumuman...</div>
       </div>
     </section>
   </div>
 
+  <!-- GALERI -->
   <div id="view-gallery" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
     <section id="galeri">
       <h2 class="heading">Galeri dan Dokumentasi</h2>
+      <p class="section-description" id="galleryDescription"></p>
       <div class="list" id="gallery">
         <div class="empty">Memuat dokumentasi...</div>
       </div>
     </section>
   </div>
 
+  <!-- JAWABAN ASPIRASI -->
+  <div id="view-answers" class="page-view">
+    <button class="page-back" data-back>← Kembali ke Beranda</button>
+
+    <section id="jawaban">
+      <h2 class="heading">Jawaban Aspirasimu</h2>
+      <p class="section-description" id="answerDescription">
+        Berikut aspirasi yang telah dipublikasikan beserta tanggapan dari HIMASAKI.
+      </p>
+
+      <div class="answer-track" id="publishedAnswers">
+        <div class="answer-empty">Memuat jawaban aspirasi...</div>
+      </div>
+
+      <div class="carousel-controls">
+        <button class="carousel-button" type="button"
+          aria-label="Geser jawaban ke kiri"
+          onclick="scrollCarousel('publishedAnswers',-1)">‹</button>
+
+        <button class="carousel-button" type="button"
+          aria-label="Geser jawaban ke kanan"
+          onclick="scrollCarousel('publishedAnswers',1)">›</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- KEPENGURUSAN -->
   <div id="view-structure" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
     <section id="struktur">
       <h2 class="heading">Struktur Kepengurusan</h2>
+      <p class="section-description" id="structureDescription"></p>
 
       <div class="panel">
         <label for="periodSelect">Pilih periode</label>
@@ -574,11 +777,13 @@
     </section>
   </div>
 
+  <!-- TENTANG -->
   <div id="view-about" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
     <section id="tentang">
       <h2 class="heading">Tentang HIMASAKI</h2>
+      <p class="section-description" id="aboutDescription"></p>
 
       <div class="panel">
         <p id="about"></p>
@@ -587,6 +792,7 @@
     </section>
   </div>
 
+  <!-- QR CODE -->
   <div id="view-qrcode" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -634,40 +840,107 @@
 </footer>
 
 <script>
-  /* ==============================================
-     KONFIGURASI
-  ============================================== */
+  // =====================================================
+  // 1. KONFIGURASI
+  // =====================================================
 
   const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
 
-  const WEBSITE_URL =
-    "https://adegameonly-dotcom.github.io/suara-himasaki/";
-
   const $ = id => document.getElementById(id);
 
-  /* ==============================================
-     UTILITAS
-  ============================================== */
+  const DEFAULT_CATEGORIES = [
+    "Kritik",
+    "Saran",
+    "Ide dan Gagasan",
+    "Pertanyaan",
+    "Apresiasi",
+    "Lainnya"
+  ];
+
+  // =====================================================
+  // 2. UTILITAS
+  // =====================================================
 
   function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
     })[char]);
   }
 
-  function showNotice(id, message, success) {
+  function setText(id,value) {
+    const element = $(id);
+    if (element) element.textContent = value || "";
+  }
+
+  function showNotice(id,message,success) {
     const element = $(id);
     element.textContent = message;
     element.className = "notice " + (success ? "ok" : "err");
   }
 
-  /* ==============================================
-     DETEKSI ID DAN FORMAT URL GOOGLE DRIVE
-  ============================================== */
+  function safeHttpsUrl(value) {
+    if (!value) return "";
+
+    try {
+      const url = new URL(String(value).trim());
+
+      if (url.protocol !== "https:") return "";
+
+      return url.href;
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function getValue(object,keys,fallback="") {
+    for (const key of keys) {
+      if (
+        object &&
+        object[key] !== undefined &&
+        object[key] !== null &&
+        object[key] !== ""
+      ) {
+        return object[key];
+      }
+    }
+
+    return fallback;
+  }
+
+  // =====================================================
+  // 3. CAROUSEL
+  // =====================================================
+
+  function scrollCarousel(id,direction) {
+    const track = $(id);
+    if (!track) return;
+
+    const firstCard = track.querySelector(
+      ".shortcut,.answer-card"
+    );
+
+    if (!firstCard) return;
+
+    const gap = parseFloat(
+      getComputedStyle(track).columnGap
+    ) || 16;
+
+    const distance =
+      firstCard.getBoundingClientRect().width + gap;
+
+    track.scrollBy({
+      left:distance * direction,
+      behavior:"smooth"
+    });
+  }
+
+  // =====================================================
+  // 4. GAMBAR GOOGLE DRIVE
+  // =====================================================
 
   function getGoogleDriveFileId(value) {
     if (!value) return "";
@@ -676,45 +949,41 @@
       const url = new URL(String(value).trim());
       const host = url.hostname.toLowerCase();
 
-      const driveHosts = [
-        "drive.google.com",
-        "www.drive.google.com",
-        "drive.usercontent.google.com"
-      ];
-
-      if (driveHosts.includes(host)) {
+      if (
+        host === "drive.google.com" ||
+        host === "www.drive.google.com" ||
+        host === "drive.usercontent.google.com"
+      ) {
         const queryId = url.searchParams.get("id");
 
         if (queryId) return queryId;
 
-        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
+        const match = url.pathname.match(
+          /\/file\/d\/([^/]+)/
+        );
 
         if (match) return match[1];
       }
 
       if (host === "docs.google.com") {
-        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
+        const match = url.pathname.match(
+          /\/file\/d\/([^/]+)/
+        );
 
         if (match) return match[1];
       }
 
       return "";
-
     } catch (error) {
       return "";
     }
   }
 
-  /* ==============================================
-     MEMBUAT DAFTAR URL GAMBAR CADANGAN
-  ============================================== */
-
   function getImageCandidates(value) {
-    if (!value) return [];
+    const original = safeHttpsUrl(value);
+    if (!original) return [];
 
-    const original = String(value).trim();
     const candidates = [original];
-
     const fileId = getGoogleDriveFileId(original);
 
     if (fileId) {
@@ -728,44 +997,23 @@
         "https://drive.google.com/uc?export=view&id=" +
         encodeURIComponent(fileId)
       );
-
-      candidates.push(
-        "https://drive.usercontent.google.com/download?id=" +
-        encodeURIComponent(fileId) +
-        "&export=view"
-      );
     }
 
-    return [...new Set(candidates.filter(Boolean))];
+    return [...new Set(candidates)];
   }
-
-  /* ==============================================
-     PERBAIKAN URL GAMBAR
-  ============================================== */
-
-  function normalizeImageUrl(value) {
-    const candidates = getImageCandidates(value);
-    return candidates[0] || "";
-  }
-
-  /* ==============================================
-     PERCOBAAN URL GAMBAR OTOMATIS
-  ============================================== */
 
   function handleImageError(img) {
     let candidates = [];
 
     try {
-      candidates = JSON.parse(img.dataset.fallbacks || "[]");
-    } catch (error) {
-      candidates = [];
-    }
+      candidates = JSON.parse(
+        img.dataset.fallbacks || "[]"
+      );
+    } catch (error) {}
 
-    if (candidates.length > 0) {
-      const nextUrl = candidates.shift();
-
+    if (candidates.length) {
+      img.src = candidates.shift();
       img.dataset.fallbacks = JSON.stringify(candidates);
-      img.src = nextUrl;
       return;
     }
 
@@ -778,29 +1026,25 @@
     }
   }
 
-  /* ==============================================
-     GAMBAR DENGAN FALLBACK
-  ============================================== */
-
-  function imageHTML(url, alt, className = "") {
-    if (!url) return "";
-
+  function imageHTML(url,alt,className="") {
     const candidates = getImageCandidates(url);
-    if (!candidates.length) return "";
 
-    const firstUrl = escapeHTML(candidates[0]);
-    const fallbackUrls = escapeHTML(
-      JSON.stringify(candidates.slice(1))
-    );
-
-    const safeAlt = escapeHTML(alt);
+    if (!candidates.length) {
+      return `
+        <div class="image-fallback" style="display:grid">
+          Belum ada gambar.
+        </div>
+      `;
+    }
 
     return `
       <img
         class="${escapeHTML(className)}"
-        src="${firstUrl}"
-        data-fallbacks="${fallbackUrls}"
-        alt="${safeAlt}"
+        src="${escapeHTML(candidates[0])}"
+        data-fallbacks="${escapeHTML(
+          JSON.stringify(candidates.slice(1))
+        )}"
+        alt="${escapeHTML(alt)}"
         loading="lazy"
         onerror="handleImageError(this)"
       >
@@ -810,21 +1054,60 @@
     `;
   }
 
-  /* ==============================================
-     NAVIGASI HALAMAN
-  ============================================== */
+  function setBrandingImage(settings) {
+    const logo = $("logo");
+
+    const logoUrl = getValue(settings,[
+      "logoUrl",
+      "logoImage"
+    ]);
+
+    if (logoUrl) {
+      logo.innerHTML = imageHTML(
+        logoUrl,
+        "Logo HIMASAKI"
+      );
+    } else {
+      logo.textContent =
+        getValue(settings,["logoText"],"HK");
+    }
+
+    const backgroundUrl = getValue(settings,[
+      "backgroundUrl",
+      "heroImage"
+    ]);
+
+    const safeBackground = getImageCandidates(
+      backgroundUrl
+    )[0];
+
+    if (safeBackground) {
+      $("hero").style.backgroundImage =
+        'linear-gradient(100deg,rgba(15,39,68,.90),rgba(23,59,105,.62)),url("' +
+        safeBackground.replace(/["\\]/g,"") +
+        '")';
+    } else {
+      $("hero").style.backgroundImage =
+        "linear-gradient(120deg,#15375f,#2b669b)";
+    }
+  }
+
+  // =====================================================
+  // 5. NAVIGASI HALAMAN
+  // =====================================================
 
   const pageMap = {
-    "#top": "home",
-    "#aspirasi": "home",
-    "#pengumuman": "announcements",
-    "#galeri": "gallery",
-    "#struktur": "structure",
-    "#tentang": "about",
-    "#qrcode": "qrcode"
+    "#top":"home",
+    "#aspirasi":"home",
+    "#pengumuman":"announcements",
+    "#galeri":"gallery",
+    "#jawaban":"answers",
+    "#struktur":"structure",
+    "#tentang":"about",
+    "#qrcode":"qrcode"
   };
 
-  function showView(view, targetId = "") {
+  function showView(view,targetId="") {
     const target = $("view-" + view);
     if (!target) return;
 
@@ -834,7 +1117,10 @@
 
     target.classList.add("active");
 
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
 
     if (targetId) {
       setTimeout(() => {
@@ -842,28 +1128,28 @@
 
         if (element) {
           element.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
+            behavior:"smooth",
+            block:"start"
           });
         }
-      }, 150);
+      },150);
     }
   }
 
-  function navigateTo(hash, addHistory = true) {
+  function navigateTo(hash,addHistory=true) {
     const view = pageMap[hash] || "home";
 
-    showView(
-      view,
-      hash === "#aspirasi" ? "aspirasi" : ""
-    );
+    const targetId =
+      hash === "#aspirasi" ? "aspirasi" : "";
+
+    showView(view,targetId);
 
     if (addHistory) {
-      history.pushState(null, "", hash);
+      history.pushState(null,"",hash);
     }
   }
 
-  document.addEventListener("click", event => {
+  document.addEventListener("click",event => {
     const back = event.target.closest("[data-back]");
 
     if (back) {
@@ -872,27 +1158,31 @@
     }
 
     const link = event.target.closest('a[href^="#"]');
+
     if (!link) return;
 
     const hash = link.getAttribute("href");
+
     if (!pageMap[hash]) return;
 
     event.preventDefault();
     navigateTo(hash);
   });
 
-  window.addEventListener("popstate", () => {
-    navigateTo(location.hash || "#top", false);
+  window.addEventListener("popstate",() => {
+    navigateTo(location.hash || "#top",false);
   });
 
-  /* ==============================================
-     KOMUNIKASI APPS SCRIPT
-  ============================================== */
+  // =====================================================
+  // 6. KOMUNIKASI DENGAN APPS SCRIPT
+  // =====================================================
 
   function request(payload) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve,reject) => {
       const id =
-        "pub_" + Date.now() + "_" +
+        "pub_" +
+        Date.now() +
+        "_" +
         Math.random().toString(36).slice(2);
 
       const frameName = "frame_" + id;
@@ -903,7 +1193,7 @@
 
       frame.name = frameName;
       frame.hidden = true;
-      frame.setAttribute("aria-hidden", "true");
+      frame.setAttribute("aria-hidden","true");
 
       form.method = "POST";
       form.action = API;
@@ -914,7 +1204,7 @@
       input.name = "payload";
       input.value = JSON.stringify({
         ...payload,
-        requestId: id
+        requestId:id
       });
 
       form.appendChild(input);
@@ -922,24 +1212,14 @@
       let completed = false;
 
       function cleanup() {
-        window.removeEventListener("message", handleMessage);
+        window.removeEventListener("message",handleMessage);
         clearTimeout(timer);
         frame.remove();
         form.remove();
       }
 
       function handleMessage(event) {
-        const trustedOrigin =
-          event.origin === "https://script.google.com" ||
-          event.origin === "https://googleusercontent.com" ||
-          event.origin.endsWith(".googleusercontent.com");
-
-        if (
-          event.source !== frame.contentWindow &&
-          !trustedOrigin
-        ) {
-          return;
-        }
+        if (event.source !== frame.contentWindow) return;
 
         let result = event.data;
 
@@ -959,7 +1239,9 @@
         if (result.ok) {
           resolve(result.data);
         } else {
-          reject(new Error(result.error || "Permintaan gagal."));
+          reject(
+            new Error(result.error || "Permintaan gagal.")
+          );
         }
       }
 
@@ -967,21 +1249,183 @@
         if (completed) return;
 
         cleanup();
-        reject(new Error("Server belum merespons. Coba lagi."));
-      }, 45000);
 
-      window.addEventListener("message", handleMessage);
+        reject(
+          new Error("Server belum merespons. Coba lagi.")
+        );
+      },45000);
 
-      document.body.append(frame, form);
+      window.addEventListener("message",handleMessage);
+
+      document.body.append(frame,form);
       form.submit();
     });
   }
 
-  /* ==============================================
-     KONTEN DAN MEDIA
-  ============================================== */
+  // =====================================================
+  // 7. KATEGORI ASPIRASI DINAMIS
+  // =====================================================
 
-  function renderItems(items, target) {
+  function renderCategories(categoryData) {
+    const select = $("category");
+
+    let list = [];
+
+    if (Array.isArray(categoryData)) {
+      list = categoryData;
+    } else if (
+      categoryData &&
+      Array.isArray(categoryData.aspiration)
+    ) {
+      list = categoryData.aspiration;
+    } else if (
+      categoryData &&
+      Array.isArray(categoryData.aspirations)
+    ) {
+      list = categoryData.aspirations;
+    }
+
+    list = list
+      .map(item => {
+        if (typeof item === "string") return item;
+
+        return getValue(item,[
+          "name",
+          "nama",
+          "title",
+          "label"
+        ]);
+      })
+      .map(item => String(item || "").trim())
+      .filter(Boolean);
+
+    if (!list.length) {
+      list = DEFAULT_CATEGORIES;
+    }
+
+    list = [...new Set(list)];
+
+    select.innerHTML =
+      '<option value="">Pilih kategori</option>' +
+      list.map(category => `
+        <option value="${escapeHTML(category)}">
+          ${escapeHTML(category)}
+        </option>
+      `).join("");
+  }
+
+  // =====================================================
+  // 8. DESKRIPSI BAGIAN WEBSITE
+  // =====================================================
+
+  function renderSectionDescriptions(settings,result) {
+    const descriptions =
+      settings.sectionDescriptions ||
+      result.sectionDescriptions ||
+      {};
+
+    setText(
+      "aspirationDescription",
+      getValue(descriptions,[
+        "aspirations",
+        "aspiration"
+      ])
+    );
+
+    setText(
+      "announcementDescription",
+      getValue(descriptions,[
+        "announcements",
+        "announcement"
+      ])
+    );
+
+    setText(
+      "galleryDescription",
+      getValue(descriptions,["gallery"])
+    );
+
+    setText(
+      "answerDescription",
+      getValue(descriptions,[
+        "answers",
+        "jawaban"
+      ],
+      "Berikut aspirasi yang telah dipublikasikan beserta tanggapan dari HIMASAKI.")
+    );
+
+    setText(
+      "structureDescription",
+      getValue(descriptions,[
+        "structure",
+        "periods"
+      ])
+    );
+
+    setText(
+      "aboutDescription",
+      getValue(descriptions,["about"])
+    );
+  }
+
+  // =====================================================
+  // 9. YOUTUBE
+  // =====================================================
+
+  function getYouTubeEmbed(value) {
+    if (!value) return "";
+
+    try {
+      const parsed = new URL(value);
+      const host = parsed.hostname.toLowerCase();
+
+      const allowedHosts = [
+        "youtube.com",
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtu.be",
+        "www.youtu.be",
+        "youtube-nocookie.com",
+        "www.youtube-nocookie.com"
+      ];
+
+      if (!allowedHosts.includes(host)) return "";
+
+      let videoId = "";
+
+      if (host === "youtu.be" || host === "www.youtu.be") {
+        videoId = parsed.pathname.split("/").filter(Boolean)[0] || "";
+      } else {
+        videoId = parsed.searchParams.get("v") || "";
+
+        if (!videoId) {
+          const match = parsed.pathname.match(
+            /\/(?:embed|shorts)\/([^/?]+)/
+          );
+
+          if (match) videoId = match[1];
+        }
+      }
+
+      if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+        return "";
+      }
+
+      return (
+        "https://www.youtube-nocookie.com/embed/" +
+        videoId
+      );
+
+    } catch (error) {
+      return "";
+    }
+  }
+
+  // =====================================================
+  // 10. PENGUMUMAN DAN GALERI
+  // =====================================================
+
+  function renderItems(items,target) {
     const container = $(target);
 
     if (!Array.isArray(items) || !items.length) {
@@ -991,18 +1435,35 @@
     }
 
     container.innerHTML = items.map(item => {
+      const title = getValue(item,[
+        "title",
+        "judul",
+        "name"
+      ]);
+
+      const text = getValue(item,[
+        "text",
+        "description",
+        "content",
+        "isi"
+      ]);
+
+      const url = getValue(item,[
+        "url",
+        "mediaUrl",
+        "image",
+        "photo"
+      ]);
+
       let media = "";
 
-      if (target === "gallery") {
-        const title = item.title || "";
+      if (target === "gallery" && url) {
+        const youtube = getYouTubeEmbed(url);
 
-        if (
-          item.mediaType === "video" ||
-          item.mediaType === "youtube"
-        ) {
+        if (youtube) {
           media = `
             <iframe
-              src="${escapeHTML(item.url || "")}"
+              src="${escapeHTML(youtube)}"
               title="${escapeHTML(title)}"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowfullscreen
@@ -1010,9 +1471,15 @@
             ></iframe>
           `;
         } else {
-          media = imageHTML(item.url, title);
+          media = imageHTML(url,title);
         }
       }
+
+      const date = getValue(item,[
+        "date",
+        "tanggal",
+        "createdAt"
+      ]);
 
       return `
         <article class="content">
@@ -1020,33 +1487,160 @@
 
           <div class="body">
             <span class="tag">
-              ${escapeHTML(item.category || "Umum")}
+              ${target === "gallery" ? "Dokumentasi" : "Pengumuman"}
             </span>
 
-            <h3>${escapeHTML(item.title || "")}</h3>
+            <h3>${escapeHTML(title)}</h3>
 
-            <p>${escapeHTML(item.description || "")}</p>
+            <p>${escapeHTML(text)}</p>
+
+            ${date
+              ? `<p style="margin-top:10px;font-size:12px">${escapeHTML(date)}</p>`
+              : ""
+            }
           </div>
         </article>
       `;
     }).join("");
   }
 
-  /* ==============================================
-     STRUKTUR KEPENGURUSAN
-  ============================================== */
+  // =====================================================
+  // 11. JAWABAN ASPIRASIMU
+  // =====================================================
 
-  function renderOfficers(periods, officers) {
+  function isPublished(item) {
+    /*
+      Data dari action public seharusnya sudah difilter
+      oleh Code.gs. Pemeriksaan berikut menjadi lapisan
+      tambahan jika backend turut mengirim status publikasi.
+    */
+
+    const value = getValue(item,[
+      "published",
+      "tampilPublik",
+      "TampilPublik",
+      "isPublished"
+    ],null);
+
+    if (value === null) return true;
+
+    return (
+      value === true ||
+      value === 1 ||
+      ["true","1","ya","yes"].includes(
+        String(value).toLowerCase()
+      )
+    );
+  }
+
+  function renderPublishedAnswers(items) {
+    const container = $("publishedAnswers");
+
+    if (!Array.isArray(items) || !items.length) {
+      container.innerHTML = `
+        <div class="answer-empty">
+          Belum ada aspirasi yang dipublikasikan.
+          Silakan kunjungi kembali nanti.
+        </div>
+      `;
+      return;
+    }
+
+    const published = items.filter(item => {
+      const answer = getValue(item,[
+        "answer",
+        "jawaban",
+        "Jawaban"
+      ]);
+
+      return isPublished(item) && String(answer).trim();
+    });
+
+    if (!published.length) {
+      container.innerHTML = `
+        <div class="answer-empty">
+          Belum ada jawaban aspirasi yang dipublikasikan.
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = published.map(item => {
+      const title = getValue(item,[
+        "title",
+        "judul",
+        "Judul"
+      ],"Aspirasi");
+
+      const category = getValue(item,[
+        "category",
+        "kategori",
+        "Kategori"
+      ],"Umum");
+
+      const question = getValue(item,[
+        "question",
+        "content",
+        "isi",
+        "Isi"
+      ]);
+
+      const answer = getValue(item,[
+        "answer",
+        "jawaban",
+        "Jawaban"
+      ]);
+
+      const date = getValue(item,[
+        "answeredAt",
+        "waktuJawaban",
+        "WaktuJawaban"
+      ]);
+
+      /*
+        PENTING:
+        Jangan menambahkan Nama, Anonim, email,
+        atau identitas pengirim ke tampilan kartu.
+      */
+
+      return `
+        <article class="answer-card">
+          <span class="tag">${escapeHTML(category)}</span>
+
+          <h3>${escapeHTML(title)}</h3>
+
+          <div class="answer-message">
+            <strong>Aspirasi:</strong>
+            <p>${escapeHTML(question)}</p>
+          </div>
+
+          <div class="answer-reply">
+            <strong>Jawaban HIMASAKI</strong>
+            <p>${escapeHTML(answer)}</p>
+          </div>
+
+          ${date
+            ? `<div class="answer-meta">Dijawab: ${escapeHTML(date)}</div>`
+            : ""
+          }
+        </article>
+      `;
+    }).join("");
+  }
+
+  // =====================================================
+  // 12. STRUKTUR KEPENGURUSAN
+  // =====================================================
+
+  function renderOfficers(periods,officers) {
     const select = $("periodSelect");
 
-    select.innerHTML = (periods || []).map(period => `
-      <option value="${escapeHTML(period.id)}">
-        ${escapeHTML(period.name)}
-      </option>
-    `).join("");
+    periods = Array.isArray(periods) ? periods : [];
+    officers = Array.isArray(officers) ? officers : [];
 
-    if (!periods || !periods.length) {
-      select.innerHTML = '<option value="">Belum ada periode</option>';
+    if (!periods.length) {
+      select.innerHTML =
+        '<option value="">Belum ada periode</option>';
 
       $("officers").innerHTML =
         '<div class="empty">Belum ada data kepengurusan.</div>';
@@ -1054,198 +1648,368 @@
       return;
     }
 
-    const activePeriod = periods.find(period => period.active);
+    select.innerHTML = periods.map(period => {
+      const id = getValue(period,["id","periodId"]);
+      const label = getValue(period,[
+        "name",
+        "nama",
+        "title"
+      ],"Periode");
+
+      return `
+        <option value="${escapeHTML(id)}">
+          ${escapeHTML(label)}
+        </option>
+      `;
+    }).join("");
+
+    const activePeriod = periods.find(period => {
+      const status = String(
+        getValue(period,["status"])
+      ).toLowerCase();
+
+      return [
+        "aktif",
+        "active",
+        "berjalan"
+      ].includes(status);
+    });
 
     if (activePeriod) {
-      select.value = activePeriod.id;
+      select.value = getValue(activePeriod,[
+        "id",
+        "periodId"
+      ]);
     }
 
     function drawOfficers() {
       const periodId = select.value;
 
-      const items = (officers || [])
-        .filter(officer => officer.periodId === periodId)
-        .sort((a, b) =>
+      const selectedPeriod = periods.find(period =>
+        String(getValue(period,["id","periodId"])) ===
+        String(periodId)
+      );
+
+      const periodName = selectedPeriod
+        ? getValue(selectedPeriod,["name","nama"])
+        : "";
+
+      const items = officers
+        .filter(officer => {
+          const officerPeriod = getValue(officer,[
+            "periodId",
+            "period"
+          ]);
+
+          return (
+            String(officerPeriod) === String(periodId) ||
+            String(officerPeriod) === String(periodName)
+          );
+        })
+        .sort((a,b) =>
           Number(a.order || 0) - Number(b.order || 0)
         );
 
       $("officers").innerHTML = items.length
-        ? items.map(officer => `
-          <article class="person">
-            ${imageHTML(officer.photo, officer.name)}
+        ? items.map(officer => {
+            const name = getValue(officer,[
+              "name",
+              "nama"
+            ]);
 
-            <span class="tag">
-              ${escapeHTML(officer.division || "")}
-            </span>
+            const position = getValue(officer,[
+              "position",
+              "role",
+              "jabatan"
+            ]);
 
-            <h3>${escapeHTML(officer.name)}</h3>
-            <strong>${escapeHTML(officer.position || "")}</strong>
+            const photo = getValue(officer,[
+              "photo",
+              "photoUrl"
+            ]);
 
-            <p class="muted">
-              ${escapeHTML(officer.description || "")}
-            </p>
-          </article>
-        `).join("")
-        : '<div class="empty">Belum ada data pengurus untuk periode ini.</div>';
+            const bio = getValue(officer,[
+              "bio",
+              "description",
+              "deskripsi"
+            ]);
+
+            return `
+              <article class="person">
+                ${imageHTML(photo,name)}
+
+                <span class="tag">
+                  ${escapeHTML(periodName)}
+                </span>
+
+                <h3>${escapeHTML(name)}</h3>
+
+                <strong>${escapeHTML(position)}</strong>
+
+                <p class="muted">
+                  ${escapeHTML(bio)}
+                </p>
+              </article>
+            `;
+          }).join("")
+        : `
+          <div class="empty">
+            Belum ada data pengurus untuk periode ini.
+          </div>
+        `;
     }
 
     select.onchange = drawOfficers;
     drawOfficers();
   }
 
-  /* ==============================================
-     PENDIRI, PENGEMBANG, PENGELOLA
-  ============================================== */
+  // =====================================================
+  // 13. PENDIRI, PENGEMBANG, DAN PENGELOLA
+  // =====================================================
 
-  function renderPeople(personData) {
+  function renderPeople(personData,settings) {
+    personData = personData || {};
+    settings = settings || {};
+
+    const source = {
+      ...settings,
+      ...personData
+    };
+
     const people = [];
 
-    if (personData.founderName) {
+    const founderName = getValue(source,[
+      "founderName"
+    ]);
+
+    if (founderName) {
       people.push({
-        name: personData.founderName,
-        role: "Pendiri",
-        description: personData.founderDescription,
-        photo: personData.founderPhoto
+        name:founderName,
+        role:"Pendiri",
+        description:getValue(source,[
+          "founderDescription"
+        ]),
+        photo:getValue(source,[
+          "founderPhoto"
+        ])
       });
     }
 
-    if (personData.developerName) {
+    const developerName = getValue(source,[
+      "developerName"
+    ]);
+
+    if (developerName) {
       people.push({
-        name: personData.developerName,
-        role: "Pengembang",
-        description: personData.developerDescription,
-        photo: personData.developerPhoto
+        name:developerName,
+        role:"Pengembang",
+        description:getValue(source,[
+          "developerDescription"
+        ]),
+        photo:getValue(source,[
+          "developerPhoto"
+        ])
       });
     }
 
-    (personData.managers || []).forEach(manager => {
+    const managers = Array.isArray(source.managers)
+      ? source.managers
+      : [];
+
+    managers.forEach(manager => {
+      if (!manager || !manager.name) return;
+
       people.push({
-        name: manager.name,
-        role: manager.role || "Pengelola",
-        description: manager.description,
-        photo: manager.photo
+        name:manager.name,
+        role:getValue(manager,[
+          "role",
+          "position"
+        ],"Pengelola"),
+        description:getValue(manager,[
+          "description",
+          "bio"
+        ]),
+        photo:getValue(manager,[
+          "photo",
+          "photoUrl"
+        ])
       });
     });
 
     $("people").innerHTML = people.length
       ? people.map(person => `
-        <article class="person">
-          ${imageHTML(person.photo, person.name)}
+          <article class="person">
+            ${imageHTML(person.photo,person.name)}
 
-          <span class="tag">${escapeHTML(person.role)}</span>
-          <h3>${escapeHTML(person.name)}</h3>
+            <span class="tag">
+              ${escapeHTML(person.role)}
+            </span>
 
-          <p class="muted">
-            ${escapeHTML(person.description || "")}
-          </p>
-        </article>
-      `).join("")
-      : '<p class="muted">Informasi pendiri, pengembang, dan pengelola belum ditambahkan.</p>';
+            <h3>${escapeHTML(person.name)}</h3>
+
+            <p class="muted">
+              ${escapeHTML(person.description)}
+            </p>
+          </article>
+        `).join("")
+      : `
+        <p class="muted">
+          Informasi pendiri, pengembang, dan pengelola belum ditambahkan.
+        </p>
+      `;
   }
 
-  /* ==============================================
-     MEMUAT DATA WEBSITE
-  ============================================== */
+  // =====================================================
+  // 14. MEMUAT DATA WEBSITE
+  // =====================================================
 
   async function loadWebsite() {
     try {
-      const result = await request({ action: "public" });
+      const result = await request({
+        action:"public"
+      });
 
       const settings = result.settings || {};
 
-      $("logo").textContent = settings.logoText || "HK";
+      setText(
+        "org",
+        getValue(settings,[
+          "orgName"
+        ],"SAINS KIMIA · HIMASAKI")
+      );
 
-      $("org").textContent =
-        settings.orgName || "SAINS KIMIA · HIMASAKI";
+      setText(
+        "footerOrg",
+        getValue(settings,[
+          "orgName"
+        ],"SAINS KIMIA · HIMASAKI")
+      );
 
-      $("footerOrg").textContent =
-        settings.orgName || "SAINS KIMIA · HIMASAKI";
+      setText(
+        "heroTitle",
+        getValue(settings,[
+          "heroTitle"
+        ],"Suaramu berarti untuk HIMASAKI.")
+      );
 
-      $("heroTitle").textContent =
-        settings.heroTitle || "Suaramu berarti untuk HIMASAKI.";
+      setText(
+        "heroText",
+        getValue(settings,[
+          "heroText"
+        ],"Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.")
+      );
 
-      $("heroText").textContent =
-        settings.heroText ||
-        "Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.";
+      setText(
+        "about",
+        getValue(settings,[
+          "aboutText"
+        ])
+      );
 
-      $("about").textContent = settings.aboutText || "";
+      setText(
+        "footerText",
+        getValue(settings,[
+          "footerText"
+        ],"Himpunan Mahasiswa Sains Kimia")
+      );
 
-      $("footerText").textContent =
-        settings.footerText || "Himpunan Mahasiswa Sains Kimia";
+      setBrandingImage(settings);
 
-      renderItems(result.announcements, "announcements");
-      renderItems(result.gallery, "gallery");
+      renderCategories(result.categories);
+
+      renderSectionDescriptions(settings,result);
+
+      renderItems(
+        result.announcements || [],
+        "announcements"
+      );
+
+      renderItems(
+        result.gallery || [],
+        "gallery"
+      );
+
+      renderPublishedAnswers(
+        result.publishedAnswers || []
+      );
 
       renderOfficers(
         result.periods || [],
         result.officers || []
       );
 
-      renderPeople(result.people || {});
+      renderPeople(
+        result.people || {},
+        settings
+      );
 
     } catch (error) {
-      console.error("Gagal memuat website:", error);
+      console.error("Gagal memuat website:",error);
 
-      [
-        "announcements",
-        "gallery",
-        "officers"
-      ].forEach(id => {
-        $(id).innerHTML = `
-          <div class="empty">
-            Data belum dapat dimuat.
-            Muat ulang halaman beberapa saat lagi.
-          </div>
-        `;
-      });
+      $("announcements").innerHTML =
+        '<div class="empty">Pengumuman belum dapat dimuat.</div>';
+
+      $("gallery").innerHTML =
+        '<div class="empty">Galeri belum dapat dimuat.</div>';
+
+      $("publishedAnswers").innerHTML =
+        '<div class="answer-empty">Jawaban aspirasi belum dapat dimuat.</div>';
+
+      $("officers").innerHTML =
+        '<div class="empty">Data kepengurusan belum dapat dimuat.</div>';
     }
   }
 
-  /* ==============================================
-     FORMULIR ANONIM ATAU NAMA
-  ============================================== */
+  // =====================================================
+  // 15. PILIHAN ANONIM ATAU DENGAN NAMA
+  // =====================================================
 
   const anonymous = $("anonymous");
   const nameArea = $("nameArea");
   const nameInput = $("name");
 
-  anonymous.addEventListener("change", () => {
+  anonymous.addEventListener("change",() => {
     nameArea.hidden = anonymous.checked;
+    nameInput.required = !anonymous.checked;
 
     if (anonymous.checked) {
       nameInput.value = "";
     }
   });
 
-  /* ==============================================
-     HITUNG KARAKTER
-  ============================================== */
+  // =====================================================
+  // 16. HITUNG KARAKTER
+  // =====================================================
 
-  $("message").addEventListener("input", event => {
+  $("message").addEventListener("input",event => {
     $("count").textContent =
       event.target.value.length + "/2000 karakter";
   });
 
-  /* ==============================================
-     KIRIM ASPIRASI
-  ============================================== */
+  // =====================================================
+  // 17. KIRIM ASPIRASI
+  // =====================================================
 
-  $("aspForm").addEventListener("submit", async event => {
+  $("aspForm").addEventListener("submit",async event => {
     event.preventDefault();
 
     const button = $("sendBtn");
     const isAnonymous = anonymous.checked;
 
     const payload = {
-      action: "submit",
-      category: $("category").value,
-      title: $("title").value.trim(),
-      message: $("message").value.trim(),
-      anonymous: isAnonymous,
-      name: isAnonymous ? "" : nameInput.value.trim()
+      action:"submit",
+      category:$("category").value,
+      title:$("title").value.trim(),
+      content:$("message").value.trim(),
+      anonymous:isAnonymous,
+      name:isAnonymous ? "" : nameInput.value.trim()
     };
 
-    if (!payload.category || !payload.title || !payload.message) {
+    if (
+      !payload.category ||
+      !payload.title ||
+      !payload.content
+    ) {
       showNotice(
         "formNotice",
         "Lengkapi seluruh bagian formulir.",
@@ -1279,6 +2043,8 @@
 
       anonymous.checked = true;
       nameArea.hidden = true;
+      nameInput.required = false;
+
       $("count").textContent = "0/2000 karakter";
 
     } catch (error) {
@@ -1295,11 +2061,11 @@
     }
   });
 
-  /* ==============================================
-     MULAI WEBSITE
-  ============================================== */
+  // =====================================================
+  // 18. MULAI WEBSITE
+  // =====================================================
 
-  navigateTo(location.hash || "#top", false);
+  navigateTo(location.hash || "#top",false);
   loadWebsite();
 
 </script>

@@ -14,1322 +14,505 @@
 
 <style>
 :root{
- --navy:#173b69;
- --navy2:#214d7d;
- --blue:#3673ad;
- --bg:#f4f7fb;
- --white:#fff;
- --ink:#253449;
- --muted:#718096;
- --border:#e5ebf2;
- --green:#16845a;
- --red:#bd4545;
- --orange:#c27a24;
- --shadow:0 5px 20px rgba(25,50,80,.055);
- --radius:14px;
+ --navy:#173b69;--navy2:#214d7d;--blue:#3673ad;
+ --bg:#f4f7fb;--white:#fff;--ink:#253449;--muted:#718096;
+ --border:#e5ebf2;--green:#16845a;--red:#bd4545;
+ --orange:#c27a24;--shadow:0 5px 20px rgba(25,50,80,.055);
+ --radius:14px
 }
-
 *{box-sizing:border-box}
-
-body{
- margin:0;
- background:var(--bg);
- color:var(--ink);
- font:14px/1.6 "DM Sans",Arial,sans-serif;
-}
-
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.6 "DM Sans",Arial,sans-serif}
 button,input,select,textarea{font:inherit}
 button{cursor:pointer}
-
 .topbar{
- height:70px;
- position:fixed;
- top:0;
- left:0;
- right:0;
- z-index:100;
- background:var(--navy);
- color:white;
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:0 26px;
- box-shadow:0 3px 14px rgba(0,0,0,.12);
+ height:70px;position:fixed;top:0;left:0;right:0;z-index:100;
+ background:var(--navy);color:white;display:flex;align-items:center;
+ justify-content:space-between;padding:0 26px;
+ box-shadow:0 3px 14px rgba(0,0,0,.12)
 }
-
-.brand{
- display:flex;
- align-items:center;
- gap:12px;
-}
-
+.brand{display:flex;align-items:center;gap:12px}
 .brand-mark{
- width:39px;
- height:39px;
- border-radius:11px;
- background:rgba(255,255,255,.15);
- display:grid;
- place-items:center;
- font-size:17px;
- font-weight:800;
+ width:39px;height:39px;border-radius:11px;background:rgba(255,255,255,.15);
+ display:grid;place-items:center;font-size:17px;font-weight:800;overflow:hidden
 }
-
-.brand strong{
- display:block;
- font-size:16px;
- letter-spacing:.4px;
-}
-
-.brand small{
- display:block;
- font-size:11px;
- color:#c7d6e7;
-}
-
-.top-right{
- display:flex;
- align-items:center;
- gap:12px;
-}
-
-.user-label{
- font-size:12px;
- color:#e0eaf5;
-}
-
+.brand-mark img{width:100%;height:100%;object-fit:cover}
+.brand strong{display:block;font-size:16px;letter-spacing:.4px}
+.brand small{display:block;font-size:11px;color:#c7d6e7}
+.top-right{display:flex;align-items:center;gap:12px}
+.user-label{font-size:12px;color:#e0eaf5}
 .sidebar{
- position:fixed;
- top:70px;
- left:0;
- bottom:0;
- width:255px;
- background:var(--navy);
- padding:22px 14px;
- overflow-y:auto;
- z-index:90;
+ position:fixed;top:70px;left:0;bottom:0;width:255px;background:var(--navy);
+ padding:22px 14px;overflow-y:auto;z-index:90
 }
-
-.side-heading{
- padding:0 13px 12px;
- color:#9eb6d1;
- font-size:10px;
- font-weight:800;
- letter-spacing:1.5px;
- text-transform:uppercase;
-}
-
+.side-heading{padding:0 13px 12px;color:#9eb6d1;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}
 .tab{
- display:flex;
- align-items:center;
- gap:12px;
- width:100%;
- padding:12px 14px;
- margin:3px 0;
- border:0;
- border-radius:10px;
- color:#dbe6f2;
- background:transparent;
- text-align:left;
- font-weight:500;
- transition:.18s;
+ display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;
+ margin:3px 0;border:0;border-radius:10px;color:#dbe6f2;background:transparent;
+ text-align:left;font-weight:500;transition:.18s
 }
-
-.tab:hover{
- background:rgba(255,255,255,.1);
- color:white;
-}
-
-.tab.active{
- background:white;
- color:var(--navy);
- font-weight:800;
- box-shadow:0 3px 12px rgba(0,0,0,.1);
-}
-
-.tab-icon{
- width:22px;
- text-align:center;
- font-size:16px;
-}
-
-.side-footer{
- border-top:1px solid rgba(255,255,255,.15);
- margin-top:24px;
- padding:17px 13px;
- color:#a9bfd8;
- font-size:11px;
-}
-
-.workspace{
- margin-left:255px;
- padding:96px 28px 35px;
- min-height:100vh;
-}
-
-.page-heading{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:14px;
- margin-bottom:22px;
-}
-
-.page-heading h1{
- margin:0;
- font-size:24px;
- color:var(--navy);
- font-weight:800;
-}
-
-.page-heading p{
- margin:4px 0 0;
- color:var(--muted);
- font-size:13px;
-}
-
-.section{
- display:none;
- max-width:1250px;
- margin:auto;
-}
-
+.tab:hover{background:rgba(255,255,255,.1);color:white}
+.tab.active{background:white;color:var(--navy);font-weight:800;box-shadow:0 3px 12px rgba(0,0,0,.1)}
+.tab-icon{width:22px;text-align:center;font-size:16px}
+.side-footer{border-top:1px solid rgba(255,255,255,.15);margin-top:24px;padding:17px 13px;color:#a9bfd8;font-size:11px}
+.workspace{margin-left:255px;padding:96px 28px 35px;min-height:100vh}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px}
+.page-heading h1{margin:0;font-size:24px;color:var(--navy);font-weight:800}
+.page-heading p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.section{display:none;max-width:1250px;margin:auto}
 .section.active{display:block}
-
-.panel{
- background:var(--white);
- border:1px solid var(--border);
- border-radius:var(--radius);
- padding:23px;
- margin-bottom:19px;
- box-shadow:var(--shadow);
-}
-
-.panel-head{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px;
- margin-bottom:18px;
-}
-
-.panel h2{
- margin:0;
- color:var(--navy);
- font-size:18px;
- font-weight:800;
-}
-
-.panel h3{
- margin:20px 0 12px;
- color:var(--navy);
- font-size:15px;
-}
-
-.panel-desc{
- margin:5px 0 0;
- color:var(--muted);
- font-size:12px;
-}
-
-.grid{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:14px;
-}
-
+.panel{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:23px;margin-bottom:19px;box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.panel h2{margin:0;color:var(--navy);font-size:18px;font-weight:800}
+.panel h3{margin:20px 0 12px;color:var(--navy);font-size:15px}
+.panel-desc{margin:5px 0 0;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .full{grid-column:1/-1}
-
-label{
- display:block;
- margin:10px 0 6px;
- font-size:12px;
- font-weight:700;
- color:#40536a;
-}
-
+label{display:block;margin:10px 0 6px;font-size:12px;font-weight:700;color:#40536a}
 input,select,textarea{
- width:100%;
- min-width:0;
- padding:11px 13px;
- border:1px solid #dce4ed;
- border-radius:9px;
- outline:none;
- color:var(--ink);
- background:white;
- transition:.18s;
+ width:100%;min-width:0;padding:11px 13px;border:1px solid #dce4ed;
+ border-radius:9px;outline:none;color:var(--ink);background:white;transition:.18s
 }
-
-input:focus,select:focus,textarea:focus{
- border-color:#5b8cbd;
- box-shadow:0 0 0 3px rgba(65,119,174,.11);
-}
-
-textarea{
- min-height:105px;
- resize:vertical;
-}
-
-input[type=file]{
- padding:9px;
- background:#f9fbfd;
- font-size:12px;
-}
-
-input[type=checkbox]{
- width:16px;
- height:16px;
- accent-color:var(--navy);
-}
-
-.checkrow{
- display:flex;
- align-items:center;
- gap:9px;
- margin:12px 0;
-}
-
-.checkrow label{
- margin:0;
- font-weight:500;
-}
-
+input:focus,select:focus,textarea:focus{border-color:#5b8cbd;box-shadow:0 0 0 3px rgba(65,119,174,.11)}
+textarea{min-height:105px;resize:vertical}
+input[type=file]{padding:9px;background:#f9fbfd;font-size:12px}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--navy)}
+.checkrow{display:flex;align-items:center;gap:9px;margin:12px 0}
+.checkrow label{margin:0;font-weight:500}
 .btn{
- display:inline-flex;
- align-items:center;
- justify-content:center;
- gap:7px;
- padding:10px 15px;
- border:0;
- border-radius:9px;
- background:var(--navy);
- color:white;
- font-size:12px;
- font-weight:700;
- transition:.18s;
+ display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ padding:10px 15px;border:0;border-radius:9px;background:var(--navy);
+ color:white;font-size:12px;font-weight:700;transition:.18s
 }
-
 .btn:hover{filter:brightness(1.12)}
 .btn:disabled{opacity:.55;cursor:wait}
-
-.btn.alt{
- background:#edf2f8;
- color:var(--navy);
-}
-
+.btn.alt{background:#edf2f8;color:var(--navy)}
 .btn.red{background:var(--red)}
 .btn.green{background:var(--green)}
 .btn.small{padding:7px 10px;font-size:11px}
-
-.btn-row{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-top:17px;
-}
-
-.alert{
- display:none;
- padding:12px 14px;
- margin:13px 0;
- border-radius:9px;
- font-size:12px;
-}
-
-.alert.ok{
- display:block;
- background:#e8f6ee;
- color:#17643e;
- border:1px solid #ccebd8;
-}
-
-.alert.err{
- display:block;
- background:#fff0ef;
- color:#a12b25;
- border:1px solid #f5d5d2;
-}
-
-.item{
- background:white;
- border:1px solid var(--border);
- border-radius:11px;
- padding:16px;
- margin:12px 0;
- overflow-wrap:anywhere;
-}
-
-.item h3{
- margin:5px 0 8px;
- font-size:15px;
-}
-
+.btn-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.alert{display:none;padding:12px 14px;margin:13px 0;border-radius:9px;font-size:12px}
+.alert.ok{display:block;background:#e8f6ee;color:#17643e;border:1px solid #ccebd8}
+.alert.err{display:block;background:#fff0ef;color:#a12b25;border:1px solid #f5d5d2}
+.item{background:white;border:1px solid var(--border);border-radius:11px;padding:16px;margin:12px 0;overflow-wrap:anywhere}
+.item h3{margin:5px 0 8px;font-size:15px}
 .item p{margin:8px 0}
-
-.meta{
- color:var(--muted);
- font-size:11px;
-}
-
-.item-actions{
- display:flex;
- flex-wrap:wrap;
- gap:7px;
- margin-top:12px;
-}
-
-.badge{
- display:inline-block;
- padding:4px 9px;
- border-radius:20px;
- background:#edf3f9;
- color:#31577d;
- font-size:10px;
- font-weight:700;
-}
-
+.meta{color:var(--muted);font-size:11px}
+.item-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.badge{display:inline-block;padding:4px 9px;border-radius:20px;background:#edf3f9;color:#31577d;font-size:10px;font-weight:700}
 .badge.green{background:#e5f5eb;color:#187247}
 .badge.orange{background:#fff3df;color:#9a641c}
-
-.stats{
- display:grid;
- grid-template-columns:repeat(4,minmax(0,1fr));
- gap:13px;
- margin-bottom:19px;
-}
-
-.stat{
- background:white;
- border:1px solid var(--border);
- border-radius:13px;
- padding:17px;
- box-shadow:var(--shadow);
-}
-
-.stat-icon{
- width:35px;
- height:35px;
- border-radius:10px;
- background:#edf3fa;
- display:grid;
- place-items:center;
- font-size:17px;
- margin-bottom:10px;
-}
-
-.stat strong{
- display:block;
- color:var(--navy);
- font-size:25px;
- line-height:1.2;
-}
-
-.stat span{
- color:var(--muted);
- font-size:11px;
-}
-
-.empty{
- padding:24px 15px;
- text-align:center;
- color:var(--muted);
- font-size:12px;
- background:#fafbfd;
- border:1px dashed #dce4ed;
- border-radius:10px;
-}
-
-.photo-preview{
- display:block;
- width:112px;
- height:112px;
- object-fit:cover;
- background:#f2f5f9;
- border:1px solid var(--border);
- border-radius:12px;
- margin-top:10px;
-}
-
-.photo-note{
- display:block;
- color:var(--muted);
- font-size:11px;
- margin-top:6px;
-}
-
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:19px}
+.stat{background:white;border:1px solid var(--border);border-radius:13px;padding:17px;box-shadow:var(--shadow)}
+.stat-icon{width:35px;height:35px;border-radius:10px;background:#edf3fa;display:grid;place-items:center;font-size:17px;margin-bottom:10px}
+.stat strong{display:block;color:var(--navy);font-size:25px;line-height:1.2}
+.stat span{color:var(--muted);font-size:11px}
+.empty{padding:24px 15px;text-align:center;color:var(--muted);font-size:12px;background:#fafbfd;border:1px dashed #dce4ed;border-radius:10px}
+.photo-preview{display:block;max-width:100%;width:150px;height:120px;object-fit:cover;background:#f2f5f9;border:1px solid var(--border);border-radius:12px;margin-top:10px}
+.photo-note{display:block;color:var(--muted);font-size:11px;margin-top:6px}
 .hidden{display:none!important}
-
-hr{
- border:0;
- border-top:1px solid var(--border);
- margin:21px 0;
-}
-
-#login{
- max-width:470px;
- margin:145px auto 40px;
- padding:30px;
- text-align:center;
-}
-
-.login-logo{
- width:62px;
- height:62px;
- margin:0 auto 15px;
- display:grid;
- place-items:center;
- background:#edf3fa;
- color:var(--navy);
- border-radius:18px;
- font-size:25px;
- font-weight:800;
-}
-
-#login h2{
- margin:0;
- color:var(--navy);
- font-size:22px;
-}
-
-#login p{
- color:var(--muted);
- font-size:12px;
-}
-
-#googleButton{
- display:flex;
- justify-content:center;
- margin:20px auto;
- min-height:42px;
-}
-
+hr{border:0;border-top:1px solid var(--border);margin:21px 0}
+#login{max-width:470px;margin:145px auto 40px;padding:30px;text-align:center}
+.login-logo{width:62px;height:62px;margin:0 auto 15px;display:grid;place-items:center;background:#edf3fa;color:var(--navy);border-radius:18px;font-size:25px;font-weight:800;overflow:hidden}
+.login-logo img{width:100%;height:100%;object-fit:cover}
+#login h2{margin:0;color:var(--navy);font-size:22px}
+#login p{color:var(--muted);font-size:12px}
+#googleButton{display:flex;justify-content:center;margin:20px auto;min-height:42px}
 #accessCode{text-align:center;letter-spacing:1px}
-
-#newCode{
- overflow-wrap:anywhere;
- font-weight:700;
-}
-
-.menu-toggle{
- display:none;
- border:0;
- color:white;
- background:transparent;
- font-size:22px;
-}
-
-@media(max-width:1050px){
- .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
- .workspace{padding-left:20px;padding-right:20px}
-}
-
+#newCode{overflow-wrap:anywhere;font-weight:700}
+.menu-toggle{display:none;border:0;color:white;background:transparent;font-size:22px}
+.category-row{display:grid;grid-template-columns:1fr auto auto auto;gap:7px;align-items:center;margin:8px 0}
+.category-row input{padding:9px}
+.preview-wide{width:100%;max-height:230px;object-fit:cover;border-radius:12px;border:1px solid var(--border);margin-top:10px}
+.reply-editor{margin-top:15px;padding:14px;background:#f7f9fc;border:1px solid var(--border);border-radius:10px}
+.reply-editor textarea{min-height:90px}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{padding-left:20px;padding-right:20px}}
 @media(max-width:760px){
- .topbar{height:62px;padding:0 14px}
- .brand strong{font-size:14px}
- .brand-mark{width:34px;height:34px}
- .menu-toggle{display:block}
- .sidebar{
-  top:62px;
-  width:255px;
-  transform:translateX(-100%);
-  transition:transform .2s;
-  box-shadow:5px 0 20px rgba(0,0,0,.13);
- }
- .sidebar.open{transform:translateX(0)}
- .workspace{
-  margin-left:0;
-  padding:83px 13px 25px;
- }
- .user-label{display:none}
- .page-heading h1{font-size:21px}
- .panel{padding:17px}
- .grid{grid-template-columns:1fr}
- .full{grid-column:auto}
- .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
- .stat{padding:13px}
- .stat strong{font-size:22px}
+ .topbar{height:62px;padding:0 14px}.brand strong{font-size:14px}.brand-mark{width:34px;height:34px}
+ .menu-toggle{display:block}.sidebar{top:62px;width:255px;transform:translateX(-100%);transition:transform .2s;box-shadow:5px 0 20px rgba(0,0,0,.13)}
+ .sidebar.open{transform:translateX(0)}.workspace{margin-left:0;padding:83px 13px 25px}
+ .user-label{display:none}.page-heading h1{font-size:21px}.panel{padding:17px}
+ .grid{grid-template-columns:1fr}.full{grid-column:auto}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .stat{padding:13px}.stat strong{font-size:22px}.category-row{grid-template-columns:1fr auto auto auto}
 }
-
-@media(max-width:400px){
- .stats{grid-template-columns:1fr 1fr}
- .panel{padding:14px}
-}
+@media(max-width:400px){.stats{grid-template-columns:1fr 1fr}.panel{padding:14px}}
 </style>
 </head>
 
 <body>
-
 <header class="topbar">
  <div class="brand">
   <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
-  <div class="brand-mark">HK</div>
-  <div>
-   <strong>SUARA HIMASAKI</strong>
-   <small>Panel Pengelolaan</small>
-  </div>
+  <div class="brand-mark" id="topLogo">HK</div>
+  <div><strong>SUARA HIMASAKI</strong><small>Panel Pengelolaan</small></div>
  </div>
-
  <div class="top-right hidden" id="account">
   <span class="user-label" id="who"></span>
   <button class="btn alt small" onclick="logout()">Keluar</button>
  </div>
 </header>
 
-<!-- LOGIN -->
 <section id="login" class="panel">
- <div class="login-logo">HK</div>
+ <div class="login-logo" id="loginLogo">HK</div>
  <h2>Selamat Datang</h2>
  <p>Masuk ke panel pengelolaan SUARA HIMASAKI.</p>
  <p>Admin utama menggunakan akun Google. Pengurus lain menggunakan kode akses.</p>
-
- <div id="googleArea">
-  <div id="googleButton"></div>
- </div>
-
+ <div id="googleArea"><div id="googleButton"></div></div>
  <hr>
-
  <label for="accessCode">Kode akses pengurus</label>
  <input id="accessCode" placeholder="Masukkan kode akses" autocomplete="off">
-
  <div class="btn-row" style="justify-content:center">
   <button class="btn" onclick="loginCode()">Masuk dengan kode</button>
  </div>
-
  <div id="loginAlert" class="alert"></div>
 </section>
 
-<!-- SIDEBAR -->
 <nav class="sidebar hidden" id="sidebar">
  <div class="side-heading">Menu Pengelolaan</div>
-
- <button class="tab active" data-tab="asp">
-  <span class="tab-icon">▤</span> Aspirasi
- </button>
-
- <button class="tab" data-tab="home">
-  <span class="tab-icon">⌂</span> Beranda
- </button>
-
- <button class="tab" data-tab="periods">
-  <span class="tab-icon">▦</span> Periode & Pengurus
- </button>
-
- <button class="tab" data-tab="people">
-  <span class="tab-icon">♙</span> Pendiri & Pengelola
- </button>
-
- <button class="tab" data-tab="ann">
-  <span class="tab-icon">▣</span> Pengumuman
- </button>
-
- <button class="tab" data-tab="gallery">
-  <span class="tab-icon">▧</span> Dokumentasi
- </button>
-
- <button class="tab" data-tab="codes" data-main>
-  <span class="tab-icon">⚿</span> Hak Akses
- </button>
-
- <button class="tab" data-tab="backup">
-  <span class="tab-icon">⟳</span> Backup
- </button>
-
- <div class="side-footer">
-  SUARA HIMASAKI<br>
-  Himpunan Mahasiswa Sains Kimia
- </div>
+ <button class="tab active" data-tab="asp"><span class="tab-icon">▤</span>Aspirasi</button>
+ <button class="tab" data-tab="home"><span class="tab-icon">⌂</span>Beranda & Kategori</button>
+ <button class="tab" data-tab="periods"><span class="tab-icon">▦</span>Periode & Pengurus</button>
+ <button class="tab" data-tab="people"><span class="tab-icon">♙</span>Pendiri & Pengelola</button>
+ <button class="tab" data-tab="ann"><span class="tab-icon">▣</span>Pengumuman</button>
+ <button class="tab" data-tab="gallery"><span class="tab-icon">▧</span>Dokumentasi</button>
+ <button class="tab" data-tab="codes" data-main><span class="tab-icon">⚿</span>Hak Akses</button>
+ <button class="tab" data-tab="backup"><span class="tab-icon">⟳</span>Backup</button>
+ <div class="side-footer">SUARA HIMASAKI<br>Himpunan Mahasiswa Sains Kimia</div>
 </nav>
 
-<!-- AREA ADMIN -->
 <main class="workspace hidden" id="app">
-
  <div id="alert" class="alert"></div>
 
- <!-- ASPIRASI -->
- <section class="section active" id="asp">
-  <div class="page-heading">
+<!-- ASPIRASI -->
+<section class="section active" id="asp">
+ <div class="page-heading">
+  <div><h1>Dashboard & Aspirasi</h1><p>Ringkasan dan pengelolaan masukan mahasiswa.</p></div>
+  <button class="btn alt" onclick="refresh()">↻ Muat ulang</button>
+ </div>
+ <div class="stats">
+  <div class="stat"><div class="stat-icon">▤</div><strong id="statAsp">0</strong><span>Total aspirasi</span></div>
+  <div class="stat"><div class="stat-icon">◷</div><strong id="statNew">0</strong><span>Aspirasi baru</span></div>
+  <div class="stat"><div class="stat-icon">♙</div><strong id="statPeople">0</strong><span>Data pengurus</span></div>
+  <div class="stat"><div class="stat-icon">▧</div><strong id="statContent">0</strong><span>Konten aktif</span></div>
+ </div>
+ <div class="panel">
+  <div class="panel-head"><div><h2>Daftar Aspirasi</h2><p class="panel-desc">Kelola status, tulis jawaban, dan tentukan jawaban yang tampil kepada pengunjung.</p></div></div>
+  <div id="aspList"></div>
+ </div>
+</section>
+
+<!-- BERANDA -->
+<section class="section" id="home">
+ <div class="page-heading"><div><h1>Beranda & Kategori</h1><p>Atur identitas, tampilan, kategori, dan deskripsi website.</p></div></div>
+
+ <div class="panel">
+  <h2>Identitas Organisasi</h2>
+  <div class="grid">
+   <div><label>Nama organisasi</label><input id="orgName"></div>
+   <div><label>Teks logo cadangan</label><input id="logoText" maxlength="12"></div>
+   <div class="full"><label>Judul utama</label><input id="heroTitle"></div>
+   <div class="full"><label>Deskripsi utama</label><textarea id="heroText"></textarea></div>
+   <div class="full"><label>Tentang HIMASAKI</label><textarea id="aboutText"></textarea></div>
+   <div class="full"><label>Teks footer</label><input id="footerText"></div>
+  </div>
+  <div class="btn-row"><button class="btn" onclick="saveHome()">Simpan identitas dan teks</button></div>
+ </div>
+
+ <div class="panel">
+  <h2>Logo Website</h2>
+  <p class="panel-desc">Unggah logo yang akan digunakan pada website publik.</p>
+  <label>Pilih gambar logo</label>
+  <input id="logoFile" type="file" accept="image/jpeg,image/png,image/webp">
+  <img id="logoPreview" class="photo-preview hidden" alt="Pratinjau logo">
+  <span class="photo-note">Format JPG, PNG, atau WEBP. Maksimal 5 MB.</span>
+  <div class="btn-row"><button class="btn" onclick="uploadBranding('logo')">Simpan logo</button></div>
+ </div>
+
+ <div class="panel">
+  <h2>Foto Latar Belakang Beranda</h2>
+  <p class="panel-desc">Foto ini digunakan sebagai latar bagian utama halaman beranda.</p>
+  <label>Pilih foto latar belakang</label>
+  <input id="backgroundFile" type="file" accept="image/jpeg,image/png,image/webp">
+  <img id="backgroundPreview" class="preview-wide hidden" alt="Pratinjau latar belakang">
+  <span class="photo-note">Format JPG, PNG, atau WEBP. Maksimal 5 MB.</span>
+  <div class="btn-row">
+   <button class="btn" onclick="uploadBranding('background')">Simpan latar belakang</button>
+   <button class="btn alt" onclick="removeBackground()">Hapus latar belakang</button>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h2>Deskripsi Setiap Bagian Website</h2>
+  <p class="panel-desc">Atur kalimat pengantar pada bagian-bagian halaman publik.</p>
+  <div class="grid">
+   <div><label>Deskripsi Aspirasi</label><textarea id="descAspirations"></textarea></div>
+   <div><label>Deskripsi Jawaban Aspirasimu</label><textarea id="descAnswers"></textarea></div>
+   <div><label>Deskripsi Pengumuman</label><textarea id="descAnnouncements"></textarea></div>
+   <div><label>Deskripsi Galeri</label><textarea id="descGallery"></textarea></div>
+   <div><label>Deskripsi Kepengurusan</label><textarea id="descStructure"></textarea></div>
+   <div><label>Deskripsi Tentang</label><textarea id="descAbout"></textarea></div>
+  </div>
+  <div class="btn-row"><button class="btn" onclick="saveDescriptions()">Simpan deskripsi halaman</button></div>
+ </div>
+
+ <div class="panel">
+  <h2>Kategori Aspirasi</h2>
+  <p class="panel-desc">Tambah kategori sesuai kebutuhan HIMASAKI. Kategori yang sudah digunakan pada aspirasi lama sebaiknya tidak dihapus.</p>
+  <div id="aspCategoryList"></div>
+  <div class="btn-row">
+   <button class="btn alt" onclick="addCategoryRow('aspiration')">+ Tambah kategori</button>
+   <button class="btn" onclick="saveCategories('aspiration')">Simpan kategori aspirasi</button>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h2>Kategori Pengumuman</h2>
+  <div id="annCategoryList"></div>
+  <div class="btn-row">
+   <button class="btn alt" onclick="addCategoryRow('announcement')">+ Tambah kategori</button>
+   <button class="btn" onclick="saveCategories('announcement')">Simpan kategori pengumuman</button>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h2>Kategori Dokumentasi</h2>
+  <div id="galleryCategoryList"></div>
+  <div class="btn-row">
+   <button class="btn alt" onclick="addCategoryRow('gallery')">+ Tambah kategori</button>
+   <button class="btn" onclick="saveCategories('gallery')">Simpan kategori dokumentasi</button>
+  </div>
+ </div>
+</section>
+
+<!-- PERIODE -->
+<section class="section" id="periods">
+ <div class="page-heading"><div><h1>Periode & Pengurus</h1><p>Kelola periode kepengurusan dan struktur organisasi.</p></div></div>
+ <div class="panel">
+  <h2>Periode Kepengurusan</h2><input type="hidden" id="periodId">
+  <div class="grid">
+   <div><label>Nama periode</label><input id="periodName" placeholder="2025–2026"></div>
+   <div><label>Tanggal mulai</label><input type="date" id="periodStart"></div>
+   <div><label>Tanggal selesai</label><input type="date" id="periodEnd"></div>
+   <div class="checkrow"><input type="checkbox" id="periodActive"><label for="periodActive">Jadikan periode aktif</label></div>
+  </div>
+  <div class="btn-row"><button class="btn" onclick="savePeriod()">Simpan periode</button><button class="btn alt" onclick="clearPeriod()">Bersihkan form</button></div>
+  <hr><h3>Daftar Periode</h3><div id="periodList"></div>
+ </div>
+ <div class="panel">
+  <h2>Struktur Pengurus</h2><input type="hidden" id="officerId">
+  <div class="grid">
+   <div><label>Periode</label><select id="officerPeriod"></select></div>
+   <div><label>Divisi</label><select id="officerDivision"><option>Pengurus Inti</option><option>PPD</option><option>PAO</option><option>Keagamaan</option><option>Keamanan</option><option>Lainnya</option></select></div>
+   <div><label>Jabatan</label><input id="officerPosition" placeholder="Ketua Umum / Anggota"></div>
+   <div><label>Nama</label><input id="officerName"></div>
+   <div><label>Foto pengurus</label><input id="officerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><input id="officerPhoto" type="hidden"><img id="officerPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto"><span class="photo-note">Maksimal 5 MB.</span></div>
+   <div><label>Urutan tampil</label><input id="officerOrder" type="number" value="0"></div>
+   <div class="full"><label>Keterangan</label><input id="officerDescription"></div>
+  </div>
+  <div class="btn-row"><button class="btn" onclick="saveOfficer()">Simpan pengurus</button><button class="btn alt" onclick="clearOfficer()">Bersihkan form</button></div>
+  <hr><h3>Daftar Pengurus</h3><div id="officerList"></div>
+ </div>
+</section>
+
+<!-- PENDIRI -->
+<section class="section" id="people">
+ <div class="page-heading"><div><h1>Pendiri & Pengelola</h1><p>Kelola profil pendiri, pengembang, dan pengelola website.</p></div></div>
+ <div class="panel">
+  <h2>Profil Pendiri</h2>
+  <div class="grid">
+   <div><label>Nama pendiri</label><input id="founderName"></div>
+   <div><label>Foto pendiri</label><input id="founderPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><input id="founderPhoto" type="hidden"><img id="founderPhotoPreview" class="photo-preview hidden" alt="Foto pendiri"></div>
+   <div class="full"><label>Keterangan pendiri</label><textarea id="founderDescription"></textarea></div>
+  </div>
+  <hr><h2>Profil Pengembang</h2>
+  <div class="grid">
+   <div><label>Nama pengembang</label><input id="developerName"></div>
+   <div><label>Foto pengembang</label><input id="developerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><input id="developerPhoto" type="hidden"><img id="developerPhotoPreview" class="photo-preview hidden" alt="Foto pengembang"></div>
+   <div class="full"><label>Keterangan pengembang</label><textarea id="developerDescription"></textarea></div>
+  </div>
+  <hr>
+  <div class="panel-head"><div><h2>Pengelola</h2><p class="panel-desc">Tambahkan satu atau beberapa pengelola.</p></div><button class="btn alt small" onclick="addManager()">+ Tambah</button></div>
+  <div id="managerRows"></div>
+  <div class="btn-row"><button class="btn" onclick="savePeople()">Simpan seluruh data</button></div>
+ </div>
+</section>
+
+<!-- PENGUMUMAN -->
+<section class="section" id="ann">
+ <div class="page-heading"><div><h1>Pengumuman</h1><p>Terbitkan informasi dan kegiatan HIMASAKI.</p></div></div>
+ <div class="panel">
+  <h2>Buat Pengumuman</h2>
+  <label>Judul</label><input id="annTitle">
+  <label>Kategori</label><select id="annCategory"></select>
+  <label>Isi pengumuman</label><textarea id="annDescription"></textarea>
+  <div class="btn-row"><button class="btn" onclick="addAnnouncement()">Terbitkan pengumuman</button></div>
+ </div>
+ <div class="panel"><h2>Daftar Pengumuman</h2><div id="annList"></div></div>
+</section>
+
+<!-- DOKUMENTASI -->
+<section class="section" id="gallery">
+ <div class="page-heading"><div><h1>Dokumentasi</h1><p>Kelola foto, video, dan dokumentasi kegiatan.</p></div></div>
+ <div class="panel">
+  <h2>Unggah Foto / Video</h2>
+  <div class="grid">
+   <div class="full"><label>Judul dokumentasi</label><input id="mediaTitle"></div>
+   <div><label>Kategori</label><select id="mediaCategory"></select></div>
+   <div><label>Periode</label><select id="mediaPeriod"></select></div>
+   <div class="full"><label>Deskripsi</label><textarea id="mediaDescription"></textarea></div>
+   <div class="full"><label>Pilih foto atau video</label><input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg"><span class="photo-note">Foto maksimal 5 MB. Video maksimal 20 MB.</span></div>
+  </div>
+  <div class="btn-row"><button class="btn" id="uploadBtn" onclick="uploadMedia()">Unggah dokumentasi</button></div>
+  <hr><h3>Tambahkan Video YouTube</h3>
+  <label>Judul</label><input id="ytTitle">
+  <label>Kategori</label><select id="ytCategory"></select>
+  <label>Deskripsi</label><textarea id="ytDescription"></textarea>
+  <label>URL YouTube</label><input id="ytUrl" placeholder="https://www.youtube.com/watch?v=...">
+  <div class="btn-row"><button class="btn" onclick="addYoutube()">Terbitkan video YouTube</button></div>
+ </div>
+ <div class="panel"><h2>Daftar Dokumentasi</h2><div id="galleryList"></div></div>
+</section>
+
+<!-- HAK AKSES -->
+<section class="section" id="codes">
+ <div class="page-heading"><div><h1>Hak Akses Pengurus</h1><p>Buat dan kelola kode akses untuk pengurus lain.</p></div></div>
+ <div class="panel">
+  <h2>Buat Kode Akses</h2>
+  <label>Nama / keterangan kode</label><input id="codeLabel" placeholder="Contoh: Tim Dokumentasi">
+  <h3>Hak akses</h3>
+  <div class="grid">
    <div>
-    <h1>Dashboard & Aspirasi</h1>
-    <p>Ringkasan dan pengelolaan masukan mahasiswa.</p>
+    <div class="checkrow"><input type="checkbox" id="permAsp"><label for="permAsp">Aspirasi</label></div>
+    <div class="checkrow"><input type="checkbox" id="permHome"><label for="permHome">Beranda & kategori</label></div>
+    <div class="checkrow"><input type="checkbox" id="permPeriods"><label for="permPeriods">Periode dan pengurus</label></div>
+    <div class="checkrow"><input type="checkbox" id="permPeople"><label for="permPeople">Pendiri dan pengelola</label></div>
    </div>
-   <button class="btn alt" onclick="refresh()">↻ Muat ulang</button>
-  </div>
-
-  <div class="stats">
-   <div class="stat">
-    <div class="stat-icon">▤</div>
-    <strong id="statAsp">0</strong>
-    <span>Total aspirasi</span>
-   </div>
-   <div class="stat">
-    <div class="stat-icon">◷</div>
-    <strong id="statNew">0</strong>
-    <span>Aspirasi baru</span>
-   </div>
-   <div class="stat">
-    <div class="stat-icon">♙</div>
-    <strong id="statPeople">0</strong>
-    <span>Data pengurus</span>
-   </div>
-   <div class="stat">
-    <div class="stat-icon">▧</div>
-    <strong id="statContent">0</strong>
-    <span>Konten aktif</span>
-   </div>
-  </div>
-
-  <div class="panel">
-   <div class="panel-head">
-    <div>
-     <h2>Daftar Aspirasi</h2>
-     <p class="panel-desc">Lihat aspirasi dan perbarui status penanganannya.</p>
-    </div>
-   </div>
-   <div id="aspList"></div>
-  </div>
- </section>
-
- <!-- BERANDA -->
- <section class="section" id="home">
-  <div class="page-heading">
    <div>
-    <h1>Pengaturan Beranda</h1>
-    <p>Atur informasi yang tampil pada halaman utama website.</p>
+    <div class="checkrow"><input type="checkbox" id="permAnn" checked><label for="permAnn">Pengumuman</label></div>
+    <div class="checkrow"><input type="checkbox" id="permGallery" checked><label for="permGallery">Dokumentasi</label></div>
+    <div class="checkrow"><input type="checkbox" id="permBackup"><label for="permBackup">Backup</label></div>
    </div>
   </div>
-
-  <div class="panel">
-   <h2>Identitas Organisasi</h2>
-   <div class="grid">
-    <div>
-     <label>Nama organisasi</label>
-     <input id="orgName">
-    </div>
-    <div>
-     <label>Teks logo</label>
-     <input id="logoText" maxlength="12">
-    </div>
-    <div class="full">
-     <label>Judul utama</label>
-     <input id="heroTitle">
-    </div>
-    <div class="full">
-     <label>Deskripsi utama</label>
-     <textarea id="heroText"></textarea>
-    </div>
-    <div class="full">
-     <label>Tentang HIMASAKI</label>
-     <textarea id="aboutText"></textarea>
-    </div>
-    <div class="full">
-     <label>Teks footer</label>
-     <input id="footerText">
-    </div>
-   </div>
-   <div class="btn-row">
-    <button class="btn" onclick="saveHome()">Simpan perubahan</button>
-   </div>
+  <p class="meta">Kode pengurus tidak dapat membuat atau mengelola kode akses lain.</p>
+  <div class="grid">
+   <div><label>Masa berlaku sampai</label><input type="date" id="codeExpiry"></div>
+   <div><label>Maksimal jumlah pengguna/perangkat</label><input type="number" id="codeMax" min="1" max="500" value="3"></div>
   </div>
- </section>
+  <div class="btn-row"><button class="btn" onclick="createCode()">Buat kode akses</button></div>
+  <div id="newCode" class="alert"></div>
+ </div>
+ <div class="panel"><h2>Daftar Kode Akses</h2><div id="codeList"></div></div>
+</section>
 
- <!-- PERIODE -->
- <section class="section" id="periods">
-  <div class="page-heading">
-   <div>
-    <h1>Periode & Pengurus</h1>
-    <p>Kelola periode kepengurusan dan struktur organisasi.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Periode Kepengurusan</h2>
-   <input type="hidden" id="periodId">
-
-   <div class="grid">
-    <div>
-     <label>Nama periode</label>
-     <input id="periodName" placeholder="2025–2026">
-    </div>
-    <div>
-     <label>Tanggal mulai</label>
-     <input type="date" id="periodStart">
-    </div>
-    <div>
-     <label>Tanggal selesai</label>
-     <input type="date" id="periodEnd">
-    </div>
-    <div class="checkrow">
-     <input type="checkbox" id="periodActive">
-     <label for="periodActive">Jadikan periode aktif</label>
-    </div>
-   </div>
-
-   <div class="btn-row">
-    <button class="btn" onclick="savePeriod()">Simpan periode</button>
-    <button class="btn alt" onclick="clearPeriod()">Bersihkan form</button>
-   </div>
-
-   <hr>
-   <h3>Daftar Periode</h3>
-   <div id="periodList"></div>
-  </div>
-
-  <div class="panel">
-   <h2>Struktur Pengurus</h2>
-   <input type="hidden" id="officerId">
-
-   <div class="grid">
-    <div>
-     <label>Periode</label>
-     <select id="officerPeriod"></select>
-    </div>
-    <div>
-     <label>Divisi</label>
-     <select id="officerDivision">
-      <option>Pengurus Inti</option>
-      <option>PPD</option>
-      <option>PAO</option>
-      <option>Keagamaan</option>
-      <option>Keamanan</option>
-      <option>Lainnya</option>
-     </select>
-    </div>
-    <div>
-     <label>Jabatan</label>
-     <input id="officerPosition" placeholder="Ketua Umum / Anggota">
-    </div>
-    <div>
-     <label>Nama</label>
-     <input id="officerName">
-    </div>
-    <div>
-     <label>Foto pengurus</label>
-     <input id="officerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-     <input id="officerPhoto" type="hidden">
-     <img id="officerPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pengurus">
-     <span class="photo-note">JPG, PNG, WEBP, atau GIF. Maksimal 5 MB.</span>
-    </div>
-    <div>
-     <label>Urutan tampil</label>
-     <input id="officerOrder" type="number" value="0">
-    </div>
-    <div class="full">
-     <label>Keterangan</label>
-     <input id="officerDescription">
-    </div>
-   </div>
-
-   <div class="btn-row">
-    <button class="btn" onclick="saveOfficer()">Simpan pengurus</button>
-    <button class="btn alt" onclick="clearOfficer()">Bersihkan form</button>
-   </div>
-
-   <hr>
-   <h3>Daftar Pengurus</h3>
-   <div id="officerList"></div>
-  </div>
- </section>
-
- <!-- PENDIRI -->
- <section class="section" id="people">
-  <div class="page-heading">
-   <div>
-    <h1>Pendiri & Pengelola</h1>
-    <p>Kelola profil pendiri, pengembang, dan pengelola website.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Profil Pendiri</h2>
-   <div class="grid">
-    <div>
-     <label>Nama pendiri</label>
-     <input id="founderName">
-    </div>
-    <div>
-     <label>Foto pendiri</label>
-     <input id="founderPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-     <input id="founderPhoto" type="hidden">
-     <img id="founderPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pendiri">
-    </div>
-    <div class="full">
-     <label>Keterangan pendiri</label>
-     <textarea id="founderDescription"></textarea>
-    </div>
-   </div>
-
-   <hr>
-   <h2>Profil Pengembang</h2>
-   <div class="grid">
-    <div>
-     <label>Nama pengembang</label>
-     <input id="developerName">
-    </div>
-    <div>
-     <label>Foto pengembang</label>
-     <input id="developerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-     <input id="developerPhoto" type="hidden">
-     <img id="developerPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pengembang">
-    </div>
-    <div class="full">
-     <label>Keterangan pengembang</label>
-     <textarea id="developerDescription"></textarea>
-    </div>
-   </div>
-
-   <hr>
-   <div class="panel-head">
-    <div>
-     <h2>Pengelola</h2>
-     <p class="panel-desc">Tambahkan satu atau beberapa pengelola.</p>
-    </div>
-    <button class="btn alt small" onclick="addManager()">+ Tambah</button>
-   </div>
-
-   <div id="managerRows"></div>
-
-   <div class="btn-row">
-    <button class="btn" onclick="savePeople()">Simpan seluruh data</button>
-   </div>
-  </div>
- </section>
-
- <!-- PENGUMUMAN -->
- <section class="section" id="ann">
-  <div class="page-heading">
-   <div>
-    <h1>Pengumuman</h1>
-    <p>Terbitkan informasi dan kegiatan HIMASAKI.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Buat Pengumuman</h2>
-   <label>Judul</label>
-   <input id="annTitle">
-   <label>Kategori</label>
-   <input id="annCategory" placeholder="Informasi kegiatan">
-   <label>Isi pengumuman</label>
-   <textarea id="annDescription"></textarea>
-   <div class="btn-row">
-    <button class="btn" onclick="addAnnouncement()">Terbitkan pengumuman</button>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Daftar Pengumuman</h2>
-   <div id="annList"></div>
-  </div>
- </section>
-
- <!-- DOKUMENTASI -->
- <section class="section" id="gallery">
-  <div class="page-heading">
-   <div>
-    <h1>Dokumentasi</h1>
-    <p>Kelola foto, video, dan dokumentasi kegiatan.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Unggah Foto / Video</h2>
-   <div class="grid">
-    <div class="full">
-     <label>Judul dokumentasi</label>
-     <input id="mediaTitle">
-    </div>
-    <div>
-     <label>Kategori</label>
-     <input id="mediaCategory" placeholder="Seminar, kegiatan, pengodokan, dll.">
-    </div>
-    <div>
-     <label>Periode</label>
-     <select id="mediaPeriod"></select>
-    </div>
-    <div class="full">
-     <label>Deskripsi</label>
-     <textarea id="mediaDescription"></textarea>
-    </div>
-    <div class="full">
-     <label>Pilih foto atau video</label>
-     <input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg">
-     <span class="photo-note">Foto maksimal 5 MB. Video maksimal 20 MB. Foto besar akan dikompres otomatis.</span>
-    </div>
-   </div>
-
-   <div class="btn-row">
-    <button class="btn" id="uploadBtn" onclick="uploadMedia()">Unggah dokumentasi</button>
-   </div>
-
-   <hr>
-
-   <h3>Tambahkan Video YouTube</h3>
-   <label>Judul</label>
-   <input id="ytTitle">
-   <label>Kategori</label>
-   <input id="ytCategory">
-   <label>Deskripsi</label>
-   <textarea id="ytDescription"></textarea>
-   <label>URL YouTube</label>
-   <input id="ytUrl" placeholder="https://www.youtube.com/watch?v=...">
-
-   <div class="btn-row">
-    <button class="btn" onclick="addYoutube()">Terbitkan video YouTube</button>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Daftar Dokumentasi</h2>
-   <div id="galleryList"></div>
-  </div>
- </section>
-
- <!-- HAK AKSES -->
- <section class="section" id="codes">
-  <div class="page-heading">
-   <div>
-    <h1>Hak Akses Pengurus</h1>
-    <p>Buat dan kelola kode akses untuk pengurus lain.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Buat Kode Akses</h2>
-   <label>Nama / keterangan kode</label>
-   <input id="codeLabel" placeholder="Contoh: Tim Dokumentasi">
-
-   <h3>Hak akses</h3>
-
-   <div class="grid">
-    <div>
-     <div class="checkrow"><input type="checkbox" id="permAsp"><label for="permAsp">Aspirasi</label></div>
-     <div class="checkrow"><input type="checkbox" id="permHome"><label for="permHome">Pengaturan beranda</label></div>
-     <div class="checkrow"><input type="checkbox" id="permPeriods"><label for="permPeriods">Periode dan pengurus</label></div>
-     <div class="checkrow"><input type="checkbox" id="permPeople"><label for="permPeople">Pendiri dan pengelola</label></div>
-    </div>
-    <div>
-     <div class="checkrow"><input type="checkbox" id="permAnn" checked><label for="permAnn">Pengumuman</label></div>
-     <div class="checkrow"><input type="checkbox" id="permGallery" checked><label for="permGallery">Dokumentasi</label></div>
-     <div class="checkrow"><input type="checkbox" id="permBackup"><label for="permBackup">Backup</label></div>
-    </div>
-   </div>
-
-   <p class="meta">Kode pengurus tidak dapat membuat atau mengelola kode akses lain.</p>
-
-   <div class="grid">
-    <div>
-     <label>Masa berlaku sampai</label>
-     <input type="date" id="codeExpiry">
-    </div>
-    <div>
-     <label>Maksimal jumlah pengguna/perangkat</label>
-     <input type="number" id="codeMax" min="1" max="500" value="3">
-    </div>
-   </div>
-
-   <div class="btn-row">
-    <button class="btn" onclick="createCode()">Buat kode akses</button>
-   </div>
-
-   <div id="newCode" class="alert"></div>
-  </div>
-
-  <div class="panel">
-   <h2>Daftar Kode Akses</h2>
-   <div id="codeList"></div>
-  </div>
- </section>
-
- <!-- BACKUP -->
- <section class="section" id="backup">
-  <div class="page-heading">
-   <div>
-    <h1>Backup Data</h1>
-    <p>Perlindungan dan pencadangan data SUARA HIMASAKI.</p>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h2>Pencadangan Data</h2>
-   <p>Backup otomatis dijadwalkan setiap hari sekitar pukul 02.00 berdasarkan zona waktu proyek Apps Script.</p>
-   <p class="meta">Backup manual dapat dijalankan kapan saja. File backup disimpan di Google Drive.</p>
-   <div class="btn-row">
-    <button class="btn" onclick="runBackup()">Buat backup sekarang</button>
-   </div>
-  </div>
- </section>
-
+<!-- BACKUP -->
+<section class="section" id="backup">
+ <div class="page-heading"><div><h1>Backup Data</h1><p>Perlindungan dan pencadangan data SUARA HIMASAKI.</p></div></div>
+ <div class="panel">
+  <h2>Pencadangan Data</h2>
+  <p>Backup otomatis dijadwalkan setiap hari berdasarkan zona waktu proyek Apps Script.</p>
+  <p class="meta">Backup manual dapat dijalankan kapan saja. File backup disimpan di Google Drive.</p>
+  <div class="btn-row"><button class="btn" onclick="runBackup()">Buat backup sekarang</button></div>
+ </div>
+</section>
 </main>
 
 <script>
-/* =========================
-   KONFIGURASI
-========================= */
+const API="https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+const CLIENT="80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
+const ADMIN="adegameonly@gmail.com";
 
-const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
-const CLIENT = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
-const ADMIN = "adegameonly@gmail.com";
+let googleToken="",sessionToken="",isMain=false,data=null,officerPermissions=[];
 
-let googleToken = "";
-let sessionToken = "";
-let isMain = false;
-let data = null;
-let officerPermissions = [];
+const $=id=>document.getElementById(id);
+const val=id=>$(id).value;
+const setVal=(id,v)=>$(id).value=v??"";
 
-/* =========================
-   UTILITAS
-========================= */
-
-const $ = id => document.getElementById(id);
-
-function esc(value){
- return String(value ?? "").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 }
-
-function val(id){
- return $(id).value;
-}
-
-function setVal(id,value){
- $(id).value = value ?? "";
-}
-
 function alertBox(id,message,ok=true){
- const el=$(id);
- if(!el)return;
- el.textContent=message;
- el.className="alert "+(ok?"ok":"err");
+ const el=$(id);if(!el)return;
+ el.textContent=message;el.className="alert "+(ok?"ok":"err");
 }
-
-function clearAlert(id){
- const el=$(id);
- if(el)el.className="alert";
-}
-
-function empty(text){
- return `<div class="empty">${esc(text)}</div>`;
-}
-
-function auth(){
- return isMain?{token:googleToken}:{session:sessionToken};
-}
-
-/* =========================
-   KOMUNIKASI SERVER
-========================= */
+function clearAlert(id){if($(id))$(id).className="alert"}
+function empty(t){return `<div class="empty">${esc(t)}</div>`}
+function auth(){return isMain?{token:googleToken}:{session:sessionToken}}
 
 function request(payload){
  return new Promise((resolve,reject)=>{
   const id="adm_"+Date.now()+"_"+Math.random().toString(36).slice(2);
-  const frameName="frame_"+id;
-
-  const frame=document.createElement("iframe");
-  frame.name=frameName;
-  frame.hidden=true;
-
-  const form=document.createElement("form");
-  form.method="POST";
-  form.action=API;
-  form.target=frameName;
-  form.hidden=true;
-
-  const input=document.createElement("input");
-  input.type="hidden";
-  input.name="payload";
-  input.value=JSON.stringify({...payload,requestId:id});
-  form.appendChild(input);
-
+  const frame=document.createElement("iframe");frame.name="frame_"+id;frame.hidden=true;
+  const form=document.createElement("form");form.method="POST";form.action=API;form.target=frame.name;form.hidden=true;
+  const input=document.createElement("input");input.type="hidden";input.name="payload";
+  input.value=JSON.stringify({...payload,requestId:id});form.appendChild(input);
   let finished=false;
-
-  function cleanup(){
-   removeEventListener("message",onMessage);
-   clearTimeout(timer);
-   frame.remove();
-   form.remove();
+  function cleanup(){removeEventListener("message",onMessage);clearTimeout(timer);frame.remove();form.remove()}
+  function onMessage(e){
+   if(!e.data||e.data.requestId!==id)return;
+   finished=true;cleanup();
+   if(e.data.ok)resolve(e.data.data);else reject(Error(e.data.error||"Permintaan gagal."));
   }
-
-  function onMessage(event){
-   if(!event.data||event.data.requestId!==id)return;
-
-   finished=true;
-   cleanup();
-
-   if(event.data.ok)resolve(event.data.data);
-   else reject(Error(event.data.error||"Permintaan gagal."));
-  }
-
-  const timer=setTimeout(()=>{
-   if(finished)return;
-   cleanup();
-   reject(Error("Server tidak merespons. Coba kembali."));
-  },90000);
-
-  addEventListener("message",onMessage);
-  document.body.append(frame,form);
-  form.submit();
+  const timer=setTimeout(()=>{if(finished)return;cleanup();reject(Error("Server tidak merespons. Coba kembali."))},90000);
+  addEventListener("message",onMessage);document.body.append(frame,form);form.submit();
  });
 }
-
-async function api(action,extra={}){
- return request({action,...auth(),...extra});
-}
-
-/* =========================
-   LOGIN
-========================= */
+async function api(action,extra={}){return request({action,...auth(),...extra})}
 
 function localDeviceId(){
  let id=localStorage.getItem("himasaki_access_device");
-
- if(!id){
-  id=(window.crypto&&crypto.randomUUID)
-   ?crypto.randomUUID()
-   :"dev-"+Date.now()+"-"+Math.random().toString(36).slice(2);
-
-  localStorage.setItem("himasaki_access_device",id);
- }
-
+ if(!id){id=window.crypto?.randomUUID?crypto.randomUUID():"dev-"+Date.now()+"-"+Math.random().toString(36).slice(2);localStorage.setItem("himasaki_access_device",id)}
  return id;
 }
 
 function showApp(label){
- $("login").classList.add("hidden");
- $("sidebar").classList.remove("hidden");
- $("app").classList.remove("hidden");
- $("account").classList.remove("hidden");
- $("who").textContent=label;
-
- document.querySelectorAll("[data-main]").forEach(el=>{
-  el.classList.toggle("hidden",!isMain);
+ $("login").classList.add("hidden");$("sidebar").classList.remove("hidden");
+ $("app").classList.remove("hidden");$("account").classList.remove("hidden");$("who").textContent=label;
+ document.querySelectorAll("[data-main]").forEach(el=>el.classList.toggle("hidden",!isMain));
+ const map={asp:"aspirations",home:"home",periods:"periods",people:"people",ann:"announcements",gallery:"gallery",backup:"backup"};
+ Object.keys(map).forEach(k=>{
+  const el=document.querySelector(`[data-tab="${k}"]`);
+  if(el)el.classList.toggle("hidden",!isMain&&!officerPermissions.includes(map[k]));
  });
-
- const permissionMap={
-  asp:"aspirations",
-  home:"home",
-  periods:"periods",
-  people:"people",
-  ann:"announcements",
-  gallery:"gallery",
-  backup:"backup"
- };
-
- Object.keys(permissionMap).forEach(tab=>{
-  const el=document.querySelector(`[data-tab="${tab}"]`);
-  if(el){
-   el.classList.toggle(
-    "hidden",
-    !isMain&&!officerPermissions.includes(permissionMap[tab])
-   );
-  }
- });
-
- const first=isMain
-  ?"asp"
-  :Object.keys(permissionMap).find(k=>officerPermissions.includes(permissionMap[k]));
-
+ const first=isMain?"asp":Object.keys(map).find(k=>officerPermissions.includes(map[k]));
  if(!first)throw Error("Kode akses belum memiliki hak akses.");
-
  openTab(first);
 }
-
 async function loginCode(){
  try{
   clearAlert("loginAlert");
-
-  const result=await request({
-   action:"codeLogin",
-   code:val("accessCode"),
-   deviceId:localDeviceId()
-  });
-
-  sessionToken=result.session;
-  officerPermissions=result.permissions||[];
-  isMain=false;
-
-  showApp(result.label);
-  await refresh();
-
- }catch(error){
-  alertBox("loginAlert",error.message,false);
- }
+  const r=await request({action:"codeLogin",code:val("accessCode"),deviceId:localDeviceId()});
+  sessionToken=r.session;officerPermissions=r.permissions||[];isMain=false;
+  showApp(r.label);await refresh();
+ }catch(e){alertBox("loginAlert",e.message,false)}
 }
-
 function logout(){
- googleToken="";
- sessionToken="";
- isMain=false;
- officerPermissions=[];
- data=null;
-
- $("login").classList.remove("hidden");
- $("sidebar").classList.add("hidden");
- $("app").classList.add("hidden");
- $("account").classList.add("hidden");
- $("accessCode").value="";
- clearAlert("loginAlert");
- closeSidebar();
+ googleToken="";sessionToken="";isMain=false;officerPermissions=[];data=null;
+ $("login").classList.remove("hidden");$("sidebar").classList.add("hidden");
+ $("app").classList.add("hidden");$("account").classList.add("hidden");
+ $("accessCode").value="";clearAlert("loginAlert");closeSidebar();
 }
-
 function bootGoogle(){
- if(!window.google?.accounts?.id){
-  setTimeout(bootGoogle,400);
-  return;
- }
-
+ if(!window.google?.accounts?.id){setTimeout(bootGoogle,400);return}
  google.accounts.id.initialize({
   client_id:CLIENT,
   callback:async response=>{
    try{
-    const part=response.credential.split(".")[1]
-     .replace(/-/g,"+").replace(/_/g,"/");
-
-    const claims=JSON.parse(
-     atob(part+"=".repeat((4-part.length%4)%4))
-    );
-
-    if(String(claims.email).toLowerCase()!==ADMIN){
-     throw Error("Akun ini bukan admin utama.");
-    }
-
-    googleToken=response.credential;
-    isMain=true;
-    officerPermissions=[];
-
-    showApp(claims.email);
-    await refresh();
-
-   }catch(error){
-    alertBox("loginAlert",error.message,false);
-   }
+    const part=response.credential.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
+    const claims=JSON.parse(atob(part+"=".repeat((4-part.length%4)%4)));
+    if(String(claims.email).toLowerCase()!==ADMIN)throw Error("Akun ini bukan admin utama.");
+    googleToken=response.credential;isMain=true;officerPermissions=[];
+    showApp(claims.email);await refresh();
+   }catch(e){alertBox("loginAlert",e.message,false)}
   }
  });
-
- google.accounts.id.renderButton($("googleButton"),{
-  theme:"outline",
-  size:"large",
-  shape:"rectangular",
-  text:"signin_with",
-  width:260
- });
+ google.accounts.id.renderButton($("googleButton"),{theme:"outline",size:"large",shape:"rectangular",text:"signin_with",width:260});
 }
 
-/* =========================
-   NAVIGASI
-========================= */
-
 function openTab(id){
- document.querySelectorAll(".tab").forEach(el=>{
-  el.classList.toggle("active",el.dataset.tab===id);
- });
-
- document.querySelectorAll(".section").forEach(el=>{
-  el.classList.toggle("active",el.id===id);
- });
-
+ document.querySelectorAll(".tab").forEach(e=>e.classList.toggle("active",e.dataset.tab===id));
+ document.querySelectorAll(".section").forEach(e=>e.classList.toggle("active",e.id===id));
  const titles={
   asp:["Dashboard & Aspirasi","Ringkasan dan masukan mahasiswa."],
-  home:["Pengaturan Beranda","Atur informasi halaman utama website."],
+  home:["Beranda & Kategori","Atur tampilan, identitas, dan kategori website."],
   periods:["Periode & Pengurus","Kelola periode dan struktur organisasi."],
   people:["Pendiri & Pengelola","Kelola profil pengelola website."],
   ann:["Pengumuman","Kelola informasi dan kegiatan HIMASAKI."],
@@ -1337,829 +520,374 @@ function openTab(id){
   codes:["Hak Akses Pengurus","Kelola kode akses pengurus."],
   backup:["Backup Data","Pencadangan data website."]
  };
-
- const heading=$(id).querySelector(".page-heading");
- if(heading&&titles[id]){
-  heading.querySelector("h1").textContent=titles[id][0];
-  heading.querySelector("p").textContent=titles[id][1];
- }
-
+ const h=$(id).querySelector(".page-heading");
+ if(h&&titles[id]){h.querySelector("h1").textContent=titles[id][0];h.querySelector("p").textContent=titles[id][1]}
  closeSidebar();
 }
-
-document.querySelectorAll(".tab").forEach(button=>{
- button.addEventListener("click",()=>{
-  if(button.classList.contains("hidden"))return;
-  openTab(button.dataset.tab);
- });
-});
-
-$("menuToggle").addEventListener("click",()=>{
- $("sidebar").classList.toggle("open");
-});
-
-function closeSidebar(){
- $("sidebar").classList.remove("open");
-}
-
-/* =========================
-   MEMUAT DATA
-========================= */
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{if(!b.classList.contains("hidden"))openTab(b.dataset.tab)}));
+$("menuToggle").addEventListener("click",()=>$("sidebar").classList.toggle("open"));
+function closeSidebar(){$("sidebar").classList.remove("open")}
 
 async function refresh(){
  try{
-  data=isMain
-   ?await api("adminData")
-   :await api("officerData");
-
+  data=isMain?await api("adminData"):await api("officerData");
   if(!isMain)data.codes=[];
-
   renderAll();
-
- }catch(error){
-  alertBox("alert",error.message,false);
-  throw error;
- }
+ }catch(e){alertBox("alert",e.message,false);throw e}
 }
-
 function renderAll(){
- const settings=data.settings||{};
-
- renderStats();
- renderAspirations();
- renderHome(settings);
- renderPeriods();
- renderOfficers();
- renderPeople(settings);
- renderContent();
- renderCodes();
-
- $("mediaPeriod").innerHTML=
-  '<option value="">Tanpa periode</option>'+
-  (data.periods||[]).map(p=>
-   `<option value="${esc(p.id)}">${esc(p.name)}</option>`
-  ).join("");
+ const s=data.settings||{};
+ renderStats();renderAspirations();renderHome(s);renderPeriods();renderOfficers();
+ renderPeople(s);renderContent();renderCodes();renderCategories();
+ $("mediaPeriod").innerHTML='<option value="">Tanpa periode</option>'+(data.periods||[]).map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
 }
-
 function renderStats(){
- const aspirations=data.aspirations||[];
- const officers=data.officers||[];
- const content=data.content||[];
-
- $("statAsp").textContent=aspirations.length;
- $("statNew").textContent=aspirations.filter(x=>x.status==="Baru").length;
- $("statPeople").textContent=officers.length;
- $("statContent").textContent=content.filter(x=>x.active).length;
+ const a=data.aspirations||[],o=data.officers||[],c=data.content||[];
+ $("statAsp").textContent=a.length;$("statNew").textContent=a.filter(x=>x.status==="Baru").length;
+ $("statPeople").textContent=o.length;$("statContent").textContent=c.filter(x=>x.active).length;
 }
 
-/* =========================
-   ASPIRASI
-========================= */
-
+/* ASPIRASI DAN JAWABAN */
 function renderAspirations(){
  const list=data.aspirations||[];
-
- $("aspList").innerHTML=list.length
-  ?list.map(x=>`
-   <article class="item">
-    <div class="meta">${esc(x.time)} · ${esc(x.category)}</div>
-    <h3>${esc(x.title)}</h3>
-    <p>${esc(x.message)}</p>
-    <div class="meta">
-     Pengirim: ${x.anonymous?"Anonim":esc(x.name||"Tidak dicantumkan")}
-    </div>
-    <div style="margin-top:12px">
-     <span class="badge ${x.status==="Selesai"?"green":x.status==="Diproses"?"orange":""}">
-      ${esc(x.status)}
-     </span>
-    </div>
-    <label>Status penanganan</label>
-    <select id="st_${esc(x.id)}">
-     <option ${x.status==="Baru"?"selected":""}>Baru</option>
-     <option ${x.status==="Diproses"?"selected":""}>Diproses</option>
-     <option ${x.status==="Selesai"?"selected":""}>Selesai</option>
-    </select>
-    <div class="item-actions">
-     <button class="btn small" onclick="setStatus('${esc(x.id)}')">Simpan status</button>
-    </div>
-   </article>
-  `).join("")
-  :empty("Belum ada aspirasi yang masuk.");
+ $("aspList").innerHTML=list.length?list.map(x=>`
+ <article class="item">
+  <div class="meta">${esc(x.time)} · ${esc(x.category)}</div>
+  <h3>${esc(x.title)}</h3><p>${esc(x.message)}</p>
+  <div class="meta">Pengirim: ${x.anonymous?"Anonim":esc(x.name||"Tidak dicantumkan")}</div>
+  <div style="margin-top:12px"><span class="badge ${x.status==="Selesai"?"green":x.status==="Diproses"?"orange":""}">${esc(x.status)}</span>
+  ${x.published?'<span class="badge green">Jawaban tampil publik</span>':""}</div>
+  <label>Status penanganan</label>
+  <select id="st_${esc(x.id)}">
+   <option ${x.status==="Baru"?"selected":""}>Baru</option>
+   <option ${x.status==="Diproses"?"selected":""}>Diproses</option>
+   <option ${x.status==="Selesai"?"selected":""}>Selesai</option>
+  </select>
+  <div class="item-actions"><button class="btn small" onclick="setStatus('${esc(x.id)}')">Simpan status</button></div>
+  <div class="reply-editor">
+   <label>Jawaban pengurus</label>
+   <textarea id="reply_${esc(x.id)}" placeholder="Tuliskan jawaban untuk aspirasi ini...">${esc(x.answer||"")}</textarea>
+   <div class="checkrow"><input type="checkbox" id="publish_${esc(x.id)}" ${x.published?"checked":""}><label for="publish_${esc(x.id)}">Tampilkan jawaban pada bagian Jawaban Aspirasimu</label></div>
+   <div class="item-actions">
+    <button class="btn small" onclick="saveReply('${esc(x.id)}',false)">Simpan draf</button>
+    <button class="btn green small" onclick="saveReply('${esc(x.id)}',true)">Simpan & terbitkan</button>
+    ${x.published?`<button class="btn red small" onclick="unpublishReply('${esc(x.id)}')">Tarik publikasi</button>`:""}
+   </div>
+  </div>
+ </article>`).join(""):empty("Belum ada aspirasi yang masuk.");
 }
-
 async function setStatus(id){
+ try{const r=await api("setStatus",{id,status:$("st_"+id).value});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
+}
+async function saveReply(id,publish){
  try{
-  const result=await api("setStatus",{
-   id,
-   status:$("st_"+id).value
-  });
-
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const answer=$("reply_"+id).value.trim();
+  if(!answer)throw Error("Jawaban belum diisi.");
+  const r=await api("saveAspirationAnswer",{id,answer,published:publish});
+  alertBox("alert",r.message||"Jawaban berhasil disimpan.");await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
+}
+async function unpublishReply(id){
+ if(!confirm("Tarik jawaban ini dari website publik?"))return;
+ try{const r=await api("saveAspirationAnswer",{id,answer:$("reply_"+id).value,published:false});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   BERANDA
-========================= */
-
-function renderHome(settings){
- ["orgName","logoText","heroTitle","heroText","aboutText","footerText"]
-  .forEach(k=>setVal(k,settings[k]||""));
+/* BERANDA */
+function renderHome(s){
+ ["orgName","logoText","heroTitle","heroText","aboutText","footerText"].forEach(k=>setVal(k,s[k]||""));
+ if(s.logoUrl){$("logoPreview").src=s.logoUrl;$("logoPreview").classList.remove("hidden");setLogo(s.logoUrl)}
+ else{$("logoPreview").classList.add("hidden");setLogo("")}
+ if(s.backgroundUrl){$("backgroundPreview").src=s.backgroundUrl;$("backgroundPreview").classList.remove("hidden")}
+ else{$("backgroundPreview").classList.add("hidden")}
 }
-
+function setLogo(url){
+ const html=url?`<img src="${esc(url)}" alt="Logo">`:esc(val("logoText")||"HK");
+ $("topLogo").innerHTML=html;$("loginLogo").innerHTML=html;
+}
 async function saveHome(){
  try{
   const settings={};
-
-  ["orgName","logoText","heroTitle","heroText","aboutText","footerText"]
-   .forEach(k=>settings[k]=val(k));
-
-  const result=await api("saveSettings",{settings});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  ["orgName","logoText","heroTitle","heroText","aboutText","footerText"].forEach(k=>settings[k]=val(k));
+  const r=await api("saveSettings",{settings});alertBox("alert",r.message);await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
-
-/* =========================
-   PERIODE
-========================= */
-
-function renderPeriods(){
- const periods=data.periods||[];
-
- $("periodList").innerHTML=periods.length
-  ?periods.map(p=>`
-   <article class="item">
-    <b>${esc(p.name)}</b>
-    ${p.active?'<span class="badge green">Periode aktif</span>':""}
-    <div class="meta">${esc(p.start)} – ${esc(p.end)}</div>
-    <div class="item-actions">
-     <button class="btn alt small" onclick="editPeriod('${esc(p.id)}')">Edit</button>
-     <button class="btn red small" onclick="deletePeriod('${esc(p.id)}')">Hapus</button>
-    </div>
-   </article>
-  `).join("")
-  :empty("Belum ada periode kepengurusan.");
-
- $("officerPeriod").innerHTML=periods.map(p=>
-  `<option value="${esc(p.id)}">${esc(p.name)}</option>`
- ).join("");
-}
-
-function clearPeriod(){
- ["periodId","periodName","periodStart","periodEnd"].forEach(id=>setVal(id,""));
- $("periodActive").checked=false;
-}
-
-function editPeriod(id){
- const p=(data.periods||[]).find(x=>x.id===id);
- if(!p)return;
-
- setVal("periodId",p.id);
- setVal("periodName",p.name);
- setVal("periodStart",p.start);
- setVal("periodEnd",p.end);
- $("periodActive").checked=!!p.active;
-
- $("periodName").focus();
-}
-
-async function savePeriod(){
+async function uploadBranding(kind){
  try{
-  const period={
-   id:val("periodId"),
-   name:val("periodName"),
-   start:val("periodStart"),
-   end:val("periodEnd"),
-   active:$("periodActive").checked
-  };
-
-  const result=await api("savePeriod",{period});
-  alertBox("alert",result.message);
-  clearPeriod();
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const input=$(kind==="logo"?"logoFile":"backgroundFile"),file=input.files[0];
+  if(!file)throw Error("Pilih gambar terlebih dahulu.");
+  const prepared=await prepareImageUpload(file);
+  const r=await api("uploadBrandingMedia",{kind,file:prepared});
+  if(!r?.url)throw Error("Server tidak mengembalikan alamat gambar.");
+  const settings=kind==="logo"?{logoUrl:r.url}:{backgroundUrl:r.url};
+  const saved=await api("saveSettings",{settings});
+  alertBox("alert",saved.message||"Gambar berhasil disimpan.");await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
+}
+async function removeBackground(){
+ if(!confirm("Hapus foto latar belakang beranda?"))return;
+ try{const r=await api("saveSettings",{settings:{backgroundUrl:""}});alertBox("alert",r.message||"Latar belakang dihapus.");await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
+/* DESKRIPSI BAGIAN */
+function renderDescriptions(s){
+ const d=s.sectionDescriptions||{};
+ setVal("descAspirations",d.aspirations||"");setVal("descAnswers",d.answers||"");
+ setVal("descAnnouncements",d.announcements||"");setVal("descGallery",d.gallery||"");
+ setVal("descStructure",d.structure||"");setVal("descAbout",d.about||"");
+}
+async function saveDescriptions(){
+ try{
+  const descriptions={
+   aspirations:val("descAspirations"),answers:val("descAnswers"),
+   announcements:val("descAnnouncements"),gallery:val("descGallery"),
+   structure:val("descStructure"),about:val("descAbout")
+  };
+  const r=await api("saveSectionDescriptions",{descriptions});
+  alertBox("alert",r.message||"Deskripsi berhasil disimpan.");await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
+}
+
+/* KATEGORI */
+const defaultCategories={
+ aspiration:["Kritik","Saran","Ide dan Gagasan","Pertanyaan","Apresiasi","Lainnya"],
+ announcement:["Informasi","Kegiatan","Akademik","Organisasi"],
+ gallery:["Kegiatan","Seminar","Pengabdian","Dokumentasi"]
+};
+function getCategories(type){
+ const cats=data.categories||{};
+ return Array.isArray(cats[type])&&cats[type].length?cats[type]:defaultCategories[type];
+}
+function renderCategoryRows(type,container){
+ const values=getCategories(type);
+ $(container).innerHTML=values.map((name,i)=>categoryRow(type,name,i)).join("");
+}
+function categoryRow(type,name,index){
+ return `<div class="category-row" data-category-type="${type}">
+  <input class="category-name" value="${esc(name)}" aria-label="Nama kategori">
+  <button class="btn alt small" type="button" onclick="moveCategory(this,-1)" title="Naik">↑</button>
+  <button class="btn alt small" type="button" onclick="moveCategory(this,1)" title="Turun">↓</button>
+  <button class="btn red small" type="button" onclick="this.closest('.category-row').remove()" title="Hapus">×</button>
+ </div>`;
+}
+function renderCategories(){
+ renderCategoryRows("aspiration","aspCategoryList");
+ renderCategoryRows("announcement","annCategoryList");
+ renderCategoryRows("gallery","galleryCategoryList");
+ const ann=getCategories("announcement"),gal=getCategories("gallery");
+ $("annCategory").innerHTML=ann.map(x=>`<option>${esc(x)}</option>`).join("");
+ $("mediaCategory").innerHTML=gal.map(x=>`<option>${esc(x)}</option>`).join("");
+ $("ytCategory").innerHTML=gal.map(x=>`<option>${esc(x)}</option>`).join("");
+}
+function addCategoryRow(type){
+ const container={aspiration:"aspCategoryList",announcement:"annCategoryList",gallery:"galleryCategoryList"}[type];
+ $(container).insertAdjacentHTML("beforeend",categoryRow(type,"",0));
+ const inputs=$(container).querySelectorAll(".category-name");inputs[inputs.length-1].focus();
+}
+function moveCategory(button,direction){
+ const row=button.closest(".category-row"),parent=row.parentElement;
+ if(direction<0&&row.previousElementSibling)parent.insertBefore(row,row.previousElementSibling);
+ if(direction>0&&row.nextElementSibling)parent.insertBefore(row.nextElementSibling,row);
+}
+async function saveCategories(type){
+ try{
+  const container={aspiration:"aspCategoryList",announcement:"annCategoryList",gallery:"galleryCategoryList"}[type];
+  const categories=[...$(container).querySelectorAll(".category-name")].map(x=>x.value.trim()).filter(Boolean);
+  if(!categories.length)throw Error("Minimal harus ada satu kategori.");
+  if(new Set(categories.map(x=>x.toLowerCase())).size!==categories.length)throw Error("Ada nama kategori yang sama.");
+  const r=await api("saveCategories",{type,categories});
+  alertBox("alert",r.message||"Kategori berhasil disimpan.");await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
+}
+
+/* PERIODE */
+function renderPeriods(){
+ const ps=data.periods||[];
+ $("periodList").innerHTML=ps.length?ps.map(p=>`<article class="item"><b>${esc(p.name)}</b> ${p.active?'<span class="badge green">Periode aktif</span>':""}<div class="meta">${esc(p.start)} – ${esc(p.end)}</div><div class="item-actions"><button class="btn alt small" onclick="editPeriod('${esc(p.id)}')">Edit</button><button class="btn red small" onclick="deletePeriod('${esc(p.id)}')">Hapus</button></div></article>`).join(""):empty("Belum ada periode kepengurusan.");
+ $("officerPeriod").innerHTML=ps.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
+}
+function clearPeriod(){["periodId","periodName","periodStart","periodEnd"].forEach(k=>setVal(k,""));$("periodActive").checked=false}
+function editPeriod(id){
+ const p=(data.periods||[]).find(x=>x.id===id);if(!p)return;
+ setVal("periodId",p.id);setVal("periodName",p.name);setVal("periodStart",p.start);setVal("periodEnd",p.end);$("periodActive").checked=!!p.active;
+}
+async function savePeriod(){
+ try{const period={id:val("periodId"),name:val("periodName"),start:val("periodStart"),end:val("periodEnd"),active:$("periodActive").checked};const r=await api("savePeriod",{period});alertBox("alert",r.message);clearPeriod();await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
+}
 async function deletePeriod(id){
  if(!confirm("Hapus periode ini?"))return;
-
- try{
-  const result=await api("deletePeriod",{id});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+ try{const r=await api("deletePeriod",{id});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   FOTO DAN KOMPRESI
-========================= */
-
+/* FOTO DAN UNGGAH */
 function readDataUrl(file){
- return new Promise((resolve,reject)=>{
-  const reader=new FileReader();
-  reader.onload=()=>resolve(reader.result);
-  reader.onerror=()=>reject(Error("File gagal dibaca."));
-  reader.readAsDataURL(file);
- });
+ return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error("File gagal dibaca."));reader.readAsDataURL(file)});
 }
-
 function previewSelectedFile(input,img){
- const file=input.files&&input.files[0];
-
- if(!file){
-  img.classList.add("hidden");
-  img.removeAttribute("src");
-  return;
- }
-
+ const file=input.files?.[0];if(!file){img.classList.add("hidden");return}
  const allowed=["image/jpeg","image/png","image/webp","image/gif"];
-
- if(!allowed.includes(file.type)){
-  input.value="";
-  throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
- }
-
- if(file.size>5*1024*1024){
-  input.value="";
-  throw Error("Ukuran foto maksimal 5 MB.");
- }
-
- if(img.dataset.previewUrl){
-  URL.revokeObjectURL(img.dataset.previewUrl);
- }
-
- const url=URL.createObjectURL(file);
- img.dataset.previewUrl=url;
- img.src=url;
- img.classList.remove("hidden");
+ if(!allowed.includes(file.type)){input.value="";throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.")}
+ if(file.size>5*1024*1024){input.value="";throw Error("Ukuran foto maksimal 5 MB.")}
+ if(img.dataset.previewUrl)URL.revokeObjectURL(img.dataset.previewUrl);
+ const url=URL.createObjectURL(file);img.dataset.previewUrl=url;img.src=url;img.classList.remove("hidden");
 }
-
 function showPhotoPreview(id,url){
- const img=$(id);
-
- if(url){
-  img.src=url;
-  img.classList.remove("hidden");
- }else{
-  img.removeAttribute("src");
-  img.classList.add("hidden");
- }
+ const img=$(id);if(url){img.src=url;img.classList.remove("hidden")}else{img.removeAttribute("src");img.classList.add("hidden")}
 }
-
 async function prepareImageUpload(file){
  const allowed=["image/jpeg","image/png","image/webp","image/gif"];
-
- if(!file||!allowed.includes(file.type)){
-  throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
- }
-
- if(file.size>5*1024*1024){
-  throw Error("Ukuran foto maksimal 5 MB.");
- }
-
- if(file.size<=800*1024){
-  return{
-   name:file.name,
-   mimeType:file.type,
-   data:await readDataUrl(file)
-  };
- }
-
- if(file.type==="image/gif"){
-  throw Error("GIF lebih dari 800 KB tidak dikompres otomatis agar animasinya tidak hilang. Gunakan GIF yang lebih kecil.");
- }
-
- let bitmap;
-
- try{
-  bitmap=await createImageBitmap(file);
- }catch(error){
-  throw Error("Foto tidak dapat dibaca. Coba gunakan JPG atau PNG.");
- }
-
- const maxDimension=1600;
- const scale=Math.min(1,maxDimension/Math.max(bitmap.width,bitmap.height));
-
- const canvas=document.createElement("canvas");
- canvas.width=Math.max(1,Math.round(bitmap.width*scale));
- canvas.height=Math.max(1,Math.round(bitmap.height*scale));
-
- const ctx=canvas.getContext("2d");
-
- if(!ctx){
-  bitmap.close();
-  throw Error("Browser tidak mendukung pemrosesan foto.");
- }
-
- ctx.fillStyle="#ffffff";
- ctx.fillRect(0,0,canvas.width,canvas.height);
- ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);
- bitmap.close();
-
+ if(!file||!allowed.includes(file.type))throw Error("Format foto tidak didukung.");
+ if(file.size>5*1024*1024)throw Error("Ukuran foto maksimal 5 MB.");
+ if(file.size<=800*1024)return{name:file.name,mimeType:file.type,data:await readDataUrl(file)};
+ if(file.type==="image/gif")throw Error("GIF lebih dari 800 KB tidak dapat dikompres otomatis.");
+ const bitmap=await createImageBitmap(file),scale=Math.min(1,1600/Math.max(bitmap.width,bitmap.height));
+ const canvas=document.createElement("canvas");canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+ const ctx=canvas.getContext("2d");ctx.fillStyle="#fff";ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
  let compressed="";
-
- for(const quality of [.85,.75,.65,.55,.45]){
-  compressed=canvas.toDataURL("image/jpeg",quality);
-  const estimated=Math.ceil(compressed.length*.75);
-
-  if(estimated<=800*1024)break;
- }
-
- if(!compressed||Math.ceil(compressed.length*.75)>800*1024){
-  throw Error("Foto belum berhasil dikompres ke ukuran aman. Gunakan foto dengan resolusi lebih kecil.");
- }
-
- return{
-  name:file.name.replace(/\.[^.]+$/,"")+".jpg",
-  mimeType:"image/jpeg",
-  data:compressed
- };
+ for(const q of [.85,.75,.65,.55,.45]){compressed=canvas.toDataURL("image/jpeg",q);if(Math.ceil(compressed.length*.75)<=800*1024)break}
+ if(!compressed||Math.ceil(compressed.length*.75)>800*1024)throw Error("Foto belum berhasil dikompres ke ukuran aman.");
+ return{name:file.name.replace(/\.[^.]+$/,"")+".jpg",mimeType:"image/jpeg",data:compressed};
 }
-
 async function uploadProfileFile(file,permission){
- if(!file)return "";
-
- const prepared=await prepareImageUpload(file);
-
- const uploaded=await api("uploadProfilePhoto",{
-  permission,
-  file:prepared
- });
-
- if(!uploaded||!uploaded.url){
-  throw Error("Server tidak mengembalikan alamat foto.");
- }
-
- return uploaded.url;
+ if(!file)return "";const prepared=await prepareImageUpload(file);
+ const r=await api("uploadProfilePhoto",{permission,file:prepared});if(!r?.url)throw Error("Server tidak mengembalikan alamat foto.");return r.url;
 }
-
 async function uploadProfileIfSelected(fileId,urlId,permission){
- const file=$(fileId).files[0];
- const hidden=$(urlId);
-
- if(!file)return hidden.value||"";
-
- const url=await uploadProfileFile(file,permission);
- hidden.value=url;
-
- return url;
+ const file=$(fileId).files[0];if(!file)return $(urlId).value||"";
+ const url=await uploadProfileFile(file,permission);$(urlId).value=url;return url;
 }
-
-/* =========================
-   PRATINJAU FOTO
-========================= */
-
 [
- ["officerPhotoFile","officerPhotoPreview"],
- ["founderPhotoFile","founderPhotoPreview"],
- ["developerPhotoFile","developerPhotoPreview"]
-].forEach(([inputId,imgId])=>{
- $(inputId).addEventListener("change",()=>{
-  try{
-   previewSelectedFile($(inputId),$(imgId));
-  }catch(error){
-   alertBox("alert",error.message,false);
-  }
- });
-});
+ ["officerPhotoFile","officerPhotoPreview"],["founderPhotoFile","founderPhotoPreview"],["developerPhotoFile","developerPhotoPreview"]
+].forEach(([a,b])=>$(a).addEventListener("change",()=>{try{previewSelectedFile($(a),$(b))}catch(e){alertBox("alert",e.message,false)}}));
 
-/* =========================
-   PENGURUS
-========================= */
-
+/* PENGURUS */
 function renderOfficers(){
- const officers=data.officers||[];
-
- $("officerList").innerHTML=officers.length
-  ?officers.map(o=>{
-   const period=(data.periods||[]).find(p=>p.id===o.periodId);
-   return`
-    <article class="item">
-     <b>${esc(o.name)}</b>
-     <span class="badge">${esc(o.position)}</span>
-     <div class="meta">${esc(o.division)} · ${esc(period?.name||"")}</div>
-     <p>${esc(o.description||"")}</p>
-     ${o.photo?`<img class="photo-preview" src="${esc(o.photo)}" alt="Foto pengurus">`:""}
-     <div class="item-actions">
-      <button class="btn alt small" onclick="editOfficer('${esc(o.id)}')">Edit</button>
-      <button class="btn red small" onclick="deleteOfficer('${esc(o.id)}')">Hapus</button>
-     </div>
-    </article>
-   `;
-  }).join("")
-  :empty("Belum ada data pengurus.");
+ const list=data.officers||[];
+ $("officerList").innerHTML=list.length?list.map(o=>{
+  const p=(data.periods||[]).find(x=>x.id===o.periodId);
+  return `<article class="item"><b>${esc(o.name)}</b> <span class="badge">${esc(o.position)}</span><div class="meta">${esc(o.division)} · ${esc(p?.name||"")}</div><p>${esc(o.description||"")}</p>${o.photo?`<img class="photo-preview" src="${esc(o.photo)}" alt="Foto pengurus">`:""}<div class="item-actions"><button class="btn alt small" onclick="editOfficer('${esc(o.id)}')">Edit</button><button class="btn red small" onclick="deleteOfficer('${esc(o.id)}')">Hapus</button></div></article>`;
+ }).join(""):empty("Belum ada data pengurus.");
 }
-
 function clearOfficer(){
- ["officerId","officerPosition","officerName","officerPhoto","officerDescription"]
-  .forEach(id=>setVal(id,""));
-
- $("officerPhotoFile").value="";
- $("officerOrder").value=0;
- showPhotoPreview("officerPhotoPreview","");
+ ["officerId","officerPosition","officerName","officerPhoto","officerDescription"].forEach(k=>setVal(k,""));
+ $("officerPhotoFile").value="";$("officerOrder").value=0;showPhotoPreview("officerPhotoPreview","");
 }
-
 function editOfficer(id){
- const o=(data.officers||[]).find(x=>x.id===id);
- if(!o)return;
-
- setVal("officerId",o.id);
- setVal("officerPeriod",o.periodId);
- setVal("officerDivision",o.division);
- setVal("officerPosition",o.position);
- setVal("officerName",o.name);
- setVal("officerPhoto",o.photo||"");
- setVal("officerDescription",o.description);
- setVal("officerOrder",o.order);
-
- $("officerPhotoFile").value="";
- showPhotoPreview("officerPhotoPreview",o.photo);
+ const o=(data.officers||[]).find(x=>x.id===id);if(!o)return;
+ setVal("officerId",o.id);setVal("officerPeriod",o.periodId);setVal("officerDivision",o.division);
+ setVal("officerPosition",o.position);setVal("officerName",o.name);setVal("officerPhoto",o.photo||"");
+ setVal("officerDescription",o.description);setVal("officerOrder",o.order);
+ $("officerPhotoFile").value="";showPhotoPreview("officerPhotoPreview",o.photo);
 }
-
 async function saveOfficer(){
  try{
-  const photo=await uploadProfileIfSelected(
-   "officerPhotoFile","officerPhoto","periods"
-  );
-
-  const officer={
-   id:val("officerId"),
-   periodId:val("officerPeriod"),
-   division:val("officerDivision"),
-   position:val("officerPosition"),
-   name:val("officerName"),
-   photo,
-   description:val("officerDescription"),
-   order:val("officerOrder")
-  };
-
-  const result=await api("saveOfficer",{officer});
-  alertBox("alert",result.message);
-  clearOfficer();
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const photo=await uploadProfileIfSelected("officerPhotoFile","officerPhoto","periods");
+  const officer={id:val("officerId"),periodId:val("officerPeriod"),division:val("officerDivision"),position:val("officerPosition"),name:val("officerName"),photo,description:val("officerDescription"),order:val("officerOrder")};
+  const r=await api("saveOfficer",{officer});alertBox("alert",r.message);clearOfficer();await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
-
 async function deleteOfficer(id){
  if(!confirm("Hapus data pengurus ini?"))return;
-
- try{
-  const result=await api("deleteOfficer",{id});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+ try{const r=await api("deleteOfficer",{id});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   PENDIRI DAN PENGELOLA
-========================= */
-
-function renderPeople(settings){
- setVal("founderName",settings.founderName);
- setVal("founderPhoto",settings.founderPhoto);
- setVal("founderDescription",settings.founderDescription);
-
- setVal("developerName",settings.developerName);
- setVal("developerPhoto",settings.developerPhoto);
- setVal("developerDescription",settings.developerDescription);
-
- $("founderPhotoFile").value="";
- $("developerPhotoFile").value="";
-
- showPhotoPreview("founderPhotoPreview",settings.founderPhoto);
- showPhotoPreview("developerPhotoPreview",settings.developerPhoto);
-
- let managers=[];
-
- try{
-  managers=JSON.parse(settings.managers||"[]");
- }catch(error){}
-
- $("managerRows").innerHTML="";
- (managers.length?managers:[{}]).forEach(addManager);
+/* PENDIRI DAN PENGELOLA */
+function renderPeople(s){
+ ["founderName","founderPhoto","founderDescription","developerName","developerPhoto","developerDescription"].forEach(k=>setVal(k,s[k]||""));
+ $("founderPhotoFile").value="";$("developerPhotoFile").value="";
+ showPhotoPreview("founderPhotoPreview",s.founderPhoto);showPhotoPreview("developerPhotoPreview",s.developerPhoto);
+ let managers=[];try{managers=JSON.parse(s.managers||"[]")}catch(e){}
+ $("managerRows").innerHTML="";(managers.length?managers:[{}]).forEach(addManager);
 }
-
-function addManager(manager={}){
- const row=document.createElement("div");
- row.className="item manager-row";
-
- row.innerHTML=`
-  <div class="grid">
-   <div>
-    <label>Nama pengelola</label>
-    <input class="m-name" value="${esc(manager.name||"")}">
-   </div>
-   <div>
-    <label>Jabatan</label>
-    <input class="m-role" value="${esc(manager.role||"")}">
-   </div>
-   <div class="full">
-    <label>Foto pengelola</label>
-    <input class="m-photo-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
-    <input class="m-photo" type="hidden" value="${esc(manager.photo||"")}">
-    <img class="photo-preview m-photo-preview ${manager.photo?"":"hidden"}" alt="Pratinjau foto pengelola">
-   </div>
-   <div class="full">
-    <label>Keterangan</label>
-    <input class="m-desc" value="${esc(manager.description||"")}">
-   </div>
-  </div>
-  <div class="item-actions">
-   <button type="button" class="btn red small remove-manager">Hapus pengelola</button>
-  </div>
- `;
-
- const file=row.querySelector(".m-photo-file");
- const preview=row.querySelector(".m-photo-preview");
-
- if(manager.photo)preview.src=manager.photo;
-
- file.addEventListener("change",()=>{
-  try{
-   previewSelectedFile(file,preview);
-  }catch(error){
-   alertBox("alert",error.message,false);
-  }
- });
-
- row.querySelector(".remove-manager").addEventListener("click",()=>{
-  row.remove();
- });
-
- $("managerRows").appendChild(row);
+function addManager(m={}){
+ const row=document.createElement("div");row.className="item manager-row";
+ row.innerHTML=`<div class="grid"><div><label>Nama pengelola</label><input class="m-name" value="${esc(m.name||"")}"></div><div><label>Jabatan</label><input class="m-role" value="${esc(m.role||"")}"></div><div class="full"><label>Foto pengelola</label><input class="m-photo-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif"><input class="m-photo" type="hidden" value="${esc(m.photo||"")}"><img class="photo-preview m-photo-preview ${m.photo?"":"hidden"}" alt="Foto pengelola"></div><div class="full"><label>Keterangan</label><input class="m-desc" value="${esc(m.description||"")}"></div></div><div class="item-actions"><button type="button" class="btn red small remove-manager">Hapus pengelola</button></div>`;
+ const f=row.querySelector(".m-photo-file"),img=row.querySelector(".m-photo-preview");if(m.photo)img.src=m.photo;
+ f.addEventListener("change",()=>{try{previewSelectedFile(f,img)}catch(e){alertBox("alert",e.message,false)}});
+ row.querySelector(".remove-manager").addEventListener("click",()=>row.remove());$("managerRows").appendChild(row);
 }
-
 async function savePeople(){
  try{
-  const founderPhoto=await uploadProfileIfSelected(
-   "founderPhotoFile","founderPhoto","people"
-  );
-
-  const developerPhoto=await uploadProfileIfSelected(
-   "developerPhotoFile","developerPhoto","people"
-  );
-
+  const founderPhoto=await uploadProfileIfSelected("founderPhotoFile","founderPhoto","people");
+  const developerPhoto=await uploadProfileIfSelected("developerPhotoFile","developerPhoto","people");
   const managers=[];
-
   for(const row of document.querySelectorAll(".manager-row")){
-   const name=row.querySelector(".m-name").value.trim();
-   if(!name)continue;
-
-   let photo=row.querySelector(".m-photo").value;
-   const file=row.querySelector(".m-photo-file").files[0];
-
+   const name=row.querySelector(".m-name").value.trim();if(!name)continue;
+   let photo=row.querySelector(".m-photo").value;const file=row.querySelector(".m-photo-file").files[0];
    if(file)photo=await uploadProfileFile(file,"people");
-
-   managers.push({
-    name,
-    role:row.querySelector(".m-role").value,
-    photo,
-    description:row.querySelector(".m-desc").value
-   });
+   managers.push({name,role:row.querySelector(".m-role").value,photo,description:row.querySelector(".m-desc").value});
   }
-
-  const people={
-   founderName:val("founderName"),
-   founderPhoto,
-   founderDescription:val("founderDescription"),
-   developerName:val("developerName"),
-   developerPhoto,
-   developerDescription:val("developerDescription"),
-   managers
-  };
-
-  const result=await api("savePeople",{people});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const people={founderName:val("founderName"),founderPhoto,founderDescription:val("founderDescription"),developerName:val("developerName"),developerPhoto,developerDescription:val("developerDescription"),managers};
+  const r=await api("savePeople",{people});alertBox("alert",r.message);await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   PENGUMUMAN DAN DOKUMENTASI
-========================= */
-
+/* KONTEN */
 function renderContent(){
  const items=data.content||[];
-
- $("annList").innerHTML=items
-  .filter(x=>x.type==="announcement")
-  .map(contentItem)
-  .join("")||empty("Belum ada pengumuman.");
-
- $("galleryList").innerHTML=items
-  .filter(x=>x.type==="gallery")
-  .map(contentItem)
-  .join("")||empty("Belum ada dokumentasi.");
+ $("annList").innerHTML=items.filter(x=>x.type==="announcement").map(contentItem).join("")||empty("Belum ada pengumuman.");
+ $("galleryList").innerHTML=items.filter(x=>x.type==="gallery").map(contentItem).join("")||empty("Belum ada dokumentasi.");
 }
-
-function contentItem(item){
- return`
-  <article class="item">
-   <b>${esc(item.title)}</b>
-   <span class="badge">${esc(item.category||"Umum")}</span>
-   <div class="meta">${esc(item.mediaType||"")}</div>
-   <p>${esc(item.description||"")}</p>
-   ${item.url?`<a href="${esc(item.url)}" target="_blank" rel="noopener">Lihat media ↗</a>`:""}
-   <div class="item-actions">
-    <button class="btn red small" onclick="deleteContent('${esc(item.id)}','${esc(item.type)}')">Hapus</button>
-   </div>
-  </article>
- `;
+function contentItem(x){
+ return `<article class="item"><b>${esc(x.title)}</b> <span class="badge">${esc(x.category||"Umum")}</span><div class="meta">${esc(x.mediaType||"")}</div><p>${esc(x.description||"")}</p>${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">Lihat media ↗</a>`:""}<div class="item-actions"><button class="btn red small" onclick="deleteContent('${esc(x.id)}','${esc(x.type)}')">Hapus</button></div></article>`;
 }
-
 async function addAnnouncement(){
  try{
-  const content={
-   type:"announcement",
-   title:val("annTitle"),
-   category:val("annCategory"),
-   description:val("annDescription")
-  };
-
-  const result=await api("addContent",{content});
-  alertBox("alert",result.message);
-
-  ["annTitle","annCategory","annDescription"].forEach(id=>setVal(id,""));
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const content={type:"announcement",title:val("annTitle"),category:val("annCategory"),description:val("annDescription")};
+  const r=await api("addContent",{content});alertBox("alert",r.message);
+  ["annTitle","annDescription"].forEach(k=>setVal(k,""));await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
-
 async function deleteContent(id,type){
  if(!confirm("Hapus konten ini?"))return;
-
- try{
-  const result=await api("deleteContent",{id,type});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+ try{const r=await api("deleteContent",{id,type});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   UNGGAH DOKUMENTASI
-========================= */
-
+/* UNGGAH DOKUMENTASI */
 async function uploadMedia(){
- const button=$("uploadBtn");
-
+ const b=$("uploadBtn");
  try{
-  const file=$("mediaFile").files[0];
-
-  if(!file)throw Error("Pilih foto atau video terlebih dahulu.");
+  const file=$("mediaFile").files[0];if(!file)throw Error("Pilih foto atau video terlebih dahulu.");
   if(!val("mediaTitle").trim())throw Error("Judul dokumentasi wajib diisi.");
-
-  const isImage=file.type.startsWith("image/");
-  const isVideo=file.type.startsWith("video/");
-
-  if(!isImage&&!isVideo)throw Error("Format media tidak didukung.");
-
-  if(isVideo&&file.size>20*1024*1024){
-   throw Error("Ukuran video maksimal 20 MB.");
-  }
-
-  if(isImage&&file.size>5*1024*1024){
-   throw Error("Ukuran foto maksimal 5 MB.");
-  }
-
-  button.disabled=true;
-  button.textContent=isImage?"Memproses foto...":"Membaca video...";
-
-  const prepared=isImage
-   ?await prepareImageUpload(file)
-   :{
-     name:file.name,
-     mimeType:file.type,
-     data:await readDataUrl(file)
-    };
-
-  button.textContent="Mengirim ke server...";
-
-  const uploaded=await api("uploadMedia",{file:prepared});
-
-  if(!uploaded||!uploaded.url){
-   throw Error("Server tidak mengembalikan alamat media.");
-  }
-
-  const content={
-   type:"gallery",
-   title:val("mediaTitle"),
-   category:val("mediaCategory"),
-   description:val("mediaDescription"),
-   url:uploaded.url,
-   mediaType:uploaded.mediaType,
-   periodId:val("mediaPeriod")
-  };
-
-  const result=await api("addContent",{content});
-  alertBox("alert",result.message);
-
-  ["mediaTitle","mediaCategory","mediaDescription","mediaFile"]
-   .forEach(id=>setVal(id,""));
-
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
-
- }finally{
-  button.disabled=false;
-  button.textContent="Unggah dokumentasi";
- }
+  const image=file.type.startsWith("image/"),video=file.type.startsWith("video/");
+  if(!image&&!video)throw Error("Format media tidak didukung.");
+  if(video&&file.size>20*1024*1024)throw Error("Ukuran video maksimal 20 MB.");
+  if(image&&file.size>5*1024*1024)throw Error("Ukuran foto maksimal 5 MB.");
+  b.disabled=true;b.textContent="Memproses media...";
+  const prepared=image?await prepareImageUpload(file):{name:file.name,mimeType:file.type,data:await readDataUrl(file)};
+  const uploaded=await api("uploadMedia",{file:prepared});if(!uploaded?.url)throw Error("Server tidak mengembalikan alamat media.");
+  const content={type:"gallery",title:val("mediaTitle"),category:val("mediaCategory"),description:val("mediaDescription"),url:uploaded.url,mediaType:uploaded.mediaType,periodId:val("mediaPeriod")};
+  const r=await api("addContent",{content});alertBox("alert",r.message);
+  ["mediaTitle","mediaDescription","mediaFile"].forEach(k=>setVal(k,""));await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
+ finally{b.disabled=false;b.textContent="Unggah dokumentasi"}
 }
-
-/* =========================
-   YOUTUBE
-========================= */
-
 function youtubeEmbed(url){
- const match=String(url).match(
-  /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
- );
-
- if(!match)throw Error("URL YouTube tidak dikenali.");
-
- return"https://www.youtube.com/embed/"+match[1];
+ const m=String(url).match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+ if(!m)throw Error("URL YouTube tidak dikenali.");return "https://www.youtube.com/embed/"+m[1];
 }
-
 async function addYoutube(){
  try{
-  const content={
-   type:"gallery",
-   title:val("ytTitle"),
-   category:val("ytCategory"),
-   description:val("ytDescription"),
-   url:youtubeEmbed(val("ytUrl")),
-   mediaType:"youtube"
-  };
-
-  const result=await api("addContent",{content});
-  alertBox("alert",result.message);
-
-  ["ytTitle","ytCategory","ytDescription","ytUrl"].forEach(id=>setVal(id,""));
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const content={type:"gallery",title:val("ytTitle"),category:val("ytCategory"),description:val("ytDescription"),url:youtubeEmbed(val("ytUrl")),mediaType:"youtube"};
+  const r=await api("addContent",{content});alertBox("alert",r.message);
+  ["ytTitle","ytDescription","ytUrl"].forEach(k=>setVal(k,""));await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   KODE AKSES
-========================= */
-
+/* KODE AKSES */
 function renderCodes(){
  const codes=data.codes||[];
-
- $("codeList").innerHTML=codes.length
-  ?codes.map(c=>`
-   <article class="item">
-    <b>${esc(c.label)}</b>
-    <span class="badge ${c.active?"green":"orange"}">${c.active?"Aktif":"Nonaktif"}</span>
-    <div class="meta">Izin: ${(c.permissions||[]).map(esc).join(", ")}</div>
-    <div class="meta">Berlaku sampai: ${esc(c.expires)}</div>
-    <div class="meta">Penggunaan: ${c.used}/${c.maxUsers}</div>
-    ${c.active?`
-     <div class="item-actions">
-      <button class="btn red small" onclick="deactivateCode('${esc(c.id)}')">Nonaktifkan</button>
-     </div>
-    `:""}
-   </article>
-  `).join("")
-  :empty("Belum ada kode akses.");
+ $("codeList").innerHTML=codes.length?codes.map(c=>`<article class="item"><b>${esc(c.label)}</b> <span class="badge ${c.active?"green":"orange"}">${c.active?"Aktif":"Nonaktif"}</span><div class="meta">Izin: ${(c.permissions||[]).map(esc).join(", ")}</div><div class="meta">Berlaku sampai: ${esc(c.expires)}</div><div class="meta">Penggunaan: ${c.used}/${c.maxUsers}</div>${c.active?`<div class="item-actions"><button class="btn red small" onclick="deactivateCode('${esc(c.id)}')">Nonaktifkan</button></div>`:""}</article>`).join(""):empty("Belum ada kode akses.");
 }
-
 async function createCode(){
  try{
   const permissions=[];
-
   if($("permAsp").checked)permissions.push("aspirations");
   if($("permHome").checked)permissions.push("home");
   if($("permPeriods").checked)permissions.push("periods");
@@ -2167,61 +895,22 @@ async function createCode(){
   if($("permAnn").checked)permissions.push("announcements");
   if($("permGallery").checked)permissions.push("gallery");
   if($("permBackup").checked)permissions.push("backup");
-
-  const codeData={
-   label:val("codeLabel"),
-   permissions,
-   expires:val("codeExpiry"),
-   maxUsers:val("codeMax")
-  };
-
-  const result=await api("createAccessCode",{codeData});
-
-  alertBox(
-   "newCode",
-   result.message+" KODE AKSES: "+result.code
-  );
-
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+  const codeData={label:val("codeLabel"),permissions,expires:val("codeExpiry"),maxUsers:val("codeMax")};
+  const r=await api("createAccessCode",{codeData});alertBox("newCode",r.message+" KODE AKSES: "+r.code);await refresh();
+ }catch(e){alertBox("alert",e.message,false)}
 }
-
 async function deactivateCode(id){
  if(!confirm("Nonaktifkan kode akses ini?"))return;
-
- try{
-  const result=await api("deactivateAccessCode",{id});
-  alertBox("alert",result.message);
-  await refresh();
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+ try{const r=await api("deactivateAccessCode",{id});alertBox("alert",r.message);await refresh()}
+ catch(e){alertBox("alert",e.message,false)}
 }
-
-/* =========================
-   BACKUP
-========================= */
-
 async function runBackup(){
- try{
-  const result=await api("runBackup");
-  alertBox("alert",result.message+" "+(result.name||""));
-
- }catch(error){
-  alertBox("alert",error.message,false);
- }
+ try{const r=await api("runBackup");alertBox("alert",r.message+" "+(r.name||""))}
+ catch(e){alertBox("alert",e.message,false)}
 }
 
-/* =========================
-   MULAI
-========================= */
-
+/* MULAI */
 bootGoogle();
 </script>
-
 </body>
 </html>
