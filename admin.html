@@ -2,2027 +2,2225 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#173b69">
-
-    <title>Admin SUARA HIMASAKI</title>
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <style>
-        :root {
-            --navy: #173b69;
-            --blue: #28517f;
-            --bg: #f3f6fa;
-            --ink: #243142;
-            --muted: #68788b;
-            --white: #ffffff;
-            --border: #e1e7ee;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--bg);
-            font: 15px/1.55 Arial, sans-serif;
-            color: var(--ink);
-        }
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            background: var(--navy);
-            color: white;
-            padding: 15px 22px;
-            box-shadow: 0 2px 8px rgba(0,0,0,.12);
-        }
-
-        .wrap {
-            max-width: 1500px;
-            margin: auto;
-            padding: 0 12px;
-        }
-
-        header .wrap {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        header strong {
-            font-size: 18px;
-            letter-spacing: .3px;
-        }
-
-        header small {
-            opacity: .8;
-        }
-
-        main {
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 22px;
-        }
-
-        .panel {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 13px;
-            padding: 20px;
-            margin-bottom: 18px;
-            box-shadow: 0 2px 8px rgba(25,50,80,.035);
-        }
-
-        h2 {
-            font-size: 21px;
-            color: var(--navy);
-            margin: 0 0 16px;
-        }
-
-        h3 {
-            margin: 12px 0 8px;
-            color: var(--navy);
-        }
-
-        label {
-            font-size: 13px;
-            font-weight: bold;
-            display: block;
-            margin: 9px 0 5px;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 11px 12px;
-            border: 1px solid #cbd5df;
-            border-radius: 8px;
-            font: inherit;
-            color: var(--ink);
-            background: white;
-        }
-
-        input:focus,
-        select:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #4778ad;
-            box-shadow: 0 0 0 3px rgba(71,120,173,.12);
-        }
-
-        textarea {
-            min-height: 90px;
-            resize: vertical;
-        }
-
-        .btn {
-            border: 0;
-            border-radius: 8px;
-            background: var(--navy);
-            color: white;
-            padding: 10px 15px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 4px 3px;
-            transition: .2s;
-        }
-
-        .btn:hover {
-            filter: brightness(1.12);
-        }
-
-        .btn:disabled {
-            opacity: .6;
-            cursor: wait;
-        }
-
-        .btn.alt {
-            background: #e8eef5;
-            color: var(--navy);
-        }
-
-        .btn.red {
-            background: #a12e2e;
-            color: white;
-        }
-
-        /* SIDEBAR NAVIGASI */
-
-        .tabs {
-            position: fixed;
-            top: 66px;
-            left: 0;
-            bottom: 0;
-            width: 250px;
-            padding: 24px 14px;
-            background: var(--navy);
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            gap: 8px;
-            overflow-y: auto;
-            z-index: 100;
-        }
-
-        .sidebar-title {
-            color: #c9d8e9;
-            font-size: 11px;
-            font-weight: bold;
-            letter-spacing: 1.2px;
-            padding: 0 13px 10px;
-            text-transform: uppercase;
-        }
-
-        .tab {
-            display: block;
-            width: 100%;
-            text-align: left;
-            background: transparent;
-            color: #e8eef7;
-            border: none;
-            border-radius: 9px;
-            padding: 12px 14px;
-            margin: 0;
-            font-size: 14px;
-            font-weight: normal;
-            transition: .2s;
-        }
-
-        .tab:hover {
-            background: var(--blue);
-        }
-
-        .tab.active {
-            background: white;
-            color: var(--navy);
-            font-weight: bold;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* AREA KONTEN */
-
-        #app {
-            margin-left: 250px;
-            padding: 20px 24px;
-            min-height: calc(100vh - 66px);
-        }
-
-        #app > .section {
-            max-width: 1150px;
-        }
-
-        #app > .alert {
-            margin-bottom: 18px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .full {
-            grid-column: 1 / -1;
-        }
-
-        .alert {
-            display: none;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-
-        .alert.ok {
-            display: block;
-            background: #e5f5e9;
-            color: #176638;
-        }
-
-        .alert.err {
-            display: block;
-            background: #fff0ef;
-            color: #a12b25;
-        }
-
-        .item {
-            border: 1px solid #e2e8ef;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 11px 0;
-            overflow-wrap: anywhere;
-            background: white;
-        }
-
-        .meta {
-            font-size: 12px;
-            color: var(--muted);
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* LOGIN */
-
-        #login {
-            max-width: 500px;
-            margin: 55px auto;
-            text-align: center;
-        }
-
-        #googleButton {
-            display: flex;
-            justify-content: center;
-            margin: 18px auto;
-        }
-
-        /* INPUT KHUSUS */
-
-        .checkrow {
-            display: flex;
-            gap: 9px;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .checkrow input {
-            width: auto;
-        }
-
-        .checkrow label {
-            margin: 0;
-        }
-
-        .photo-preview {
-            display: block;
-            width: 112px;
-            height: 112px;
-            object-fit: contain;
-            background: #f3f6fa;
-            border: 1px solid #d8e0e8;
-            border-radius: 10px;
-            margin: 8px 0;
-        }
-
-        .photo-note {
-            display: block;
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 7px;
-        }
-
-        hr {
-            border: 0;
-            border-top: 1px solid var(--border);
-            margin: 20px 0;
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 900px) {
-            .tabs {
-                width: 220px;
-            }
-
-            #app {
-                margin-left: 220px;
-                padding: 18px;
-            }
-        }
-
-        @media (max-width: 700px) {
-            header {
-                padding: 13px;
-            }
-
-            main {
-                padding: 12px;
-            }
-
-            .tabs {
-                position: relative;
-                top: auto;
-                left: auto;
-                bottom: auto;
-                width: 100%;
-                padding: 12px;
-                flex-direction: row;
-                align-items: center;
-                overflow-x: auto;
-                white-space: nowrap;
-                gap: 7px;
-            }
-
-            .sidebar-title {
-                display: none;
-            }
-
-            .tab {
-                width: auto;
-                min-width: max-content;
-                padding: 10px 13px;
-            }
-
-            #app {
-                margin-left: 0;
-                padding: 12px;
-            }
-
-            .grid {
-                grid-template-columns: 1fr;
-            }
-
-            .full {
-                grid-column: auto;
-            }
-
-            .panel {
-                padding: 15px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#173b69">
+<title>Admin SUARA HIMASAKI</title>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --navy:#173b69;
+ --navy2:#214d7d;
+ --blue:#3673ad;
+ --bg:#f4f7fb;
+ --white:#fff;
+ --ink:#253449;
+ --muted:#718096;
+ --border:#e5ebf2;
+ --green:#16845a;
+ --red:#bd4545;
+ --orange:#c27a24;
+ --shadow:0 5px 20px rgba(25,50,80,.055);
+ --radius:14px;
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--ink);
+ font:14px/1.6 "DM Sans",Arial,sans-serif;
+}
+
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+
+.topbar{
+ height:70px;
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ z-index:100;
+ background:var(--navy);
+ color:white;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:0 26px;
+ box-shadow:0 3px 14px rgba(0,0,0,.12);
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.brand-mark{
+ width:39px;
+ height:39px;
+ border-radius:11px;
+ background:rgba(255,255,255,.15);
+ display:grid;
+ place-items:center;
+ font-size:17px;
+ font-weight:800;
+}
+
+.brand strong{
+ display:block;
+ font-size:16px;
+ letter-spacing:.4px;
+}
+
+.brand small{
+ display:block;
+ font-size:11px;
+ color:#c7d6e7;
+}
+
+.top-right{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.user-label{
+ font-size:12px;
+ color:#e0eaf5;
+}
+
+.sidebar{
+ position:fixed;
+ top:70px;
+ left:0;
+ bottom:0;
+ width:255px;
+ background:var(--navy);
+ padding:22px 14px;
+ overflow-y:auto;
+ z-index:90;
+}
+
+.side-heading{
+ padding:0 13px 12px;
+ color:#9eb6d1;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1.5px;
+ text-transform:uppercase;
+}
+
+.tab{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ width:100%;
+ padding:12px 14px;
+ margin:3px 0;
+ border:0;
+ border-radius:10px;
+ color:#dbe6f2;
+ background:transparent;
+ text-align:left;
+ font-weight:500;
+ transition:.18s;
+}
+
+.tab:hover{
+ background:rgba(255,255,255,.1);
+ color:white;
+}
+
+.tab.active{
+ background:white;
+ color:var(--navy);
+ font-weight:800;
+ box-shadow:0 3px 12px rgba(0,0,0,.1);
+}
+
+.tab-icon{
+ width:22px;
+ text-align:center;
+ font-size:16px;
+}
+
+.side-footer{
+ border-top:1px solid rgba(255,255,255,.15);
+ margin-top:24px;
+ padding:17px 13px;
+ color:#a9bfd8;
+ font-size:11px;
+}
+
+.workspace{
+ margin-left:255px;
+ padding:96px 28px 35px;
+ min-height:100vh;
+}
+
+.page-heading{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:14px;
+ margin-bottom:22px;
+}
+
+.page-heading h1{
+ margin:0;
+ font-size:24px;
+ color:var(--navy);
+ font-weight:800;
+}
+
+.page-heading p{
+ margin:4px 0 0;
+ color:var(--muted);
+ font-size:13px;
+}
+
+.section{
+ display:none;
+ max-width:1250px;
+ margin:auto;
+}
+
+.section.active{display:block}
+
+.panel{
+ background:var(--white);
+ border:1px solid var(--border);
+ border-radius:var(--radius);
+ padding:23px;
+ margin-bottom:19px;
+ box-shadow:var(--shadow);
+}
+
+.panel-head{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ margin-bottom:18px;
+}
+
+.panel h2{
+ margin:0;
+ color:var(--navy);
+ font-size:18px;
+ font-weight:800;
+}
+
+.panel h3{
+ margin:20px 0 12px;
+ color:var(--navy);
+ font-size:15px;
+}
+
+.panel-desc{
+ margin:5px 0 0;
+ color:var(--muted);
+ font-size:12px;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:14px;
+}
+
+.full{grid-column:1/-1}
+
+label{
+ display:block;
+ margin:10px 0 6px;
+ font-size:12px;
+ font-weight:700;
+ color:#40536a;
+}
+
+input,select,textarea{
+ width:100%;
+ min-width:0;
+ padding:11px 13px;
+ border:1px solid #dce4ed;
+ border-radius:9px;
+ outline:none;
+ color:var(--ink);
+ background:white;
+ transition:.18s;
+}
+
+input:focus,select:focus,textarea:focus{
+ border-color:#5b8cbd;
+ box-shadow:0 0 0 3px rgba(65,119,174,.11);
+}
+
+textarea{
+ min-height:105px;
+ resize:vertical;
+}
+
+input[type=file]{
+ padding:9px;
+ background:#f9fbfd;
+ font-size:12px;
+}
+
+input[type=checkbox]{
+ width:16px;
+ height:16px;
+ accent-color:var(--navy);
+}
+
+.checkrow{
+ display:flex;
+ align-items:center;
+ gap:9px;
+ margin:12px 0;
+}
+
+.checkrow label{
+ margin:0;
+ font-weight:500;
+}
+
+.btn{
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:7px;
+ padding:10px 15px;
+ border:0;
+ border-radius:9px;
+ background:var(--navy);
+ color:white;
+ font-size:12px;
+ font-weight:700;
+ transition:.18s;
+}
+
+.btn:hover{filter:brightness(1.12)}
+.btn:disabled{opacity:.55;cursor:wait}
+
+.btn.alt{
+ background:#edf2f8;
+ color:var(--navy);
+}
+
+.btn.red{background:var(--red)}
+.btn.green{background:var(--green)}
+.btn.small{padding:7px 10px;font-size:11px}
+
+.btn-row{
+ display:flex;
+ flex-wrap:wrap;
+ gap:8px;
+ margin-top:17px;
+}
+
+.alert{
+ display:none;
+ padding:12px 14px;
+ margin:13px 0;
+ border-radius:9px;
+ font-size:12px;
+}
+
+.alert.ok{
+ display:block;
+ background:#e8f6ee;
+ color:#17643e;
+ border:1px solid #ccebd8;
+}
+
+.alert.err{
+ display:block;
+ background:#fff0ef;
+ color:#a12b25;
+ border:1px solid #f5d5d2;
+}
+
+.item{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:11px;
+ padding:16px;
+ margin:12px 0;
+ overflow-wrap:anywhere;
+}
+
+.item h3{
+ margin:5px 0 8px;
+ font-size:15px;
+}
+
+.item p{margin:8px 0}
+
+.meta{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.item-actions{
+ display:flex;
+ flex-wrap:wrap;
+ gap:7px;
+ margin-top:12px;
+}
+
+.badge{
+ display:inline-block;
+ padding:4px 9px;
+ border-radius:20px;
+ background:#edf3f9;
+ color:#31577d;
+ font-size:10px;
+ font-weight:700;
+}
+
+.badge.green{background:#e5f5eb;color:#187247}
+.badge.orange{background:#fff3df;color:#9a641c}
+
+.stats{
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:13px;
+ margin-bottom:19px;
+}
+
+.stat{
+ background:white;
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:17px;
+ box-shadow:var(--shadow);
+}
+
+.stat-icon{
+ width:35px;
+ height:35px;
+ border-radius:10px;
+ background:#edf3fa;
+ display:grid;
+ place-items:center;
+ font-size:17px;
+ margin-bottom:10px;
+}
+
+.stat strong{
+ display:block;
+ color:var(--navy);
+ font-size:25px;
+ line-height:1.2;
+}
+
+.stat span{
+ color:var(--muted);
+ font-size:11px;
+}
+
+.empty{
+ padding:24px 15px;
+ text-align:center;
+ color:var(--muted);
+ font-size:12px;
+ background:#fafbfd;
+ border:1px dashed #dce4ed;
+ border-radius:10px;
+}
+
+.photo-preview{
+ display:block;
+ width:112px;
+ height:112px;
+ object-fit:cover;
+ background:#f2f5f9;
+ border:1px solid var(--border);
+ border-radius:12px;
+ margin-top:10px;
+}
+
+.photo-note{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin-top:6px;
+}
+
+.hidden{display:none!important}
+
+hr{
+ border:0;
+ border-top:1px solid var(--border);
+ margin:21px 0;
+}
+
+#login{
+ max-width:470px;
+ margin:145px auto 40px;
+ padding:30px;
+ text-align:center;
+}
+
+.login-logo{
+ width:62px;
+ height:62px;
+ margin:0 auto 15px;
+ display:grid;
+ place-items:center;
+ background:#edf3fa;
+ color:var(--navy);
+ border-radius:18px;
+ font-size:25px;
+ font-weight:800;
+}
+
+#login h2{
+ margin:0;
+ color:var(--navy);
+ font-size:22px;
+}
+
+#login p{
+ color:var(--muted);
+ font-size:12px;
+}
+
+#googleButton{
+ display:flex;
+ justify-content:center;
+ margin:20px auto;
+ min-height:42px;
+}
+
+#accessCode{text-align:center;letter-spacing:1px}
+
+#newCode{
+ overflow-wrap:anywhere;
+ font-weight:700;
+}
+
+.menu-toggle{
+ display:none;
+ border:0;
+ color:white;
+ background:transparent;
+ font-size:22px;
+}
+
+@media(max-width:1050px){
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .workspace{padding-left:20px;padding-right:20px}
+}
+
+@media(max-width:760px){
+ .topbar{height:62px;padding:0 14px}
+ .brand strong{font-size:14px}
+ .brand-mark{width:34px;height:34px}
+ .menu-toggle{display:block}
+ .sidebar{
+  top:62px;
+  width:255px;
+  transform:translateX(-100%);
+  transition:transform .2s;
+  box-shadow:5px 0 20px rgba(0,0,0,.13);
+ }
+ .sidebar.open{transform:translateX(0)}
+ .workspace{
+  margin-left:0;
+  padding:83px 13px 25px;
+ }
+ .user-label{display:none}
+ .page-heading h1{font-size:21px}
+ .panel{padding:17px}
+ .grid{grid-template-columns:1fr}
+ .full{grid-column:auto}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .stat{padding:13px}
+ .stat strong{font-size:22px}
+}
+
+@media(max-width:400px){
+ .stats{grid-template-columns:1fr 1fr}
+ .panel{padding:14px}
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <div class="wrap">
-        <div>
-            <strong>SUARA HIMASAKI</strong>
-            <br>
-            <small>Panel Pengelolaan</small>
-        </div>
+<header class="topbar">
+ <div class="brand">
+  <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
+  <div class="brand-mark">HK</div>
+  <div>
+   <strong>SUARA HIMASAKI</strong>
+   <small>Panel Pengelolaan</small>
+  </div>
+ </div>
 
-        <div id="account" class="hidden">
-            <span id="who"></span>
-            <button class="btn alt" onclick="logout()">Keluar</button>
-        </div>
-    </div>
+ <div class="top-right hidden" id="account">
+  <span class="user-label" id="who"></span>
+  <button class="btn alt small" onclick="logout()">Keluar</button>
+ </div>
 </header>
 
-<main>
-
-    <!-- LOGIN -->
-    <section id="login" class="panel">
-        <h2>Masuk Pengurus</h2>
-
-        <p class="meta">
-            Admin utama menggunakan Google.
-            Pengurus lain menggunakan kode akses yang diberikan admin utama.
-        </p>
-
-        <div id="googleArea">
-            <div id="googleButton"></div>
-        </div>
-
-        <hr>
-
-        <label for="accessCode">Kode akses pengurus</label>
-        <input id="accessCode" placeholder="Masukkan kode akses">
-
-        <button class="btn" onclick="loginCode()">
-            Masuk dengan kode
-        </button>
-
-        <div id="loginAlert" class="alert"></div>
-    </section>
-
-    <!-- APLIKASI ADMIN -->
-    <section id="app" class="hidden">
-
-        <div id="alert" class="alert"></div>
-
-        <!-- NAVIGASI SIDEBAR -->
-        <nav class="tabs" id="tabs">
-            <div class="sidebar-title">Menu Pengelolaan</div>
-
-            <button class="btn tab active" data-tab="asp">Aspirasi</button>
-            <button class="btn tab" data-tab="home">Beranda</button>
-            <button class="btn tab" data-tab="periods">Periode & Pengurus</button>
-            <button class="btn tab" data-tab="people">Pendiri & Pengelola</button>
-            <button class="btn tab" data-tab="ann">Pengumuman</button>
-            <button class="btn tab" data-tab="gallery">Dokumentasi</button>
-            <button class="btn tab" data-tab="codes" data-main>Hak Akses</button>
-            <button class="btn tab" data-tab="backup">Backup</button>
-        </nav>
-
-        <!-- ASPIRASI -->
-        <section class="section active" id="asp">
-            <div class="panel">
-                <h2>Daftar Aspirasi</h2>
-
-                <button class="btn alt" onclick="refresh()">
-                    Muat ulang
-                </button>
-
-                <div id="aspList"></div>
-            </div>
-        </section>
-
-        <!-- BERANDA -->
-        <section class="section" id="home">
-            <div class="panel">
-                <h2>Pengaturan Beranda</h2>
-
-                <div class="grid">
-                    <div>
-                        <label>Nama organisasi</label>
-                        <input id="orgName">
-                    </div>
-
-                    <div>
-                        <label>Teks logo</label>
-                        <input id="logoText" maxlength="12">
-                    </div>
-
-                    <div class="full">
-                        <label>Judul utama</label>
-                        <input id="heroTitle">
-                    </div>
-
-                    <div class="full">
-                        <label>Deskripsi utama</label>
-                        <textarea id="heroText"></textarea>
-                    </div>
-
-                    <div class="full">
-                        <label>Tentang HIMASAKI</label>
-                        <textarea id="aboutText"></textarea>
-                    </div>
-
-                    <div class="full">
-                        <label>Teks footer</label>
-                        <input id="footerText">
-                    </div>
-                </div>
-
-                <button class="btn" onclick="saveHome()">Simpan beranda</button>
-            </div>
-        </section>
-
-        <!-- PERIODE DAN PENGURUS -->
-        <section class="section" id="periods">
-
-            <div class="panel">
-                <h2>Periode Kepengurusan</h2>
-
-                <input type="hidden" id="periodId">
-
-                <div class="grid">
-                    <div>
-                        <label>Nama periode</label>
-                        <input id="periodName" placeholder="2025–2026">
-                    </div>
-
-                    <div>
-                        <label>Tanggal mulai</label>
-                        <input type="date" id="periodStart">
-                    </div>
-
-                    <div>
-                        <label>Tanggal selesai</label>
-                        <input type="date" id="periodEnd">
-                    </div>
-
-                    <div class="checkrow">
-                        <input type="checkbox" id="periodActive">
-                        <label for="periodActive">Jadikan periode aktif</label>
-                    </div>
-                </div>
-
-                <button class="btn" onclick="savePeriod()">Simpan periode</button>
-
-                <div id="periodList"></div>
-            </div>
-
-            <div class="panel">
-                <h2>Struktur Pengurus</h2>
-
-                <input type="hidden" id="officerId">
-
-                <div class="grid">
-                    <div>
-                        <label>Periode</label>
-                        <select id="officerPeriod"></select>
-                    </div>
-
-                    <div>
-                        <label>Divisi</label>
-                        <select id="officerDivision">
-                            <option>Pengurus Inti</option>
-                            <option>PPD</option>
-                            <option>PAO</option>
-                            <option>Keagamaan</option>
-                            <option>Keamanan</option>
-                            <option>Lainnya</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Jabatan</label>
-                        <input id="officerPosition" placeholder="Ketua Umum / Anggota">
-                    </div>
-
-                    <div>
-                        <label>Nama</label>
-                        <input id="officerName">
-                    </div>
-
-                    <div>
-                        <label>Foto pengurus (opsional, maksimal 5 MB)</label>
-                        <input
-                            id="officerPhotoFile"
-                            type="file"
-                            accept="image/jpeg,image/png,image/webp,image/gif"
-                        >
-
-                        <input id="officerPhoto" type="hidden">
-
-                        <img
-                            id="officerPhotoPreview"
-                            class="photo-preview hidden"
-                            alt="Pratinjau foto pengurus"
-                        >
-
-                        <span class="photo-note">
-                            Pilih foto langsung dari perangkat.
-                            Jika tidak memilih foto baru, foto lama tetap digunakan.
-                        </span>
-                    </div>
-
-                    <div>
-                        <label>Urutan tampil</label>
-                        <input id="officerOrder" type="number" value="0">
-                    </div>
-
-                    <div class="full">
-                        <label>Keterangan</label>
-                        <input id="officerDescription">
-                    </div>
-                </div>
-
-                <button class="btn" onclick="saveOfficer()">Simpan pengurus</button>
-
-                <div id="officerList"></div>
-            </div>
-        </section>
-
-        <!-- PENDIRI DAN PENGELOLA -->
-        <section class="section" id="people">
-            <div class="panel">
-                <h2>Pendiri dan Pengembang</h2>
-
-                <div class="grid">
-                    <div>
-                        <label>Nama pendiri</label>
-                        <input id="founderName">
-                    </div>
-
-                    <div>
-                        <label>Foto pendiri (maksimal 5 MB)</label>
-                        <input
-                            id="founderPhotoFile"
-                            type="file"
-                            accept="image/jpeg,image/png,image/webp,image/gif"
-                        >
-
-                        <input id="founderPhoto" type="hidden">
-
-                        <img
-                            id="founderPhotoPreview"
-                            class="photo-preview hidden"
-                            alt="Pratinjau foto pendiri"
-                        >
-                    </div>
-
-                    <div class="full">
-                        <label>Keterangan pendiri</label>
-                        <textarea id="founderDescription"></textarea>
-                    </div>
-
-                    <div>
-                        <label>Nama pengembang</label>
-                        <input id="developerName">
-                    </div>
-
-                    <div>
-                        <label>Foto pengembang (maksimal 5 MB)</label>
-                        <input
-                            id="developerPhotoFile"
-                            type="file"
-                            accept="image/jpeg,image/png,image/webp,image/gif"
-                        >
-
-                        <input id="developerPhoto" type="hidden">
-
-                        <img
-                            id="developerPhotoPreview"
-                            class="photo-preview hidden"
-                            alt="Pratinjau foto pengembang"
-                        >
-                    </div>
-
-                    <div class="full">
-                        <label>Keterangan pengembang</label>
-                        <textarea id="developerDescription"></textarea>
-                    </div>
-                </div>
-
-                <h3>Pengelola (dapat beberapa orang)</h3>
-
-                <div id="managerRows"></div>
-
-                <button class="btn alt" onclick="addManager()">
-                    Tambah pengelola
-                </button>
-
-                <br>
-
-                <button class="btn" onclick="savePeople()">Simpan data</button>
-            </div>
-        </section>
-
-        <!-- PENGUMUMAN -->
-        <section class="section" id="ann">
-
-            <div class="panel">
-                <h2>Tambah Pengumuman</h2>
-
-                <label>Judul</label>
-                <input id="annTitle">
-
-                <label>Kategori</label>
-                <input id="annCategory" placeholder="Informasi kegiatan">
-
-                <label>Isi</label>
-                <textarea id="annDescription"></textarea>
-
-                <button class="btn" onclick="addAnnouncement()">Terbitkan</button>
-            </div>
-
-            <div class="panel">
-                <h2>Daftar Pengumuman</h2>
-                <div id="annList"></div>
-            </div>
-        </section>
-
-        <!-- DOKUMENTASI -->
-        <section class="section" id="gallery">
-
-            <div class="panel">
-                <h2>Tambah Dokumentasi Foto / Video</h2>
-
-                <label>Judul</label>
-                <input id="mediaTitle">
-
-                <label>Kategori</label>
-                <input
-                    id="mediaCategory"
-                    placeholder="Pengodokan, seminar, kegiatan, dll."
-                >
-
-                <label>Deskripsi</label>
-                <textarea id="mediaDescription"></textarea>
-
-                <label>Periode (opsional)</label>
-                <select id="mediaPeriod"></select>
-
-                <label>
-                    Pilih foto atau video
-                    (foto maksimal 5 MB, video maksimal 20 MB)
-                </label>
-
-                <input
-                    id="mediaFile"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg"
-                >
-
-                <p class="meta">
-                    Video dapat berupa MP4, WEBM, atau OGG.
-                    Kamu juga dapat menambahkan tautan YouTube.
-                </p>
-
-                <button class="btn" id="uploadBtn" onclick="uploadMedia()">
-                    Unggah media
-                </button>
-
-                <hr>
-
-                <h3>Tambahkan video YouTube</h3>
-
-                <label>Judul</label>
-                <input id="ytTitle">
-
-                <label>Kategori</label>
-                <input id="ytCategory">
-
-                <label>Deskripsi</label>
-                <textarea id="ytDescription"></textarea>
-
-                <label>URL YouTube</label>
-                <input
-                    id="ytUrl"
-                    placeholder="https://www.youtube.com/watch?v=..."
-                >
-
-                <button class="btn" onclick="addYoutube()">
-                    Terbitkan video YouTube
-                </button>
-            </div>
-
-            <div class="panel">
-                <h2>Daftar Dokumentasi</h2>
-                <div id="galleryList"></div>
-            </div>
-        </section>
-
-        <!-- HAK AKSES -->
-        <section class="section" id="codes">
-
-            <div class="panel">
-                <h2>Buat Kode Akses Pengurus</h2>
-
-                <label>Nama / keterangan kode</label>
-                <input id="codeLabel" placeholder="Contoh: Tim Dokumentasi">
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permAsp">
-                    <label for="permAsp">Akses aspirasi</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permHome">
-                    <label for="permHome">Akses pengaturan beranda</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permPeriods">
-                    <label for="permPeriods">Akses periode dan struktur pengurus</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permPeople">
-                    <label for="permPeople">Akses pendiri dan pengelola</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permAnn" checked>
-                    <label for="permAnn">Akses pengumuman</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permGallery" checked>
-                    <label for="permGallery">Akses dokumentasi</label>
-                </div>
-
-                <div class="checkrow">
-                    <input type="checkbox" id="permBackup">
-                    <label for="permBackup">Akses backup</label>
-                </div>
-
-                <p class="meta">
-                    Tidak ada kode akses yang dapat membuat
-                    atau mengelola kode akses baru.
-                </p>
-
-                <label>Masa berlaku sampai</label>
-                <input type="date" id="codeExpiry">
-
-                <label>Maksimal jumlah penggunaan / pengguna</label>
-                <input type="number" id="codeMax" min="1" max="500" value="3">
-
-                <button class="btn" onclick="createCode()">Buat kode akses</button>
-
-                <div id="newCode" class="alert"></div>
-            </div>
-
-            <div class="panel">
-                <h2>Daftar Kode Akses</h2>
-                <div id="codeList"></div>
-            </div>
-        </section>
-
-        <!-- BACKUP -->
-        <section class="section" id="backup">
-            <div class="panel">
-                <h2>Backup Data</h2>
-
-                <p>
-                    Backup otomatis dijadwalkan setiap hari sekitar
-                    pukul 02.00 berdasarkan zona waktu proyek Apps Script.
-                    Backup manual juga dapat dibuat di sini.
-                </p>
-
-                <button class="btn" onclick="runBackup()">
-                    Buat backup sekarang
-                </button>
-            </div>
-        </section>
-
-    </section>
+<!-- LOGIN -->
+<section id="login" class="panel">
+ <div class="login-logo">HK</div>
+ <h2>Selamat Datang</h2>
+ <p>Masuk ke panel pengelolaan SUARA HIMASAKI.</p>
+ <p>Admin utama menggunakan akun Google. Pengurus lain menggunakan kode akses.</p>
+
+ <div id="googleArea">
+  <div id="googleButton"></div>
+ </div>
+
+ <hr>
+
+ <label for="accessCode">Kode akses pengurus</label>
+ <input id="accessCode" placeholder="Masukkan kode akses" autocomplete="off">
+
+ <div class="btn-row" style="justify-content:center">
+  <button class="btn" onclick="loginCode()">Masuk dengan kode</button>
+ </div>
+
+ <div id="loginAlert" class="alert"></div>
+</section>
+
+<!-- SIDEBAR -->
+<nav class="sidebar hidden" id="sidebar">
+ <div class="side-heading">Menu Pengelolaan</div>
+
+ <button class="tab active" data-tab="asp">
+  <span class="tab-icon">▤</span> Aspirasi
+ </button>
+
+ <button class="tab" data-tab="home">
+  <span class="tab-icon">⌂</span> Beranda
+ </button>
+
+ <button class="tab" data-tab="periods">
+  <span class="tab-icon">▦</span> Periode & Pengurus
+ </button>
+
+ <button class="tab" data-tab="people">
+  <span class="tab-icon">♙</span> Pendiri & Pengelola
+ </button>
+
+ <button class="tab" data-tab="ann">
+  <span class="tab-icon">▣</span> Pengumuman
+ </button>
+
+ <button class="tab" data-tab="gallery">
+  <span class="tab-icon">▧</span> Dokumentasi
+ </button>
+
+ <button class="tab" data-tab="codes" data-main>
+  <span class="tab-icon">⚿</span> Hak Akses
+ </button>
+
+ <button class="tab" data-tab="backup">
+  <span class="tab-icon">⟳</span> Backup
+ </button>
+
+ <div class="side-footer">
+  SUARA HIMASAKI<br>
+  Himpunan Mahasiswa Sains Kimia
+ </div>
+</nav>
+
+<!-- AREA ADMIN -->
+<main class="workspace hidden" id="app">
+
+ <div id="alert" class="alert"></div>
+
+ <!-- ASPIRASI -->
+ <section class="section active" id="asp">
+  <div class="page-heading">
+   <div>
+    <h1>Dashboard & Aspirasi</h1>
+    <p>Ringkasan dan pengelolaan masukan mahasiswa.</p>
+   </div>
+   <button class="btn alt" onclick="refresh()">↻ Muat ulang</button>
+  </div>
+
+  <div class="stats">
+   <div class="stat">
+    <div class="stat-icon">▤</div>
+    <strong id="statAsp">0</strong>
+    <span>Total aspirasi</span>
+   </div>
+   <div class="stat">
+    <div class="stat-icon">◷</div>
+    <strong id="statNew">0</strong>
+    <span>Aspirasi baru</span>
+   </div>
+   <div class="stat">
+    <div class="stat-icon">♙</div>
+    <strong id="statPeople">0</strong>
+    <span>Data pengurus</span>
+   </div>
+   <div class="stat">
+    <div class="stat-icon">▧</div>
+    <strong id="statContent">0</strong>
+    <span>Konten aktif</span>
+   </div>
+  </div>
+
+  <div class="panel">
+   <div class="panel-head">
+    <div>
+     <h2>Daftar Aspirasi</h2>
+     <p class="panel-desc">Lihat aspirasi dan perbarui status penanganannya.</p>
+    </div>
+   </div>
+   <div id="aspList"></div>
+  </div>
+ </section>
+
+ <!-- BERANDA -->
+ <section class="section" id="home">
+  <div class="page-heading">
+   <div>
+    <h1>Pengaturan Beranda</h1>
+    <p>Atur informasi yang tampil pada halaman utama website.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Identitas Organisasi</h2>
+   <div class="grid">
+    <div>
+     <label>Nama organisasi</label>
+     <input id="orgName">
+    </div>
+    <div>
+     <label>Teks logo</label>
+     <input id="logoText" maxlength="12">
+    </div>
+    <div class="full">
+     <label>Judul utama</label>
+     <input id="heroTitle">
+    </div>
+    <div class="full">
+     <label>Deskripsi utama</label>
+     <textarea id="heroText"></textarea>
+    </div>
+    <div class="full">
+     <label>Tentang HIMASAKI</label>
+     <textarea id="aboutText"></textarea>
+    </div>
+    <div class="full">
+     <label>Teks footer</label>
+     <input id="footerText">
+    </div>
+   </div>
+   <div class="btn-row">
+    <button class="btn" onclick="saveHome()">Simpan perubahan</button>
+   </div>
+  </div>
+ </section>
+
+ <!-- PERIODE -->
+ <section class="section" id="periods">
+  <div class="page-heading">
+   <div>
+    <h1>Periode & Pengurus</h1>
+    <p>Kelola periode kepengurusan dan struktur organisasi.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Periode Kepengurusan</h2>
+   <input type="hidden" id="periodId">
+
+   <div class="grid">
+    <div>
+     <label>Nama periode</label>
+     <input id="periodName" placeholder="2025–2026">
+    </div>
+    <div>
+     <label>Tanggal mulai</label>
+     <input type="date" id="periodStart">
+    </div>
+    <div>
+     <label>Tanggal selesai</label>
+     <input type="date" id="periodEnd">
+    </div>
+    <div class="checkrow">
+     <input type="checkbox" id="periodActive">
+     <label for="periodActive">Jadikan periode aktif</label>
+    </div>
+   </div>
+
+   <div class="btn-row">
+    <button class="btn" onclick="savePeriod()">Simpan periode</button>
+    <button class="btn alt" onclick="clearPeriod()">Bersihkan form</button>
+   </div>
+
+   <hr>
+   <h3>Daftar Periode</h3>
+   <div id="periodList"></div>
+  </div>
+
+  <div class="panel">
+   <h2>Struktur Pengurus</h2>
+   <input type="hidden" id="officerId">
+
+   <div class="grid">
+    <div>
+     <label>Periode</label>
+     <select id="officerPeriod"></select>
+    </div>
+    <div>
+     <label>Divisi</label>
+     <select id="officerDivision">
+      <option>Pengurus Inti</option>
+      <option>PPD</option>
+      <option>PAO</option>
+      <option>Keagamaan</option>
+      <option>Keamanan</option>
+      <option>Lainnya</option>
+     </select>
+    </div>
+    <div>
+     <label>Jabatan</label>
+     <input id="officerPosition" placeholder="Ketua Umum / Anggota">
+    </div>
+    <div>
+     <label>Nama</label>
+     <input id="officerName">
+    </div>
+    <div>
+     <label>Foto pengurus</label>
+     <input id="officerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+     <input id="officerPhoto" type="hidden">
+     <img id="officerPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pengurus">
+     <span class="photo-note">JPG, PNG, WEBP, atau GIF. Maksimal 5 MB.</span>
+    </div>
+    <div>
+     <label>Urutan tampil</label>
+     <input id="officerOrder" type="number" value="0">
+    </div>
+    <div class="full">
+     <label>Keterangan</label>
+     <input id="officerDescription">
+    </div>
+   </div>
+
+   <div class="btn-row">
+    <button class="btn" onclick="saveOfficer()">Simpan pengurus</button>
+    <button class="btn alt" onclick="clearOfficer()">Bersihkan form</button>
+   </div>
+
+   <hr>
+   <h3>Daftar Pengurus</h3>
+   <div id="officerList"></div>
+  </div>
+ </section>
+
+ <!-- PENDIRI -->
+ <section class="section" id="people">
+  <div class="page-heading">
+   <div>
+    <h1>Pendiri & Pengelola</h1>
+    <p>Kelola profil pendiri, pengembang, dan pengelola website.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Profil Pendiri</h2>
+   <div class="grid">
+    <div>
+     <label>Nama pendiri</label>
+     <input id="founderName">
+    </div>
+    <div>
+     <label>Foto pendiri</label>
+     <input id="founderPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+     <input id="founderPhoto" type="hidden">
+     <img id="founderPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pendiri">
+    </div>
+    <div class="full">
+     <label>Keterangan pendiri</label>
+     <textarea id="founderDescription"></textarea>
+    </div>
+   </div>
+
+   <hr>
+   <h2>Profil Pengembang</h2>
+   <div class="grid">
+    <div>
+     <label>Nama pengembang</label>
+     <input id="developerName">
+    </div>
+    <div>
+     <label>Foto pengembang</label>
+     <input id="developerPhotoFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+     <input id="developerPhoto" type="hidden">
+     <img id="developerPhotoPreview" class="photo-preview hidden" alt="Pratinjau foto pengembang">
+    </div>
+    <div class="full">
+     <label>Keterangan pengembang</label>
+     <textarea id="developerDescription"></textarea>
+    </div>
+   </div>
+
+   <hr>
+   <div class="panel-head">
+    <div>
+     <h2>Pengelola</h2>
+     <p class="panel-desc">Tambahkan satu atau beberapa pengelola.</p>
+    </div>
+    <button class="btn alt small" onclick="addManager()">+ Tambah</button>
+   </div>
+
+   <div id="managerRows"></div>
+
+   <div class="btn-row">
+    <button class="btn" onclick="savePeople()">Simpan seluruh data</button>
+   </div>
+  </div>
+ </section>
+
+ <!-- PENGUMUMAN -->
+ <section class="section" id="ann">
+  <div class="page-heading">
+   <div>
+    <h1>Pengumuman</h1>
+    <p>Terbitkan informasi dan kegiatan HIMASAKI.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Buat Pengumuman</h2>
+   <label>Judul</label>
+   <input id="annTitle">
+   <label>Kategori</label>
+   <input id="annCategory" placeholder="Informasi kegiatan">
+   <label>Isi pengumuman</label>
+   <textarea id="annDescription"></textarea>
+   <div class="btn-row">
+    <button class="btn" onclick="addAnnouncement()">Terbitkan pengumuman</button>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Daftar Pengumuman</h2>
+   <div id="annList"></div>
+  </div>
+ </section>
+
+ <!-- DOKUMENTASI -->
+ <section class="section" id="gallery">
+  <div class="page-heading">
+   <div>
+    <h1>Dokumentasi</h1>
+    <p>Kelola foto, video, dan dokumentasi kegiatan.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Unggah Foto / Video</h2>
+   <div class="grid">
+    <div class="full">
+     <label>Judul dokumentasi</label>
+     <input id="mediaTitle">
+    </div>
+    <div>
+     <label>Kategori</label>
+     <input id="mediaCategory" placeholder="Seminar, kegiatan, pengodokan, dll.">
+    </div>
+    <div>
+     <label>Periode</label>
+     <select id="mediaPeriod"></select>
+    </div>
+    <div class="full">
+     <label>Deskripsi</label>
+     <textarea id="mediaDescription"></textarea>
+    </div>
+    <div class="full">
+     <label>Pilih foto atau video</label>
+     <input id="mediaFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/ogg">
+     <span class="photo-note">Foto maksimal 5 MB. Video maksimal 20 MB. Foto besar akan dikompres otomatis.</span>
+    </div>
+   </div>
+
+   <div class="btn-row">
+    <button class="btn" id="uploadBtn" onclick="uploadMedia()">Unggah dokumentasi</button>
+   </div>
+
+   <hr>
+
+   <h3>Tambahkan Video YouTube</h3>
+   <label>Judul</label>
+   <input id="ytTitle">
+   <label>Kategori</label>
+   <input id="ytCategory">
+   <label>Deskripsi</label>
+   <textarea id="ytDescription"></textarea>
+   <label>URL YouTube</label>
+   <input id="ytUrl" placeholder="https://www.youtube.com/watch?v=...">
+
+   <div class="btn-row">
+    <button class="btn" onclick="addYoutube()">Terbitkan video YouTube</button>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Daftar Dokumentasi</h2>
+   <div id="galleryList"></div>
+  </div>
+ </section>
+
+ <!-- HAK AKSES -->
+ <section class="section" id="codes">
+  <div class="page-heading">
+   <div>
+    <h1>Hak Akses Pengurus</h1>
+    <p>Buat dan kelola kode akses untuk pengurus lain.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Buat Kode Akses</h2>
+   <label>Nama / keterangan kode</label>
+   <input id="codeLabel" placeholder="Contoh: Tim Dokumentasi">
+
+   <h3>Hak akses</h3>
+
+   <div class="grid">
+    <div>
+     <div class="checkrow"><input type="checkbox" id="permAsp"><label for="permAsp">Aspirasi</label></div>
+     <div class="checkrow"><input type="checkbox" id="permHome"><label for="permHome">Pengaturan beranda</label></div>
+     <div class="checkrow"><input type="checkbox" id="permPeriods"><label for="permPeriods">Periode dan pengurus</label></div>
+     <div class="checkrow"><input type="checkbox" id="permPeople"><label for="permPeople">Pendiri dan pengelola</label></div>
+    </div>
+    <div>
+     <div class="checkrow"><input type="checkbox" id="permAnn" checked><label for="permAnn">Pengumuman</label></div>
+     <div class="checkrow"><input type="checkbox" id="permGallery" checked><label for="permGallery">Dokumentasi</label></div>
+     <div class="checkrow"><input type="checkbox" id="permBackup"><label for="permBackup">Backup</label></div>
+    </div>
+   </div>
+
+   <p class="meta">Kode pengurus tidak dapat membuat atau mengelola kode akses lain.</p>
+
+   <div class="grid">
+    <div>
+     <label>Masa berlaku sampai</label>
+     <input type="date" id="codeExpiry">
+    </div>
+    <div>
+     <label>Maksimal jumlah pengguna/perangkat</label>
+     <input type="number" id="codeMax" min="1" max="500" value="3">
+    </div>
+   </div>
+
+   <div class="btn-row">
+    <button class="btn" onclick="createCode()">Buat kode akses</button>
+   </div>
+
+   <div id="newCode" class="alert"></div>
+  </div>
+
+  <div class="panel">
+   <h2>Daftar Kode Akses</h2>
+   <div id="codeList"></div>
+  </div>
+ </section>
+
+ <!-- BACKUP -->
+ <section class="section" id="backup">
+  <div class="page-heading">
+   <div>
+    <h1>Backup Data</h1>
+    <p>Perlindungan dan pencadangan data SUARA HIMASAKI.</p>
+   </div>
+  </div>
+
+  <div class="panel">
+   <h2>Pencadangan Data</h2>
+   <p>Backup otomatis dijadwalkan setiap hari sekitar pukul 02.00 berdasarkan zona waktu proyek Apps Script.</p>
+   <p class="meta">Backup manual dapat dijalankan kapan saja. File backup disimpan di Google Drive.</p>
+   <div class="btn-row">
+    <button class="btn" onclick="runBackup()">Buat backup sekarang</button>
+   </div>
+  </div>
+ </section>
+
 </main>
 
 <script>
-    const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+/* =========================
+   KONFIGURASI
+========================= */
 
-    const CLIENT = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
-    const ADMIN = "adegameonly@gmail.com";
+const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+const CLIENT = "80195249647-cb5al4kc1785kke4hh2okhuqsa7bten5.apps.googleusercontent.com";
+const ADMIN = "adegameonly@gmail.com";
 
-    let googleToken = "";
-    let sessionToken = "";
-    let isMain = false;
-    let data = null;
-    let officerPermissions = [];
+let googleToken = "";
+let sessionToken = "";
+let isMain = false;
+let data = null;
+let officerPermissions = [];
 
-    /* =========================
-       KOMUNIKASI API
-    ========================= */
+/* =========================
+   UTILITAS
+========================= */
 
-    function request(payload) {
-        return new Promise((resolve, reject) => {
-            const id = "adm_" + Date.now() + "_" +
-                Math.random().toString(36).slice(2);
+const $ = id => document.getElementById(id);
 
-            const name = "f_" + id;
+function esc(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
 
-            const frame = document.createElement("iframe");
-            const form = document.createElement("form");
-            const input = document.createElement("input");
+function val(id){
+ return $(id).value;
+}
 
-            frame.name = name;
-            frame.hidden = true;
+function setVal(id,value){
+ $(id).value = value ?? "";
+}
 
-            form.method = "POST";
-            form.action = API;
-            form.target = name;
-            form.hidden = true;
+function alertBox(id,message,ok=true){
+ const el=$(id);
+ if(!el)return;
+ el.textContent=message;
+ el.className="alert "+(ok?"ok":"err");
+}
 
-            input.type = "hidden";
-            input.name = "payload";
-            input.value = JSON.stringify({
-                ...payload,
-                requestId: id
-            });
+function clearAlert(id){
+ const el=$(id);
+ if(el)el.className="alert";
+}
 
-            form.appendChild(input);
+function empty(text){
+ return `<div class="empty">${esc(text)}</div>`;
+}
 
-            let done = false;
+function auth(){
+ return isMain?{token:googleToken}:{session:sessionToken};
+}
 
-            const clean = () => {
-                removeEventListener("message", msg);
-                clearTimeout(timer);
-                frame.remove();
-                form.remove();
-            };
+/* =========================
+   KOMUNIKASI SERVER
+========================= */
 
-            const msg = e => {
-                if (!e.data || e.data.requestId !== id) return;
+function request(payload){
+ return new Promise((resolve,reject)=>{
+  const id="adm_"+Date.now()+"_"+Math.random().toString(36).slice(2);
+  const frameName="frame_"+id;
 
-                done = true;
-                clean();
+  const frame=document.createElement("iframe");
+  frame.name=frameName;
+  frame.hidden=true;
 
-                if (e.data.ok) {
-                    resolve(e.data.data);
-                } else {
-                    reject(Error(e.data.error || "Permintaan gagal"));
-                }
-            };
+  const form=document.createElement("form");
+  form.method="POST";
+  form.action=API;
+  form.target=frameName;
+  form.hidden=true;
 
-            const timer = setTimeout(() => {
-                if (!done) {
-                    clean();
-                    reject(Error("Server tidak merespons. Coba kembali."));
-                }
-            }, 60000);
+  const input=document.createElement("input");
+  input.type="hidden";
+  input.name="payload";
+  input.value=JSON.stringify({...payload,requestId:id});
+  form.appendChild(input);
 
-            addEventListener("message", msg);
-            document.body.append(frame, form);
-            form.submit();
-        });
+  let finished=false;
+
+  function cleanup(){
+   removeEventListener("message",onMessage);
+   clearTimeout(timer);
+   frame.remove();
+   form.remove();
+  }
+
+  function onMessage(event){
+   if(!event.data||event.data.requestId!==id)return;
+
+   finished=true;
+   cleanup();
+
+   if(event.data.ok)resolve(event.data.data);
+   else reject(Error(event.data.error||"Permintaan gagal."));
+  }
+
+  const timer=setTimeout(()=>{
+   if(finished)return;
+   cleanup();
+   reject(Error("Server tidak merespons. Coba kembali."));
+  },90000);
+
+  addEventListener("message",onMessage);
+  document.body.append(frame,form);
+  form.submit();
+ });
+}
+
+async function api(action,extra={}){
+ return request({action,...auth(),...extra});
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+function localDeviceId(){
+ let id=localStorage.getItem("himasaki_access_device");
+
+ if(!id){
+  id=(window.crypto&&crypto.randomUUID)
+   ?crypto.randomUUID()
+   :"dev-"+Date.now()+"-"+Math.random().toString(36).slice(2);
+
+  localStorage.setItem("himasaki_access_device",id);
+ }
+
+ return id;
+}
+
+function showApp(label){
+ $("login").classList.add("hidden");
+ $("sidebar").classList.remove("hidden");
+ $("app").classList.remove("hidden");
+ $("account").classList.remove("hidden");
+ $("who").textContent=label;
+
+ document.querySelectorAll("[data-main]").forEach(el=>{
+  el.classList.toggle("hidden",!isMain);
+ });
+
+ const permissionMap={
+  asp:"aspirations",
+  home:"home",
+  periods:"periods",
+  people:"people",
+  ann:"announcements",
+  gallery:"gallery",
+  backup:"backup"
+ };
+
+ Object.keys(permissionMap).forEach(tab=>{
+  const el=document.querySelector(`[data-tab="${tab}"]`);
+  if(el){
+   el.classList.toggle(
+    "hidden",
+    !isMain&&!officerPermissions.includes(permissionMap[tab])
+   );
+  }
+ });
+
+ const first=isMain
+  ?"asp"
+  :Object.keys(permissionMap).find(k=>officerPermissions.includes(permissionMap[k]));
+
+ if(!first)throw Error("Kode akses belum memiliki hak akses.");
+
+ openTab(first);
+}
+
+async function loginCode(){
+ try{
+  clearAlert("loginAlert");
+
+  const result=await request({
+   action:"codeLogin",
+   code:val("accessCode"),
+   deviceId:localDeviceId()
+  });
+
+  sessionToken=result.session;
+  officerPermissions=result.permissions||[];
+  isMain=false;
+
+  showApp(result.label);
+  await refresh();
+
+ }catch(error){
+  alertBox("loginAlert",error.message,false);
+ }
+}
+
+function logout(){
+ googleToken="";
+ sessionToken="";
+ isMain=false;
+ officerPermissions=[];
+ data=null;
+
+ $("login").classList.remove("hidden");
+ $("sidebar").classList.add("hidden");
+ $("app").classList.add("hidden");
+ $("account").classList.add("hidden");
+ $("accessCode").value="";
+ clearAlert("loginAlert");
+ closeSidebar();
+}
+
+function bootGoogle(){
+ if(!window.google?.accounts?.id){
+  setTimeout(bootGoogle,400);
+  return;
+ }
+
+ google.accounts.id.initialize({
+  client_id:CLIENT,
+  callback:async response=>{
+   try{
+    const part=response.credential.split(".")[1]
+     .replace(/-/g,"+").replace(/_/g,"/");
+
+    const claims=JSON.parse(
+     atob(part+"=".repeat((4-part.length%4)%4))
+    );
+
+    if(String(claims.email).toLowerCase()!==ADMIN){
+     throw Error("Akun ini bukan admin utama.");
     }
 
-    function auth() {
-        return isMain
-            ? { token: googleToken }
-            : { session: sessionToken };
-    }
-
-    async function api(action, extra = {}) {
-        return request({
-            action,
-            ...auth(),
-            ...extra
-        });
-    }
-
-    /* =========================
-       UTILITAS
-    ========================= */
-
-    function esc(s) {
-        return String(s ?? "").replace(/[&<>"']/g, c => ({
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-        }[c]));
-    }
-
-    function alertBox(id, msg, ok = true) {
-        const e = document.getElementById(id);
-        e.textContent = msg;
-        e.className = "alert " + (ok ? "ok" : "err");
-    }
-
-    function localDeviceId() {
-        let id = localStorage.getItem("himasaki_access_device");
-
-        if (!id) {
-            id = (window.crypto && crypto.randomUUID)
-                ? crypto.randomUUID()
-                : "dev-" + Date.now() + "-" + Math.random().toString(36).slice(2);
-
-            localStorage.setItem("himasaki_access_device", id);
-        }
-
-        return id;
-    }
-
-    /* =========================
-       LOGIN DAN HAK AKSES
-    ========================= */
-
-    function showApp(label) {
-        document.getElementById("login").classList.add("hidden");
-        document.getElementById("app").classList.remove("hidden");
-        document.getElementById("account").classList.remove("hidden");
-        document.getElementById("who").textContent = label;
-
-        document.querySelectorAll("[data-main]").forEach(x => {
-            x.classList.toggle("hidden", !isMain);
-        });
-
-        const menuPermissions = {
-            asp: "aspirations",
-            home: "home",
-            periods: "periods",
-            people: "people",
-            ann: "announcements",
-            gallery: "gallery",
-            backup: "backup"
-        };
-
-        Object.keys(menuPermissions).forEach(tab => {
-            const el = document.querySelector('[data-tab="' + tab + '"]');
-
-            if (el) {
-                el.classList.toggle(
-                    "hidden",
-                    !isMain && !officerPermissions.includes(menuPermissions[tab])
-                );
-            }
-        });
-
-        document.querySelectorAll(".tab").forEach(x => {
-            x.classList.remove("active");
-        });
-
-        document.querySelectorAll(".section").forEach(x => {
-            x.classList.remove("active");
-        });
-
-        const first = isMain
-            ? "asp"
-            : Object.keys(menuPermissions).find(
-                k => officerPermissions.includes(menuPermissions[k])
-            );
-
-        if (!first) {
-            throw Error("Kode akses ini belum memiliki hak akses.");
-        }
-
-        document.querySelector('[data-tab="' + first + '"]').classList.add("active");
-        document.getElementById(first).classList.add("active");
-    }
-
-    async function loginCode() {
-        try {
-            const r = await request({
-                action: "codeLogin",
-                code: document.getElementById("accessCode").value,
-                deviceId: localDeviceId()
-            });
-
-            sessionToken = r.session;
-            officerPermissions = r.permissions || [];
-            isMain = false;
-
-            showApp(r.label);
-            await refresh();
-
-        } catch (e) {
-            alertBox("loginAlert", e.message, false);
-        }
-    }
-
-    function logout() {
-        googleToken = "";
-        sessionToken = "";
-        isMain = false;
-        officerPermissions = [];
-        data = null;
-
-        document.getElementById("app").classList.add("hidden");
-        document.getElementById("account").classList.add("hidden");
-        document.getElementById("login").classList.remove("hidden");
-
-        document.getElementById("accessCode").value = "";
-        document.getElementById("loginAlert").className = "alert";
-    }
-
-    function boot() {
-        if (!window.google?.accounts?.id) {
-            setTimeout(boot, 400);
-            return;
-        }
-
-        google.accounts.id.initialize({
-            client_id: CLIENT,
-
-            callback: async r => {
-                try {
-                    const part = r.credential
-                        .split(".")[1]
-                        .replace(/-/g, "+")
-                        .replace(/_/g, "/");
-
-                    const claims = JSON.parse(
-                        atob(part + "=".repeat((4 - part.length % 4) % 4))
-                    );
-
-                    if (String(claims.email).toLowerCase() !== ADMIN) {
-                        throw Error("Akun bukan admin utama.");
-                    }
-
-                    googleToken = r.credential;
-                    isMain = true;
-
-                    showApp(claims.email);
-                    await refresh();
-
-                } catch (e) {
-                    alertBox("loginAlert", e.message, false);
-                }
-            }
-        });
-
-        google.accounts.id.renderButton(
-            document.getElementById("googleButton"),
-            {
-                theme: "outline",
-                size: "large",
-                width: 260
-            }
-        );
-    }
-
-    /* =========================
-       MEMUAT DATA
-    ========================= */
-
-    async function refresh() {
-        try {
-            data = isMain
-                ? await api("adminData")
-                : await api("officerData");
-
-            if (!isMain) {
-                data.codes = [];
-            }
-
-            renderAll();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-            throw e;
-        }
-    }
-
-    function renderAll() {
-        const a = data.aspirations || [];
-
-        document.getElementById("aspList").innerHTML = a.length
-            ? a.map(x => `
-                <article class="item">
-                    <div class="meta">
-                        ${esc(x.time)} · ${esc(x.category)}
-                    </div>
-
-                    <h3>${esc(x.title)}</h3>
-                    <p>${esc(x.message)}</p>
-
-                    <p class="meta">
-                        Pengirim:
-                        ${x.anonymous ? "Anonim" : esc(x.name || "Tidak dicantumkan")}
-                    </p>
-
-                    <label>Status</label>
-
-                    <select id="st_${esc(x.id)}">
-                        <option ${x.status === "Baru" ? "selected" : ""}>Baru</option>
-                        <option ${x.status === "Diproses" ? "selected" : ""}>Diproses</option>
-                        <option ${x.status === "Selesai" ? "selected" : ""}>Selesai</option>
-                    </select>
-
-                    <button class="btn" onclick="setStatus('${esc(x.id)}')">
-                        Simpan status
-                    </button>
-                </article>
-            `).join("")
-            : "<p>Belum ada aspirasi.</p>";
-
-        const s = data.settings || {};
-
-        ["orgName", "logoText", "heroTitle", "heroText", "aboutText", "footerText"]
-            .forEach(k => {
-                document.getElementById(k).value = s[k] || "";
-            });
-
-        renderPeriods();
-        renderOfficers();
-        renderContent();
-        renderCodes();
-        renderManagers();
-
-        document.getElementById("mediaPeriod").innerHTML =
-            '<option value="">Tanpa periode</option>' +
-            (data.periods || []).map(p => `
-                <option value="${esc(p.id)}">${esc(p.name)}</option>
-            `).join("");
-    }
-
-    /* =========================
-       ASPIRASI
-    ========================= */
-
-    async function setStatus(id) {
-        try {
-            const r = await api("setStatus", {
-                id,
-                status: document.getElementById("st_" + id).value
-            });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       BERANDA
-    ========================= */
-
-    async function saveHome() {
-        try {
-            const settings = {};
-
-            ["orgName", "logoText", "heroTitle", "heroText", "aboutText", "footerText"]
-                .forEach(k => {
-                    settings[k] = document.getElementById(k).value;
-                });
-
-            const r = await api("saveSettings", { settings });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       PERIODE
-    ========================= */
-
-    function renderPeriods() {
-        const list = document.getElementById("periodList");
-        const sel = document.getElementById("officerPeriod");
-
-        sel.innerHTML = (data.periods || []).map(p => `
-            <option value="${esc(p.id)}">${esc(p.name)}</option>
-        `).join("");
-
-        list.innerHTML = (data.periods || []).map(p => `
-            <article class="item">
-                <b>${esc(p.name)}</b>
-                ${p.active ? "<span class='meta'>· Aktif</span>" : ""}
-
-                <div class="meta">
-                    ${esc(p.start)} – ${esc(p.end)}
-                </div>
-
-                <button class="btn alt" onclick="editPeriod('${esc(p.id)}')">
-                    Edit
-                </button>
-
-                <button class="btn red" onclick="deletePeriod('${esc(p.id)}')">
-                    Hapus
-                </button>
-            </article>
-        `).join("") || "<p>Belum ada periode.</p>";
-    }
-
-    function editPeriod(id) {
-        const p = data.periods.find(x => x.id === id);
-        if (!p) return;
-
-        periodId.value = p.id;
-        periodName.value = p.name;
-        periodStart.value = p.start;
-        periodEnd.value = p.end;
-        periodActive.checked = p.active;
-    }
-
-    async function savePeriod() {
-        try {
-            const period = {
-                id: periodId.value,
-                name: periodName.value,
-                start: periodStart.value,
-                end: periodEnd.value,
-                active: periodActive.checked
-            };
-
-            const r = await api("savePeriod", { period });
-
-            alertBox("alert", r.message);
-
-            ["periodId", "periodName", "periodStart", "periodEnd"].forEach(id => {
-                document.getElementById(id).value = "";
-            });
-
-            periodActive.checked = false;
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    async function deletePeriod(id) {
-        if (!confirm("Hapus periode ini?")) return;
-
-        try {
-            const r = await api("deletePeriod", { id });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       PENGURUS
-    ========================= */
-
-    function renderOfficers() {
-        document.getElementById("officerList").innerHTML =
-            (data.officers || []).map(o => `
-                <article class="item">
-                    <b>${esc(o.name)}</b> · ${esc(o.position)}
-
-                    <div class="meta">
-                        ${esc(o.division)} —
-                        ${(data.periods || []).find(p => p.id === o.periodId)?.name || ""}
-                    </div>
-
-                    <button class="btn alt" onclick="editOfficer('${esc(o.id)}')">
-                        Edit
-                    </button>
-
-                    <button class="btn red" onclick="deleteOfficer('${esc(o.id)}')">
-                        Hapus
-                    </button>
-                </article>
-            `).join("") || "<p>Belum ada pengurus.</p>";
-    }
-
-    function editOfficer(id) {
-        const o = data.officers.find(x => x.id === id);
-        if (!o) return;
-
-        officerId.value = o.id;
-        officerPeriod.value = o.periodId;
-        officerDivision.value = o.division;
-        officerPosition.value = o.position;
-        officerName.value = o.name;
-        officerPhoto.value = o.photo || "";
-        officerPhotoFile.value = "";
-
-        showPhotoPreview("officerPhotoPreview", o.photo);
-
-        officerDescription.value = o.description;
-        officerOrder.value = o.order;
-    }
-
-    async function saveOfficer() {
-        try {
-            const photo = await uploadProfileIfSelected(
-                "officerPhotoFile",
-                "officerPhoto",
-                "periods"
-            );
-
-            const officer = {
-                id: officerId.value,
-                periodId: officerPeriod.value,
-                division: officerDivision.value,
-                position: officerPosition.value,
-                name: officerName.value,
-                photo,
-                description: officerDescription.value,
-                order: officerOrder.value
-            };
-
-            const r = await api("saveOfficer", { officer });
-
-            alertBox("alert", r.message);
-
-            [
-                "officerId",
-                "officerPosition",
-                "officerName",
-                "officerPhoto",
-                "officerDescription"
-            ].forEach(id => {
-                document.getElementById(id).value = "";
-            });
-
-            officerPhotoFile.value = "";
-            showPhotoPreview("officerPhotoPreview", "");
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    async function deleteOfficer(id) {
-        if (!confirm("Hapus data pengurus?")) return;
-
-        try {
-            const r = await api("deleteOfficer", { id });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       PENDIRI DAN PENGELOLA
-    ========================= */
-
-    function renderManagers() {
-        const s = data.settings || {};
-
-        const managers = (() => {
-            try {
-                return JSON.parse(s.managers || "[]");
-            } catch (e) {
-                return [];
-            }
-        })();
-
-        founderName.value = s.founderName || "";
-        founderPhoto.value = s.founderPhoto || "";
-        founderPhotoFile.value = "";
-
-        showPhotoPreview("founderPhotoPreview", s.founderPhoto || "");
-
-        founderDescription.value = s.founderDescription || "";
-
-        developerName.value = s.developerName || "";
-        developerPhoto.value = s.developerPhoto || "";
-        developerPhotoFile.value = "";
-
-        showPhotoPreview("developerPhotoPreview", s.developerPhoto || "");
-
-        developerDescription.value = s.developerDescription || "";
-
-        document.getElementById("managerRows").innerHTML = "";
-
-        (managers.length ? managers : [{}]).forEach(m => addManager(m));
-    }
-
-    function addManager(m = {}) {
-        const d = document.createElement("div");
-
-        d.className = "item manager-row";
-
-        d.innerHTML = `
-            <label>Nama pengelola</label>
-            <input class="m-name" value="${esc(m.name || "")}">
-
-            <label>Jabatan</label>
-            <input class="m-role" value="${esc(m.role || "")}">
-
-            <label>Foto pengelola (maksimal 5 MB)</label>
-            <input
-                class="m-photo-file"
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-            >
-
-            <input
-                class="m-photo"
-                type="hidden"
-                value="${esc(m.photo || "")}"
-            >
-
-            <img
-                class="photo-preview m-photo-preview ${m.photo ? "" : "hidden"}"
-                alt="Pratinjau foto pengelola"
-            >
-
-            <label>Keterangan</label>
-            <input class="m-desc" value="${esc(m.description || "")}">
-
-            <button
-                type="button"
-                class="btn red"
-                onclick="this.parentElement.remove()"
-            >
-                Hapus baris
-            </button>
-        `;
-
-        const file = d.querySelector(".m-photo-file");
-        const preview = d.querySelector(".m-photo-preview");
-
-        if (m.photo) {
-            preview.src = m.photo;
-            preview.classList.remove("hidden");
-        }
-
-        file.addEventListener("change", () => {
-            try {
-                previewSelectedFile(file, preview);
-            } catch (e) {
-                alertBox("alert", e.message, false);
-            }
-        });
-
-        document.getElementById("managerRows").appendChild(d);
-    }
-
-    async function savePeople() {
-        try {
-            const founderPhotoUrl = await uploadProfileIfSelected(
-                "founderPhotoFile",
-                "founderPhoto",
-                "people"
-            );
-
-            const developerPhotoUrl = await uploadProfileIfSelected(
-                "developerPhotoFile",
-                "developerPhoto",
-                "people"
-            );
-
-            const managers = [];
-
-            for (const d of document.querySelectorAll(".manager-row")) {
-                const name = d.querySelector(".m-name").value;
-
-                if (!name.trim()) continue;
-
-                let photo = d.querySelector(".m-photo").value;
-                const file = d.querySelector(".m-photo-file").files[0];
-
-                if (file) {
-                    photo = await uploadProfileFile(file, "people");
-                }
-
-                managers.push({
-                    name,
-                    role: d.querySelector(".m-role").value,
-                    photo,
-                    description: d.querySelector(".m-desc").value
-                });
-            }
-
-            const people = {
-                founderName: founderName.value,
-                founderPhoto: founderPhotoUrl,
-                founderDescription: founderDescription.value,
-
-                developerName: developerName.value,
-                developerPhoto: developerPhotoUrl,
-                developerDescription: developerDescription.value,
-
-                managers
-            };
-
-            const r = await api("savePeople", { people });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       PENGUMUMAN DAN DOKUMENTASI
-    ========================= */
-
-    function renderContent() {
-        const items = data.content || [];
-
-        document.getElementById("annList").innerHTML =
-            items.filter(x => x.type === "announcement")
-                .map(contentItem)
-                .join("") || "<p>Belum ada pengumuman.</p>";
-
-        document.getElementById("galleryList").innerHTML =
-            items.filter(x => x.type === "gallery")
-                .map(contentItem)
-                .join("") || "<p>Belum ada dokumentasi.</p>";
-    }
-
-    function contentItem(x) {
-        return `
-            <article class="item">
-                <b>${esc(x.title)}</b>
-
-                <div class="meta">
-                    ${esc(x.category)} · ${esc(x.mediaType || "")}
-                </div>
-
-                <p>${esc(x.description)}</p>
-
-                ${x.url
-                    ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">Lihat media</a>`
-                    : ""
-                }
-
-                <br>
-
-                <button
-                    class="btn red"
-                    onclick="deleteContent('${esc(x.id)}','${esc(x.type)}')"
-                >
-                    Hapus
-                </button>
-            </article>
-        `;
-    }
-
-    async function addAnnouncement() {
-        try {
-            const content = {
-                type: "announcement",
-                title: annTitle.value,
-                category: annCategory.value,
-                description: annDescription.value
-            };
-
-            const r = await api("addContent", { content });
-
-            alertBox("alert", r.message);
-
-            annTitle.value = "";
-            annCategory.value = "";
-            annDescription.value = "";
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    async function deleteContent(id, type) {
-        if (!confirm("Hapus konten ini?")) return;
-
-        try {
-            const r = await api("deleteContent", { id, type });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       FOTO PROFIL
-    ========================= */
-
-    function readDataUrl(file) {
-        return new Promise((resolve, reject) => {
-            const r = new FileReader();
-
-            r.onload = () => resolve(r.result);
-            r.onerror = () => reject(Error("File gagal dibaca."));
-
-            r.readAsDataURL(file);
-        });
-    }
-
-    function showPhotoPreview(id, url) {
-        const img = document.getElementById(id);
-
-        if (!img) return;
-
-        if (url) {
-            img.src = url;
-            img.classList.remove("hidden");
-        } else {
-            img.removeAttribute("src");
-            img.classList.add("hidden");
-        }
-    }
-
-    function previewSelectedFile(input, img) {
-        const file = input.files && input.files[0];
-
-        if (!file) {
-            img.classList.add("hidden");
-            img.removeAttribute("src");
-            return;
-        }
-
-        if (![
-            "image/jpeg",
-            "image/png",
-            "image/webp",
-            "image/gif"
-        ].includes(file.type)) {
-            input.value = "";
-            throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            input.value = "";
-            throw Error("Ukuran foto maksimal 5 MB.");
-        }
-
-        img.src = URL.createObjectURL(file);
-        img.classList.remove("hidden");
-    }
-
-    async function uploadProfileFile(file, permission) {
-        if (!file) return "";
-
-        if (![
-            "image/jpeg",
-            "image/png",
-            "image/webp",
-            "image/gif"
-        ].includes(file.type)) {
-            throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
-        }
-
-        if (file.size > 5 * 1024 * 1024) {
-            throw Error("Ukuran foto maksimal 5 MB.");
-        }
-
-        const uploaded = await api("uploadProfilePhoto", {
-            permission,
-            file: {
-                name: file.name,
-                mimeType: file.type,
-                data: await readDataUrl(file)
-            }
-        });
-
-        return uploaded.url;
-    }
-
-    async function uploadProfileIfSelected(fileId, urlId, permission) {
-        const input = document.getElementById(fileId);
-        const hidden = document.getElementById(urlId);
-
-        const file = input.files && input.files[0];
-
-        if (!file) return hidden.value || "";
-
-        const url = await uploadProfileFile(file, permission);
-
-        hidden.value = url;
-
-        return url;
-    }
-
-    /* =========================
-       UNGGAH FOTO DAN VIDEO
-    ========================= */
-
-    async function uploadMedia() {
-        const b = document.getElementById("uploadBtn");
-
-        try {
-            const file = mediaFile.files[0];
-
-            if (!file) {
-                throw Error("Pilih file media.");
-            }
-
-            if (!mediaTitle.value.trim()) {
-                throw Error("Judul wajib diisi.");
-            }
-
-            b.disabled = true;
-            b.textContent = "Mengunggah...";
-
-            const uploaded = await api("uploadMedia", {
-                file: {
-                    name: file.name,
-                    mimeType: file.type,
-                    data: await readDataUrl(file)
-                }
-            });
-
-            const content = {
-                type: "gallery",
-                title: mediaTitle.value,
-                category: mediaCategory.value,
-                description: mediaDescription.value,
-                url: uploaded.url,
-                mediaType: uploaded.mediaType,
-                periodId: mediaPeriod.value
-            };
-
-            const r = await api("addContent", { content });
-
-            alertBox("alert", r.message);
-
-            [
-                "mediaTitle",
-                "mediaCategory",
-                "mediaDescription",
-                "mediaFile"
-            ].forEach(id => {
-                document.getElementById(id).value = "";
-            });
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-
-        } finally {
-            b.disabled = false;
-            b.textContent = "Unggah media";
-        }
-    }
-
-    function youtubeEmbed(url) {
-        const m = String(url).match(
-            /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
-        );
-
-        if (!m) {
-            throw Error("URL YouTube tidak dikenali.");
-        }
-
-        return "https://www.youtube.com/embed/" + m[1];
-    }
-
-    async function addYoutube() {
-        try {
-            const content = {
-                type: "gallery",
-                title: ytTitle.value,
-                category: ytCategory.value,
-                description: ytDescription.value,
-                url: youtubeEmbed(ytUrl.value),
-                mediaType: "youtube"
-            };
-
-            const r = await api("addContent", { content });
-
-            alertBox("alert", r.message);
-
-            ["ytTitle", "ytCategory", "ytDescription", "ytUrl"].forEach(id => {
-                document.getElementById(id).value = "";
-            });
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       KODE AKSES
-    ========================= */
-
-    function renderCodes() {
-        document.getElementById("codeList").innerHTML =
-            (data.codes || []).map(c => `
-                <article class="item">
-                    <b>${esc(c.label)}</b>
-
-                    <div class="meta">
-                        Izin: ${c.permissions.map(esc).join(", ")}
-                        · Berlaku sampai ${esc(c.expires)}
-                    </div>
-
-                    <div class="meta">
-                        Penggunaan: ${c.used}/${c.maxUsers}
-                        · ${c.active ? "Aktif" : "Nonaktif"}
-                    </div>
-
-                    ${c.active
-                        ? `<button class="btn red" onclick="deactivateCode('${esc(c.id)}')">Nonaktifkan</button>`
-                        : ""
-                    }
-                </article>
-            `).join("") || "<p>Belum ada kode akses.</p>";
-    }
-
-    async function createCode() {
-        try {
-            const permissions = [];
-
-            if (permAsp.checked) permissions.push("aspirations");
-            if (permHome.checked) permissions.push("home");
-            if (permPeriods.checked) permissions.push("periods");
-            if (permPeople.checked) permissions.push("people");
-            if (permAnn.checked) permissions.push("announcements");
-            if (permGallery.checked) permissions.push("gallery");
-            if (permBackup.checked) permissions.push("backup");
-
-            const codeData = {
-                label: codeLabel.value,
-                permissions,
-                expires: codeExpiry.value,
-                maxUsers: codeMax.value
-            };
-
-            const r = await api("createAccessCode", { codeData });
-
-            alertBox("newCode", r.message + " KODE: " + r.code);
-
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    async function deactivateCode(id) {
-        if (!confirm("Nonaktifkan kode ini?")) return;
-
-        try {
-            const r = await api("deactivateAccessCode", { id });
-
-            alertBox("alert", r.message);
-            await refresh();
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       BACKUP
-    ========================= */
-
-    async function runBackup() {
-        try {
-            const r = await api("runBackup");
-
-            alertBox("alert", r.message + " " + r.name);
-
-        } catch (e) {
-            alertBox("alert", e.message, false);
-        }
-    }
-
-    /* =========================
-       NAVIGASI TAB
-    ========================= */
-
-    document.querySelectorAll(".tab").forEach(b => {
-        b.addEventListener("click", () => {
-            if (b.classList.contains("hidden")) return;
-
-            document.querySelectorAll(".tab").forEach(x => {
-                x.classList.remove("active");
-            });
-
-            document.querySelectorAll(".section").forEach(x => {
-                x.classList.remove("active");
-            });
-
-            b.classList.add("active");
-
-            document.getElementById(b.dataset.tab).classList.add("active");
-        });
-    });
-
-    /* =========================
-       PRATINJAU FOTO
-    ========================= */
-
-    [
-        ["officerPhotoFile", "officerPhotoPreview"],
-        ["founderPhotoFile", "founderPhotoPreview"],
-        ["developerPhotoFile", "developerPhotoPreview"]
-    ].forEach(([inputId, imgId]) => {
-        const input = document.getElementById(inputId);
-
-        input.addEventListener("change", () => {
-            try {
-                previewSelectedFile(
-                    input,
-                    document.getElementById(imgId)
-                );
-
-            } catch (e) {
-                alertBox("alert", e.message, false);
-            }
-        });
-    });
-
-    /* =========================
-       MULAI APLIKASI
-    ========================= */
-
-    boot();
+    googleToken=response.credential;
+    isMain=true;
+    officerPermissions=[];
+
+    showApp(claims.email);
+    await refresh();
+
+   }catch(error){
+    alertBox("loginAlert",error.message,false);
+   }
+  }
+ });
+
+ google.accounts.id.renderButton($("googleButton"),{
+  theme:"outline",
+  size:"large",
+  shape:"rectangular",
+  text:"signin_with",
+  width:260
+ });
+}
+
+/* =========================
+   NAVIGASI
+========================= */
+
+function openTab(id){
+ document.querySelectorAll(".tab").forEach(el=>{
+  el.classList.toggle("active",el.dataset.tab===id);
+ });
+
+ document.querySelectorAll(".section").forEach(el=>{
+  el.classList.toggle("active",el.id===id);
+ });
+
+ const titles={
+  asp:["Dashboard & Aspirasi","Ringkasan dan masukan mahasiswa."],
+  home:["Pengaturan Beranda","Atur informasi halaman utama website."],
+  periods:["Periode & Pengurus","Kelola periode dan struktur organisasi."],
+  people:["Pendiri & Pengelola","Kelola profil pengelola website."],
+  ann:["Pengumuman","Kelola informasi dan kegiatan HIMASAKI."],
+  gallery:["Dokumentasi","Kelola foto dan video kegiatan."],
+  codes:["Hak Akses Pengurus","Kelola kode akses pengurus."],
+  backup:["Backup Data","Pencadangan data website."]
+ };
+
+ const heading=$(id).querySelector(".page-heading");
+ if(heading&&titles[id]){
+  heading.querySelector("h1").textContent=titles[id][0];
+  heading.querySelector("p").textContent=titles[id][1];
+ }
+
+ closeSidebar();
+}
+
+document.querySelectorAll(".tab").forEach(button=>{
+ button.addEventListener("click",()=>{
+  if(button.classList.contains("hidden"))return;
+  openTab(button.dataset.tab);
+ });
+});
+
+$("menuToggle").addEventListener("click",()=>{
+ $("sidebar").classList.toggle("open");
+});
+
+function closeSidebar(){
+ $("sidebar").classList.remove("open");
+}
+
+/* =========================
+   MEMUAT DATA
+========================= */
+
+async function refresh(){
+ try{
+  data=isMain
+   ?await api("adminData")
+   :await api("officerData");
+
+  if(!isMain)data.codes=[];
+
+  renderAll();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+  throw error;
+ }
+}
+
+function renderAll(){
+ const settings=data.settings||{};
+
+ renderStats();
+ renderAspirations();
+ renderHome(settings);
+ renderPeriods();
+ renderOfficers();
+ renderPeople(settings);
+ renderContent();
+ renderCodes();
+
+ $("mediaPeriod").innerHTML=
+  '<option value="">Tanpa periode</option>'+
+  (data.periods||[]).map(p=>
+   `<option value="${esc(p.id)}">${esc(p.name)}</option>`
+  ).join("");
+}
+
+function renderStats(){
+ const aspirations=data.aspirations||[];
+ const officers=data.officers||[];
+ const content=data.content||[];
+
+ $("statAsp").textContent=aspirations.length;
+ $("statNew").textContent=aspirations.filter(x=>x.status==="Baru").length;
+ $("statPeople").textContent=officers.length;
+ $("statContent").textContent=content.filter(x=>x.active).length;
+}
+
+/* =========================
+   ASPIRASI
+========================= */
+
+function renderAspirations(){
+ const list=data.aspirations||[];
+
+ $("aspList").innerHTML=list.length
+  ?list.map(x=>`
+   <article class="item">
+    <div class="meta">${esc(x.time)} · ${esc(x.category)}</div>
+    <h3>${esc(x.title)}</h3>
+    <p>${esc(x.message)}</p>
+    <div class="meta">
+     Pengirim: ${x.anonymous?"Anonim":esc(x.name||"Tidak dicantumkan")}
+    </div>
+    <div style="margin-top:12px">
+     <span class="badge ${x.status==="Selesai"?"green":x.status==="Diproses"?"orange":""}">
+      ${esc(x.status)}
+     </span>
+    </div>
+    <label>Status penanganan</label>
+    <select id="st_${esc(x.id)}">
+     <option ${x.status==="Baru"?"selected":""}>Baru</option>
+     <option ${x.status==="Diproses"?"selected":""}>Diproses</option>
+     <option ${x.status==="Selesai"?"selected":""}>Selesai</option>
+    </select>
+    <div class="item-actions">
+     <button class="btn small" onclick="setStatus('${esc(x.id)}')">Simpan status</button>
+    </div>
+   </article>
+  `).join("")
+  :empty("Belum ada aspirasi yang masuk.");
+}
+
+async function setStatus(id){
+ try{
+  const result=await api("setStatus",{
+   id,
+   status:$("st_"+id).value
+  });
+
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   BERANDA
+========================= */
+
+function renderHome(settings){
+ ["orgName","logoText","heroTitle","heroText","aboutText","footerText"]
+  .forEach(k=>setVal(k,settings[k]||""));
+}
+
+async function saveHome(){
+ try{
+  const settings={};
+
+  ["orgName","logoText","heroTitle","heroText","aboutText","footerText"]
+   .forEach(k=>settings[k]=val(k));
+
+  const result=await api("saveSettings",{settings});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   PERIODE
+========================= */
+
+function renderPeriods(){
+ const periods=data.periods||[];
+
+ $("periodList").innerHTML=periods.length
+  ?periods.map(p=>`
+   <article class="item">
+    <b>${esc(p.name)}</b>
+    ${p.active?'<span class="badge green">Periode aktif</span>':""}
+    <div class="meta">${esc(p.start)} – ${esc(p.end)}</div>
+    <div class="item-actions">
+     <button class="btn alt small" onclick="editPeriod('${esc(p.id)}')">Edit</button>
+     <button class="btn red small" onclick="deletePeriod('${esc(p.id)}')">Hapus</button>
+    </div>
+   </article>
+  `).join("")
+  :empty("Belum ada periode kepengurusan.");
+
+ $("officerPeriod").innerHTML=periods.map(p=>
+  `<option value="${esc(p.id)}">${esc(p.name)}</option>`
+ ).join("");
+}
+
+function clearPeriod(){
+ ["periodId","periodName","periodStart","periodEnd"].forEach(id=>setVal(id,""));
+ $("periodActive").checked=false;
+}
+
+function editPeriod(id){
+ const p=(data.periods||[]).find(x=>x.id===id);
+ if(!p)return;
+
+ setVal("periodId",p.id);
+ setVal("periodName",p.name);
+ setVal("periodStart",p.start);
+ setVal("periodEnd",p.end);
+ $("periodActive").checked=!!p.active;
+
+ $("periodName").focus();
+}
+
+async function savePeriod(){
+ try{
+  const period={
+   id:val("periodId"),
+   name:val("periodName"),
+   start:val("periodStart"),
+   end:val("periodEnd"),
+   active:$("periodActive").checked
+  };
+
+  const result=await api("savePeriod",{period});
+  alertBox("alert",result.message);
+  clearPeriod();
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+async function deletePeriod(id){
+ if(!confirm("Hapus periode ini?"))return;
+
+ try{
+  const result=await api("deletePeriod",{id});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   FOTO DAN KOMPRESI
+========================= */
+
+function readDataUrl(file){
+ return new Promise((resolve,reject)=>{
+  const reader=new FileReader();
+  reader.onload=()=>resolve(reader.result);
+  reader.onerror=()=>reject(Error("File gagal dibaca."));
+  reader.readAsDataURL(file);
+ });
+}
+
+function previewSelectedFile(input,img){
+ const file=input.files&&input.files[0];
+
+ if(!file){
+  img.classList.add("hidden");
+  img.removeAttribute("src");
+  return;
+ }
+
+ const allowed=["image/jpeg","image/png","image/webp","image/gif"];
+
+ if(!allowed.includes(file.type)){
+  input.value="";
+  throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
+ }
+
+ if(file.size>5*1024*1024){
+  input.value="";
+  throw Error("Ukuran foto maksimal 5 MB.");
+ }
+
+ if(img.dataset.previewUrl){
+  URL.revokeObjectURL(img.dataset.previewUrl);
+ }
+
+ const url=URL.createObjectURL(file);
+ img.dataset.previewUrl=url;
+ img.src=url;
+ img.classList.remove("hidden");
+}
+
+function showPhotoPreview(id,url){
+ const img=$(id);
+
+ if(url){
+  img.src=url;
+  img.classList.remove("hidden");
+ }else{
+  img.removeAttribute("src");
+  img.classList.add("hidden");
+ }
+}
+
+async function prepareImageUpload(file){
+ const allowed=["image/jpeg","image/png","image/webp","image/gif"];
+
+ if(!file||!allowed.includes(file.type)){
+  throw Error("Format foto harus JPG, PNG, WEBP, atau GIF.");
+ }
+
+ if(file.size>5*1024*1024){
+  throw Error("Ukuran foto maksimal 5 MB.");
+ }
+
+ if(file.size<=800*1024){
+  return{
+   name:file.name,
+   mimeType:file.type,
+   data:await readDataUrl(file)
+  };
+ }
+
+ if(file.type==="image/gif"){
+  throw Error("GIF lebih dari 800 KB tidak dikompres otomatis agar animasinya tidak hilang. Gunakan GIF yang lebih kecil.");
+ }
+
+ let bitmap;
+
+ try{
+  bitmap=await createImageBitmap(file);
+ }catch(error){
+  throw Error("Foto tidak dapat dibaca. Coba gunakan JPG atau PNG.");
+ }
+
+ const maxDimension=1600;
+ const scale=Math.min(1,maxDimension/Math.max(bitmap.width,bitmap.height));
+
+ const canvas=document.createElement("canvas");
+ canvas.width=Math.max(1,Math.round(bitmap.width*scale));
+ canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+
+ const ctx=canvas.getContext("2d");
+
+ if(!ctx){
+  bitmap.close();
+  throw Error("Browser tidak mendukung pemrosesan foto.");
+ }
+
+ ctx.fillStyle="#ffffff";
+ ctx.fillRect(0,0,canvas.width,canvas.height);
+ ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);
+ bitmap.close();
+
+ let compressed="";
+
+ for(const quality of [.85,.75,.65,.55,.45]){
+  compressed=canvas.toDataURL("image/jpeg",quality);
+  const estimated=Math.ceil(compressed.length*.75);
+
+  if(estimated<=800*1024)break;
+ }
+
+ if(!compressed||Math.ceil(compressed.length*.75)>800*1024){
+  throw Error("Foto belum berhasil dikompres ke ukuran aman. Gunakan foto dengan resolusi lebih kecil.");
+ }
+
+ return{
+  name:file.name.replace(/\.[^.]+$/,"")+".jpg",
+  mimeType:"image/jpeg",
+  data:compressed
+ };
+}
+
+async function uploadProfileFile(file,permission){
+ if(!file)return "";
+
+ const prepared=await prepareImageUpload(file);
+
+ const uploaded=await api("uploadProfilePhoto",{
+  permission,
+  file:prepared
+ });
+
+ if(!uploaded||!uploaded.url){
+  throw Error("Server tidak mengembalikan alamat foto.");
+ }
+
+ return uploaded.url;
+}
+
+async function uploadProfileIfSelected(fileId,urlId,permission){
+ const file=$(fileId).files[0];
+ const hidden=$(urlId);
+
+ if(!file)return hidden.value||"";
+
+ const url=await uploadProfileFile(file,permission);
+ hidden.value=url;
+
+ return url;
+}
+
+/* =========================
+   PRATINJAU FOTO
+========================= */
+
+[
+ ["officerPhotoFile","officerPhotoPreview"],
+ ["founderPhotoFile","founderPhotoPreview"],
+ ["developerPhotoFile","developerPhotoPreview"]
+].forEach(([inputId,imgId])=>{
+ $(inputId).addEventListener("change",()=>{
+  try{
+   previewSelectedFile($(inputId),$(imgId));
+  }catch(error){
+   alertBox("alert",error.message,false);
+  }
+ });
+});
+
+/* =========================
+   PENGURUS
+========================= */
+
+function renderOfficers(){
+ const officers=data.officers||[];
+
+ $("officerList").innerHTML=officers.length
+  ?officers.map(o=>{
+   const period=(data.periods||[]).find(p=>p.id===o.periodId);
+   return`
+    <article class="item">
+     <b>${esc(o.name)}</b>
+     <span class="badge">${esc(o.position)}</span>
+     <div class="meta">${esc(o.division)} · ${esc(period?.name||"")}</div>
+     <p>${esc(o.description||"")}</p>
+     ${o.photo?`<img class="photo-preview" src="${esc(o.photo)}" alt="Foto pengurus">`:""}
+     <div class="item-actions">
+      <button class="btn alt small" onclick="editOfficer('${esc(o.id)}')">Edit</button>
+      <button class="btn red small" onclick="deleteOfficer('${esc(o.id)}')">Hapus</button>
+     </div>
+    </article>
+   `;
+  }).join("")
+  :empty("Belum ada data pengurus.");
+}
+
+function clearOfficer(){
+ ["officerId","officerPosition","officerName","officerPhoto","officerDescription"]
+  .forEach(id=>setVal(id,""));
+
+ $("officerPhotoFile").value="";
+ $("officerOrder").value=0;
+ showPhotoPreview("officerPhotoPreview","");
+}
+
+function editOfficer(id){
+ const o=(data.officers||[]).find(x=>x.id===id);
+ if(!o)return;
+
+ setVal("officerId",o.id);
+ setVal("officerPeriod",o.periodId);
+ setVal("officerDivision",o.division);
+ setVal("officerPosition",o.position);
+ setVal("officerName",o.name);
+ setVal("officerPhoto",o.photo||"");
+ setVal("officerDescription",o.description);
+ setVal("officerOrder",o.order);
+
+ $("officerPhotoFile").value="";
+ showPhotoPreview("officerPhotoPreview",o.photo);
+}
+
+async function saveOfficer(){
+ try{
+  const photo=await uploadProfileIfSelected(
+   "officerPhotoFile","officerPhoto","periods"
+  );
+
+  const officer={
+   id:val("officerId"),
+   periodId:val("officerPeriod"),
+   division:val("officerDivision"),
+   position:val("officerPosition"),
+   name:val("officerName"),
+   photo,
+   description:val("officerDescription"),
+   order:val("officerOrder")
+  };
+
+  const result=await api("saveOfficer",{officer});
+  alertBox("alert",result.message);
+  clearOfficer();
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+async function deleteOfficer(id){
+ if(!confirm("Hapus data pengurus ini?"))return;
+
+ try{
+  const result=await api("deleteOfficer",{id});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   PENDIRI DAN PENGELOLA
+========================= */
+
+function renderPeople(settings){
+ setVal("founderName",settings.founderName);
+ setVal("founderPhoto",settings.founderPhoto);
+ setVal("founderDescription",settings.founderDescription);
+
+ setVal("developerName",settings.developerName);
+ setVal("developerPhoto",settings.developerPhoto);
+ setVal("developerDescription",settings.developerDescription);
+
+ $("founderPhotoFile").value="";
+ $("developerPhotoFile").value="";
+
+ showPhotoPreview("founderPhotoPreview",settings.founderPhoto);
+ showPhotoPreview("developerPhotoPreview",settings.developerPhoto);
+
+ let managers=[];
+
+ try{
+  managers=JSON.parse(settings.managers||"[]");
+ }catch(error){}
+
+ $("managerRows").innerHTML="";
+ (managers.length?managers:[{}]).forEach(addManager);
+}
+
+function addManager(manager={}){
+ const row=document.createElement("div");
+ row.className="item manager-row";
+
+ row.innerHTML=`
+  <div class="grid">
+   <div>
+    <label>Nama pengelola</label>
+    <input class="m-name" value="${esc(manager.name||"")}">
+   </div>
+   <div>
+    <label>Jabatan</label>
+    <input class="m-role" value="${esc(manager.role||"")}">
+   </div>
+   <div class="full">
+    <label>Foto pengelola</label>
+    <input class="m-photo-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+    <input class="m-photo" type="hidden" value="${esc(manager.photo||"")}">
+    <img class="photo-preview m-photo-preview ${manager.photo?"":"hidden"}" alt="Pratinjau foto pengelola">
+   </div>
+   <div class="full">
+    <label>Keterangan</label>
+    <input class="m-desc" value="${esc(manager.description||"")}">
+   </div>
+  </div>
+  <div class="item-actions">
+   <button type="button" class="btn red small remove-manager">Hapus pengelola</button>
+  </div>
+ `;
+
+ const file=row.querySelector(".m-photo-file");
+ const preview=row.querySelector(".m-photo-preview");
+
+ if(manager.photo)preview.src=manager.photo;
+
+ file.addEventListener("change",()=>{
+  try{
+   previewSelectedFile(file,preview);
+  }catch(error){
+   alertBox("alert",error.message,false);
+  }
+ });
+
+ row.querySelector(".remove-manager").addEventListener("click",()=>{
+  row.remove();
+ });
+
+ $("managerRows").appendChild(row);
+}
+
+async function savePeople(){
+ try{
+  const founderPhoto=await uploadProfileIfSelected(
+   "founderPhotoFile","founderPhoto","people"
+  );
+
+  const developerPhoto=await uploadProfileIfSelected(
+   "developerPhotoFile","developerPhoto","people"
+  );
+
+  const managers=[];
+
+  for(const row of document.querySelectorAll(".manager-row")){
+   const name=row.querySelector(".m-name").value.trim();
+   if(!name)continue;
+
+   let photo=row.querySelector(".m-photo").value;
+   const file=row.querySelector(".m-photo-file").files[0];
+
+   if(file)photo=await uploadProfileFile(file,"people");
+
+   managers.push({
+    name,
+    role:row.querySelector(".m-role").value,
+    photo,
+    description:row.querySelector(".m-desc").value
+   });
+  }
+
+  const people={
+   founderName:val("founderName"),
+   founderPhoto,
+   founderDescription:val("founderDescription"),
+   developerName:val("developerName"),
+   developerPhoto,
+   developerDescription:val("developerDescription"),
+   managers
+  };
+
+  const result=await api("savePeople",{people});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   PENGUMUMAN DAN DOKUMENTASI
+========================= */
+
+function renderContent(){
+ const items=data.content||[];
+
+ $("annList").innerHTML=items
+  .filter(x=>x.type==="announcement")
+  .map(contentItem)
+  .join("")||empty("Belum ada pengumuman.");
+
+ $("galleryList").innerHTML=items
+  .filter(x=>x.type==="gallery")
+  .map(contentItem)
+  .join("")||empty("Belum ada dokumentasi.");
+}
+
+function contentItem(item){
+ return`
+  <article class="item">
+   <b>${esc(item.title)}</b>
+   <span class="badge">${esc(item.category||"Umum")}</span>
+   <div class="meta">${esc(item.mediaType||"")}</div>
+   <p>${esc(item.description||"")}</p>
+   ${item.url?`<a href="${esc(item.url)}" target="_blank" rel="noopener">Lihat media ↗</a>`:""}
+   <div class="item-actions">
+    <button class="btn red small" onclick="deleteContent('${esc(item.id)}','${esc(item.type)}')">Hapus</button>
+   </div>
+  </article>
+ `;
+}
+
+async function addAnnouncement(){
+ try{
+  const content={
+   type:"announcement",
+   title:val("annTitle"),
+   category:val("annCategory"),
+   description:val("annDescription")
+  };
+
+  const result=await api("addContent",{content});
+  alertBox("alert",result.message);
+
+  ["annTitle","annCategory","annDescription"].forEach(id=>setVal(id,""));
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+async function deleteContent(id,type){
+ if(!confirm("Hapus konten ini?"))return;
+
+ try{
+  const result=await api("deleteContent",{id,type});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   UNGGAH DOKUMENTASI
+========================= */
+
+async function uploadMedia(){
+ const button=$("uploadBtn");
+
+ try{
+  const file=$("mediaFile").files[0];
+
+  if(!file)throw Error("Pilih foto atau video terlebih dahulu.");
+  if(!val("mediaTitle").trim())throw Error("Judul dokumentasi wajib diisi.");
+
+  const isImage=file.type.startsWith("image/");
+  const isVideo=file.type.startsWith("video/");
+
+  if(!isImage&&!isVideo)throw Error("Format media tidak didukung.");
+
+  if(isVideo&&file.size>20*1024*1024){
+   throw Error("Ukuran video maksimal 20 MB.");
+  }
+
+  if(isImage&&file.size>5*1024*1024){
+   throw Error("Ukuran foto maksimal 5 MB.");
+  }
+
+  button.disabled=true;
+  button.textContent=isImage?"Memproses foto...":"Membaca video...";
+
+  const prepared=isImage
+   ?await prepareImageUpload(file)
+   :{
+     name:file.name,
+     mimeType:file.type,
+     data:await readDataUrl(file)
+    };
+
+  button.textContent="Mengirim ke server...";
+
+  const uploaded=await api("uploadMedia",{file:prepared});
+
+  if(!uploaded||!uploaded.url){
+   throw Error("Server tidak mengembalikan alamat media.");
+  }
+
+  const content={
+   type:"gallery",
+   title:val("mediaTitle"),
+   category:val("mediaCategory"),
+   description:val("mediaDescription"),
+   url:uploaded.url,
+   mediaType:uploaded.mediaType,
+   periodId:val("mediaPeriod")
+  };
+
+  const result=await api("addContent",{content});
+  alertBox("alert",result.message);
+
+  ["mediaTitle","mediaCategory","mediaDescription","mediaFile"]
+   .forEach(id=>setVal(id,""));
+
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+
+ }finally{
+  button.disabled=false;
+  button.textContent="Unggah dokumentasi";
+ }
+}
+
+/* =========================
+   YOUTUBE
+========================= */
+
+function youtubeEmbed(url){
+ const match=String(url).match(
+  /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/
+ );
+
+ if(!match)throw Error("URL YouTube tidak dikenali.");
+
+ return"https://www.youtube.com/embed/"+match[1];
+}
+
+async function addYoutube(){
+ try{
+  const content={
+   type:"gallery",
+   title:val("ytTitle"),
+   category:val("ytCategory"),
+   description:val("ytDescription"),
+   url:youtubeEmbed(val("ytUrl")),
+   mediaType:"youtube"
+  };
+
+  const result=await api("addContent",{content});
+  alertBox("alert",result.message);
+
+  ["ytTitle","ytCategory","ytDescription","ytUrl"].forEach(id=>setVal(id,""));
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   KODE AKSES
+========================= */
+
+function renderCodes(){
+ const codes=data.codes||[];
+
+ $("codeList").innerHTML=codes.length
+  ?codes.map(c=>`
+   <article class="item">
+    <b>${esc(c.label)}</b>
+    <span class="badge ${c.active?"green":"orange"}">${c.active?"Aktif":"Nonaktif"}</span>
+    <div class="meta">Izin: ${(c.permissions||[]).map(esc).join(", ")}</div>
+    <div class="meta">Berlaku sampai: ${esc(c.expires)}</div>
+    <div class="meta">Penggunaan: ${c.used}/${c.maxUsers}</div>
+    ${c.active?`
+     <div class="item-actions">
+      <button class="btn red small" onclick="deactivateCode('${esc(c.id)}')">Nonaktifkan</button>
+     </div>
+    `:""}
+   </article>
+  `).join("")
+  :empty("Belum ada kode akses.");
+}
+
+async function createCode(){
+ try{
+  const permissions=[];
+
+  if($("permAsp").checked)permissions.push("aspirations");
+  if($("permHome").checked)permissions.push("home");
+  if($("permPeriods").checked)permissions.push("periods");
+  if($("permPeople").checked)permissions.push("people");
+  if($("permAnn").checked)permissions.push("announcements");
+  if($("permGallery").checked)permissions.push("gallery");
+  if($("permBackup").checked)permissions.push("backup");
+
+  const codeData={
+   label:val("codeLabel"),
+   permissions,
+   expires:val("codeExpiry"),
+   maxUsers:val("codeMax")
+  };
+
+  const result=await api("createAccessCode",{codeData});
+
+  alertBox(
+   "newCode",
+   result.message+" KODE AKSES: "+result.code
+  );
+
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+async function deactivateCode(id){
+ if(!confirm("Nonaktifkan kode akses ini?"))return;
+
+ try{
+  const result=await api("deactivateAccessCode",{id});
+  alertBox("alert",result.message);
+  await refresh();
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   BACKUP
+========================= */
+
+async function runBackup(){
+ try{
+  const result=await api("runBackup");
+  alertBox("alert",result.message+" "+(result.name||""));
+
+ }catch(error){
+  alertBox("alert",error.message,false);
+ }
+}
+
+/* =========================
+   MULAI
+========================= */
+
+bootGoogle();
 </script>
 
 </body>
