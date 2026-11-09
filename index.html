@@ -22,7 +22,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -89,15 +88,10 @@
     }
 
     nav a { font-size: 14px; }
-
     nav a:hover { color: var(--blue); }
-
     main { padding-top: 26px; }
 
-    /* SISTEM HALAMAN */
-
     .page-view { display: none; }
-
     .page-view.active { display: block; }
 
     .page-back {
@@ -113,8 +107,6 @@
     }
 
     .page-back:hover { background: #eaf0f7; }
-
-    /* HERO */
 
     .hero {
       padding: 55px 42px;
@@ -157,8 +149,6 @@
       opacity: .6;
     }
 
-    /* PINTASAN */
-
     .cards {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -193,8 +183,6 @@
       font-weight: normal;
     }
 
-    /* KARTU DAN PANEL */
-
     .list {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -225,8 +213,6 @@
       color: var(--muted);
     }
 
-    /* FORMULIR */
-
     .grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -234,7 +220,6 @@
     }
 
     .field { margin-bottom: 13px; }
-
     .full { grid-column: 1 / -1; }
 
     label {
@@ -290,8 +275,6 @@
       color: var(--danger);
     }
 
-    /* GALERI */
-
     .content { overflow: hidden; }
 
     .content img {
@@ -329,8 +312,6 @@
       white-space: pre-wrap;
     }
 
-    /* PENGAMAN GAMBAR */
-
     .image-fallback {
       display: none;
       width: 100%;
@@ -342,8 +323,6 @@
       text-align: center;
       font-size: 13px;
     }
-
-    /* KEPENGURUSAN DAN PROFIL */
 
     .people {
       display: grid;
@@ -374,7 +353,6 @@
     }
 
     .person h3 { margin: 10px 0 3px; }
-
     .person p { overflow-wrap: anywhere; }
 
     .empty {
@@ -384,8 +362,6 @@
       background: white;
       color: var(--muted);
     }
-
-    /* QR CODE */
 
     .qr-panel { text-align: center; }
 
@@ -397,8 +373,6 @@
       margin: 18px auto;
       object-fit: contain;
     }
-
-    /* FOOTER */
 
     footer {
       margin-top: 45px;
@@ -424,9 +398,7 @@
       }
 
       .grid { grid-template-columns: 1fr; }
-
       .full { grid-column: auto; }
-
       .hero { padding: 36px 24px; }
     }
   </style>
@@ -454,7 +426,6 @@
 
 <main class="wrap">
 
-  <!-- HALAMAN BERANDA -->
   <div id="view-home" class="page-view active">
 
     <section class="hero">
@@ -507,7 +478,6 @@
       </div>
     </section>
 
-    <!-- FORM ASPIRASI -->
     <section id="aspirasi">
       <h2 class="heading">Kotak Aspirasi</h2>
 
@@ -568,7 +538,6 @@
     </section>
   </div>
 
-  <!-- HALAMAN PENGUMUMAN -->
   <div id="view-announcements" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -580,7 +549,6 @@
     </section>
   </div>
 
-  <!-- HALAMAN GALERI -->
   <div id="view-gallery" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -592,7 +560,6 @@
     </section>
   </div>
 
-  <!-- HALAMAN KEPENGURUSAN -->
   <div id="view-structure" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -602,13 +569,11 @@
       <div class="panel">
         <label for="periodSelect">Pilih periode</label>
         <select id="periodSelect"></select>
-
         <div id="officers" class="people" style="margin-top:16px"></div>
       </div>
     </section>
   </div>
 
-  <!-- HALAMAN TENTANG -->
   <div id="view-about" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -622,7 +587,6 @@
     </section>
   </div>
 
-  <!-- HALAMAN QR CODE -->
   <div id="view-qrcode" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -702,49 +666,115 @@
   }
 
   /* ==============================================
+     DETEKSI ID DAN FORMAT URL GOOGLE DRIVE
+  ============================================== */
+
+  function getGoogleDriveFileId(value) {
+    if (!value) return "";
+
+    try {
+      const url = new URL(String(value).trim());
+      const host = url.hostname.toLowerCase();
+
+      const driveHosts = [
+        "drive.google.com",
+        "www.drive.google.com",
+        "drive.usercontent.google.com"
+      ];
+
+      if (driveHosts.includes(host)) {
+        const queryId = url.searchParams.get("id");
+
+        if (queryId) return queryId;
+
+        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
+
+        if (match) return match[1];
+      }
+
+      if (host === "docs.google.com") {
+        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
+
+        if (match) return match[1];
+      }
+
+      return "";
+
+    } catch (error) {
+      return "";
+    }
+  }
+
+  /* ==============================================
+     MEMBUAT DAFTAR URL GAMBAR CADANGAN
+  ============================================== */
+
+  function getImageCandidates(value) {
+    if (!value) return [];
+
+    const original = String(value).trim();
+    const candidates = [original];
+
+    const fileId = getGoogleDriveFileId(original);
+
+    if (fileId) {
+      candidates.push(
+        "https://drive.google.com/thumbnail?id=" +
+        encodeURIComponent(fileId) +
+        "&sz=w1600"
+      );
+
+      candidates.push(
+        "https://drive.google.com/uc?export=view&id=" +
+        encodeURIComponent(fileId)
+      );
+
+      candidates.push(
+        "https://drive.usercontent.google.com/download?id=" +
+        encodeURIComponent(fileId) +
+        "&export=view"
+      );
+    }
+
+    return [...new Set(candidates.filter(Boolean))];
+  }
+
+  /* ==============================================
      PERBAIKAN URL GAMBAR
   ============================================== */
 
   function normalizeImageUrl(value) {
-    if (!value) return "";
+    const candidates = getImageCandidates(value);
+    return candidates[0] || "";
+  }
 
-    const raw = String(value).trim();
+  /* ==============================================
+     PERCOBAAN URL GAMBAR OTOMATIS
+  ============================================== */
+
+  function handleImageError(img) {
+    let candidates = [];
 
     try {
-      const url = new URL(raw);
-      const host = url.hostname.toLowerCase();
-
-      let fileId = "";
-
-      if (
-        host === "drive.google.com" ||
-        host === "www.drive.google.com"
-      ) {
-        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
-
-        fileId =
-          match?.[1] ||
-          url.searchParams.get("id") ||
-          "";
-      }
-
-      if (
-        host === "docs.google.com" &&
-        url.pathname.includes("/file/d/")
-      ) {
-        const match = url.pathname.match(/\/file\/d\/([^/]+)/);
-        fileId = match?.[1] || "";
-      }
-
-      if (fileId) {
-        return "https://drive.google.com/thumbnail?id=" +
-          encodeURIComponent(fileId) + "&sz=w1600";
-      }
-
-      return raw;
-
+      candidates = JSON.parse(img.dataset.fallbacks || "[]");
     } catch (error) {
-      return raw;
+      candidates = [];
+    }
+
+    if (candidates.length > 0) {
+      const nextUrl = candidates.shift();
+
+      img.dataset.fallbacks = JSON.stringify(candidates);
+      img.src = nextUrl;
+      return;
+    }
+
+    img.style.display = "none";
+
+    const fallback = img.nextElementSibling;
+
+    if (fallback) {
+      fallback.style.display = "grid";
     }
   }
 
@@ -755,20 +785,24 @@
   function imageHTML(url, alt, className = "") {
     if (!url) return "";
 
-    const safeUrl = escapeHTML(normalizeImageUrl(url));
+    const candidates = getImageCandidates(url);
+    if (!candidates.length) return "";
+
+    const firstUrl = escapeHTML(candidates[0]);
+    const fallbackUrls = escapeHTML(
+      JSON.stringify(candidates.slice(1))
+    );
+
     const safeAlt = escapeHTML(alt);
 
     return `
       <img
         class="${escapeHTML(className)}"
-        src="${safeUrl}"
+        src="${firstUrl}"
+        data-fallbacks="${fallbackUrls}"
         alt="${safeAlt}"
         loading="lazy"
-        referrerpolicy="no-referrer"
-        onerror="
-          this.style.display='none';
-          this.nextElementSibling.style.display='grid';
-        "
+        onerror="handleImageError(this)"
       >
       <div class="image-fallback">
         Gambar belum dapat ditampilkan.
@@ -805,6 +839,7 @@
     if (targetId) {
       setTimeout(() => {
         const element = $(targetId);
+
         if (element) {
           element.scrollIntoView({
             behavior: "smooth",
@@ -1012,8 +1047,10 @@
 
     if (!periods || !periods.length) {
       select.innerHTML = '<option value="">Belum ada periode</option>';
+
       $("officers").innerHTML =
         '<div class="empty">Belum ada data kepengurusan.</div>';
+
       return;
     }
 
