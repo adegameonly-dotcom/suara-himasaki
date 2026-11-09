@@ -790,19 +790,21 @@
                     form.remove();
                 };
 
-                const msg = e => {
-                    if (
-                        e.source !== frame.contentWindow ||
-                        !e.data ||
-                        e.data.requestId !== id
-                    ) return;
+                
+const msg = e => {
+    if (
+        !e.data ||
+        e.data.requestId !== id
+    ) return;
 
-                    done = true;
-                    clean();
+    done = true;
+    clean();
 
-                    e.data.ok
-                        ? resolve(e.data.data)
-                        : reject(Error(e.data.error || "Permintaan gagal"));
+    e.data.ok
+        ? resolve(e.data.data)
+        : reject(Error(e.data.error || "Permintaan gagal"));
+};
+
                 };
 
                 const timer = setTimeout(() => {
