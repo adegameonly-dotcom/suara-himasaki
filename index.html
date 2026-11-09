@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -577,7 +578,6 @@
 
 <main class="wrap">
 
-  <!-- BERANDA -->
   <div id="view-home" class="page-view active">
 
     <section class="hero" id="hero">
@@ -652,7 +652,6 @@
       </div>
     </section>
 
-    <!-- FORM ASPIRASI -->
     <section id="aspirasi">
       <h2 class="heading">Kotak Aspirasi</h2>
       <p class="section-description" id="aspirationDescription"></p>
@@ -709,7 +708,6 @@
     </section>
   </div>
 
-  <!-- PENGUMUMAN -->
   <div id="view-announcements" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -722,7 +720,6 @@
     </section>
   </div>
 
-  <!-- GALERI -->
   <div id="view-gallery" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -735,7 +732,6 @@
     </section>
   </div>
 
-  <!-- JAWABAN ASPIRASI -->
   <div id="view-answers" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -761,7 +757,6 @@
     </section>
   </div>
 
-  <!-- KEPENGURUSAN -->
   <div id="view-structure" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -777,7 +772,6 @@
     </section>
   </div>
 
-  <!-- TENTANG -->
   <div id="view-about" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -792,7 +786,6 @@
     </section>
   </div>
 
-  <!-- QR CODE -->
   <div id="view-qrcode" class="page-view">
     <button class="page-back" data-back>← Kembali ke Beranda</button>
 
@@ -844,7 +837,7 @@
   // 1. KONFIGURASI
   // =====================================================
 
-  const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+  const API = "https://script.google.com/macros/s/AKfycbza8B0Tm8bzk1OF58pVsBP0WpoWUrEKeuaV91AGLC_EgbJCPm94Rd5UwdjjvaH5u7Bw-w/exec";
 
   const $ = id => document.getElementById(id);
 
@@ -1425,35 +1418,40 @@
   // 10. PENGUMUMAN DAN GALERI
   // =====================================================
 
+  function normalizeContentItems(items) {
+    if (!Array.isArray(items)) return [];
+
+    return items.map(item => ({
+      ...item,
+      title:getValue(item,[
+        "title","judul","Judul","name"
+      ]),
+      text:getValue(item,[
+        "text","description","content","isi","Isi"
+      ]),
+      url:getValue(item,[
+        "url","URL","mediaUrl","image","photo"
+      ]),
+      date:getValue(item,[
+        "date","tanggal","Tanggal","createdAt","created"
+      ])
+    }));
+  }
+
   function renderItems(items,target) {
     const container = $(target);
+    const normalized = normalizeContentItems(items);
 
-    if (!Array.isArray(items) || !items.length) {
+    if (!normalized.length) {
       container.innerHTML =
-        '<div class="empty">Belum ada konten.</div>';
+        '<div class="empty">Belum ada konten yang dipublikasikan.</div>';
       return;
     }
 
-    container.innerHTML = items.map(item => {
-      const title = getValue(item,[
-        "title",
-        "judul",
-        "name"
-      ]);
-
-      const text = getValue(item,[
-        "text",
-        "description",
-        "content",
-        "isi"
-      ]);
-
-      const url = getValue(item,[
-        "url",
-        "mediaUrl",
-        "image",
-        "photo"
-      ]);
+    container.innerHTML = normalized.map(item => {
+      const title = item.title;
+      const text = item.text;
+      const url = item.url;
 
       let media = "";
 
@@ -1475,12 +1473,6 @@
         }
       }
 
-      const date = getValue(item,[
-        "date",
-        "tanggal",
-        "createdAt"
-      ]);
-
       return `
         <article class="content">
           ${media}
@@ -1494,8 +1486,8 @@
 
             <p>${escapeHTML(text)}</p>
 
-            ${date
-              ? `<p style="margin-top:10px;font-size:12px">${escapeHTML(date)}</p>`
+            ${item.date
+              ? `<p style="margin-top:10px;font-size:12px">${escapeHTML(item.date)}</p>`
               : ""
             }
           </div>
@@ -1509,12 +1501,6 @@
   // =====================================================
 
   function isPublished(item) {
-    /*
-      Data dari action public seharusnya sudah difilter
-      oleh Code.gs. Pemeriksaan berikut menjadi lapisan
-      tambahan jika backend turut mengirim status publikasi.
-    */
-
     const value = getValue(item,[
       "published",
       "tampilPublik",
@@ -1567,46 +1553,28 @@
 
     container.innerHTML = published.map(item => {
       const title = getValue(item,[
-        "title",
-        "judul",
-        "Judul"
+        "title","judul","Judul"
       ],"Aspirasi");
 
       const category = getValue(item,[
-        "category",
-        "kategori",
-        "Kategori"
+        "category","kategori","Kategori"
       ],"Umum");
 
       const question = getValue(item,[
-        "question",
-        "content",
-        "isi",
-        "Isi"
+        "question","content","isi","Isi"
       ]);
 
       const answer = getValue(item,[
-        "answer",
-        "jawaban",
-        "Jawaban"
+        "answer","jawaban","Jawaban"
       ]);
 
       const date = getValue(item,[
-        "answeredAt",
-        "waktuJawaban",
-        "WaktuJawaban"
+        "answeredAt","waktuJawaban","WaktuJawaban"
       ]);
-
-      /*
-        PENTING:
-        Jangan menambahkan Nama, Anonim, email,
-        atau identitas pengirim ke tampilan kartu.
-      */
 
       return `
         <article class="answer-card">
           <span class="tag">${escapeHTML(category)}</span>
-
           <h3>${escapeHTML(title)}</h3>
 
           <div class="answer-message">
@@ -1651,9 +1619,7 @@
     select.innerHTML = periods.map(period => {
       const id = getValue(period,["id","periodId"]);
       const label = getValue(period,[
-        "name",
-        "nama",
-        "title"
+        "name","nama","title"
       ],"Periode");
 
       return `
@@ -1669,16 +1635,13 @@
       ).toLowerCase();
 
       return [
-        "aktif",
-        "active",
-        "berjalan"
+        "aktif","active","berjalan"
       ].includes(status);
     });
 
     if (activePeriod) {
       select.value = getValue(activePeriod,[
-        "id",
-        "periodId"
+        "id","periodId"
       ]);
     }
 
@@ -1697,8 +1660,7 @@
       const items = officers
         .filter(officer => {
           const officerPeriod = getValue(officer,[
-            "periodId",
-            "period"
+            "periodId","period"
           ]);
 
           return (
@@ -1712,43 +1674,24 @@
 
       $("officers").innerHTML = items.length
         ? items.map(officer => {
-            const name = getValue(officer,[
-              "name",
-              "nama"
-            ]);
-
+            const name = getValue(officer,["name","nama"]);
             const position = getValue(officer,[
-              "position",
-              "role",
-              "jabatan"
+              "position","role","jabatan"
             ]);
-
             const photo = getValue(officer,[
-              "photo",
-              "photoUrl"
+              "photo","photoUrl"
             ]);
-
             const bio = getValue(officer,[
-              "bio",
-              "description",
-              "deskripsi"
+              "bio","description","deskripsi"
             ]);
 
             return `
               <article class="person">
                 ${imageHTML(photo,name)}
-
-                <span class="tag">
-                  ${escapeHTML(periodName)}
-                </span>
-
+                <span class="tag">${escapeHTML(periodName)}</span>
                 <h3>${escapeHTML(name)}</h3>
-
                 <strong>${escapeHTML(position)}</strong>
-
-                <p class="muted">
-                  ${escapeHTML(bio)}
-                </p>
+                <p class="muted">${escapeHTML(bio)}</p>
               </article>
             `;
           }).join("")
@@ -1778,37 +1721,25 @@
 
     const people = [];
 
-    const founderName = getValue(source,[
-      "founderName"
-    ]);
+    const founderName = getValue(source,["founderName"]);
 
     if (founderName) {
       people.push({
         name:founderName,
         role:"Pendiri",
-        description:getValue(source,[
-          "founderDescription"
-        ]),
-        photo:getValue(source,[
-          "founderPhoto"
-        ])
+        description:getValue(source,["founderDescription"]),
+        photo:getValue(source,["founderPhoto"])
       });
     }
 
-    const developerName = getValue(source,[
-      "developerName"
-    ]);
+    const developerName = getValue(source,["developerName"]);
 
     if (developerName) {
       people.push({
         name:developerName,
         role:"Pengembang",
-        description:getValue(source,[
-          "developerDescription"
-        ]),
-        photo:getValue(source,[
-          "developerPhoto"
-        ])
+        description:getValue(source,["developerDescription"]),
+        photo:getValue(source,["developerPhoto"])
       });
     }
 
@@ -1822,16 +1753,13 @@
       people.push({
         name:manager.name,
         role:getValue(manager,[
-          "role",
-          "position"
+          "role","position"
         ],"Pengelola"),
         description:getValue(manager,[
-          "description",
-          "bio"
+          "description","bio"
         ]),
         photo:getValue(manager,[
-          "photo",
-          "photoUrl"
+          "photo","photoUrl"
         ])
       });
     });
@@ -1840,16 +1768,9 @@
       ? people.map(person => `
           <article class="person">
             ${imageHTML(person.photo,person.name)}
-
-            <span class="tag">
-              ${escapeHTML(person.role)}
-            </span>
-
+            <span class="tag">${escapeHTML(person.role)}</span>
             <h3>${escapeHTML(person.name)}</h3>
-
-            <p class="muted">
-              ${escapeHTML(person.description)}
-            </p>
+            <p class="muted">${escapeHTML(person.description)}</p>
           </article>
         `).join("")
       : `
@@ -1901,9 +1822,7 @@
 
       setText(
         "about",
-        getValue(settings,[
-          "aboutText"
-        ])
+        getValue(settings,["aboutText"])
       );
 
       setText(
@@ -1924,8 +1843,17 @@
         "announcements"
       );
 
+      // Memastikan properti galeri dibaca dari respons publik.
+      const galleryData = Array.isArray(result.gallery)
+        ? result.gallery
+        : Array.isArray(result.data?.gallery)
+          ? result.data.gallery
+          : [];
+
+      console.log("Data galeri dari API:",galleryData);
+
       renderItems(
-        result.gallery || [],
+        galleryData,
         "gallery"
       );
 
@@ -1950,7 +1878,7 @@
         '<div class="empty">Pengumuman belum dapat dimuat.</div>';
 
       $("gallery").innerHTML =
-        '<div class="empty">Galeri belum dapat dimuat.</div>';
+        '<div class="empty">Galeri belum dapat dimuat. Periksa koneksi API.</div>';
 
       $("publishedAnswers").innerHTML =
         '<div class="answer-empty">Jawaban aspirasi belum dapat dimuat.</div>';
