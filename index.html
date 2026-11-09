@@ -2,480 +2,1145 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SUARA HIMASAKI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b69">
 
-    <style>
-        body {
-            margin: 0;
-            background: #f3f7fa;
-            color: #183247;
-            font: 15px Arial;
-        }
+  <title>SUARA HIMASAKI</title>
 
-        header {
-            background: linear-gradient(120deg, #102a43, #176b87);
-            color: white;
-            padding: 28px max(5%, calc((100% - 950px)/2)) 65px;
-        }
+  <style>
+    :root {
+      --navy: #173b69;
+      --blue: #2b669b;
+      --background: #f3f6fa;
+      --text: #243142;
+      --muted: #68788b;
+      --border: #e3e9ef;
+      --white: #ffffff;
+      --success: #176638;
+      --danger: #a12b25;
+    }
 
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .logo {
-            display: inline-grid;
-            place-items: center;
-            border: 1px solid #ffffff77;
-            border-radius: 12px;
-            padding: 13px;
-            margin-right: 10px;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        a {
-            color: inherit;
-        }
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font: 16px/1.6 Arial, sans-serif;
+    }
 
-        header a {
-            border: 1px solid #ffffff77;
-            border-radius: 9px;
-            padding: 9px;
-            text-decoration: none;
-            font-size: 13px;
-        }
+    a {
+      color: var(--navy);
+      font-weight: bold;
+      text-decoration: none;
+    }
 
-        .hero {
-            max-width: 700px;
-            padding-top: 35px;
-        }
+    img,
+    video,
+    iframe {
+      max-width: 100%;
+    }
 
-        .hero h1 {
-            font-size: clamp(30px, 5vw, 46px);
-            margin: 10px 0;
-        }
+    .wrap {
+      width: 100%;
+      max-width: 1120px;
+      margin: auto;
+      padding: 0 20px;
+    }
 
-        .hero p {
-            line-height: 1.7;
-            color: #e1edf3;
-        }
+    /* ==============================
+       HEADER DAN NAVIGASI
+    ============================== */
 
-        main,
-        .content {
-            max-width: 950px;
-            margin: -28px auto 30px;
-            padding: 0 16px;
-        }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
 
-        .layout {
-            display: grid;
-            grid-template-columns: 1.4fr .8fr;
-            gap: 16px;
-        }
+    .nav {
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
 
-        .card,
-        .item {
-            background: white;
-            border: 1px solid #dce6ed;
-            border-radius: 15px;
-            padding: 22px;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--navy);
+      font-weight: bold;
+    }
 
-        .side {
-            display: grid;
-            gap: 14px;
-        }
+    .logo {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--navy);
+      color: var(--white);
+    }
 
-        .side p,
-        .muted {
-            font-size: 13px;
-            line-height: 1.6;
-            color: #637789;
-        }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 17px;
+    }
 
-        label {
-            display: block;
-            font-weight: bold;
-            font-size: 13px;
-            margin: 13px 0 6px;
-        }
+    nav a {
+      font-size: 14px;
+    }
 
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 11px;
-            border: 1px solid #ccd9e2;
-            border-radius: 9px;
-            box-sizing: border-box;
-            font: inherit;
-        }
+    /* ==============================
+       TAMPILAN UTAMA
+    ============================== */
 
-        textarea {
-            min-height: 115px;
-        }
+    main {
+      padding-top: 26px;
+    }
 
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+    .hero {
+      padding: 55px 42px;
+      border-radius: 20px;
+      background: linear-gradient(120deg, #15375f, #2b669b);
+      color: var(--white);
+    }
 
-        .check {
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-            font-size: 12px;
-            color: #637789;
-            margin: 13px 0;
-        }
+    .hero h1 {
+      max-width: 720px;
+      margin: 0 0 15px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.14;
+    }
 
-        .check input {
-            width: auto;
-        }
+    .hero p {
+      max-width: 650px;
+      margin: 0 0 22px;
+      color: #e5eef8;
+    }
 
-        button {
-            background: #269c91;
-            color: white;
-            border: 0;
-            border-radius: 9px;
-            padding: 12px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 8px;
-        }
+    .btn {
+      display: inline-block;
+      padding: 12px 18px;
+      border: 0;
+      border-radius: 9px;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-        .note {
-            background: #edf7f6;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            margin-top: 14px;
-        }
+    .btn.white {
+      background: var(--white);
+      color: var(--navy);
+    }
 
-        .content {
-            margin-top: 30px;
-        }
+    .btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
 
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
+    /* ==============================
+       KARTU DAN PANEL
+    ============================== */
 
-        .item {
-            padding: 0;
-            overflow: hidden;
-        }
+    .cards,
+    .list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
 
-        .item img {
-            display: block;
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: contain;
-            object-position: center;
-            background: #f3f7fa;
-        }
+    .cards {
+      margin: 24px 0;
+    }
 
-        .item div {
-            padding: 13px;
-        }
+    .card,
+    .panel,
+    .content {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--white);
+    }
 
-        .item p {
-            font-size: 13px;
-            color: #637789;
-            line-height: 1.5;
-        }
+    .card,
+    .panel {
+      padding: 20px;
+    }
 
-        footer {
-            text-align: center;
-            color: #637789;
-            font-size: 12px;
-            padding: 20px;
-        }
+    .card h3 {
+      margin: 6px 0;
+    }
 
-        @media (max-width: 700px) {
-            .layout {
-                grid-template-columns: 1fr;
-            }
+    .card p,
+    .muted {
+      margin: 0;
+      color: var(--muted);
+    }
 
-            .cards {
-                grid-template-columns: 1fr 1fr;
-            }
+    section {
+      margin: 34px 0;
+      scroll-margin-top: 90px;
+    }
 
-            .row {
-                grid-template-columns: 1fr;
-            }
-        }
+    .heading {
+      margin: 0 0 15px;
+      color: var(--navy);
+      font-size: 26px;
+    }
 
-        @media (max-width: 440px) {
-            .cards {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    /* ==============================
+       FORMULIR
+    ============================== */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      margin-bottom: 13px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5df;
+      border-radius: 9px;
+      background: var(--white);
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .check {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .check input {
+      width: auto;
+    }
+
+    .notice {
+      display: none;
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .notice.ok {
+      display: block;
+      background: #e5f5e9;
+      color: var(--success);
+    }
+
+    .notice.err {
+      display: block;
+      background: #fff0ef;
+      color: var(--danger);
+    }
+
+    /* ==============================
+       GALERI DAN DOKUMENTASI
+    ============================== */
+
+    .content {
+      overflow: hidden;
+    }
+
+    .content img {
+      display: block;
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      background: #edf1f5;
+    }
+
+    .content iframe {
+      display: block;
+      width: 100%;
+      height: 220px;
+      border: 0;
+      background: #111;
+    }
+
+    .content video {
+      display: block;
+      width: 100%;
+      max-height: 250px;
+      background: #111;
+    }
+
+    .body {
+      padding: 15px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 20px;
+      background: #eaf0f7;
+      color: var(--navy);
+      font-size: 11px;
+    }
+
+    .body h3 {
+      margin: 8px 0 4px;
+    }
+
+    .body p {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    /* ==============================
+       STRUKTUR DAN PROFIL
+    ============================== */
+
+    .people {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .person {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+    }
+
+    .person img {
+      width: 100%;
+      height: 180px;
+      border-radius: 8px;
+      background: #f0f3f7;
+      object-fit: contain;
+    }
+
+    .person h3 {
+      margin: 10px 0 3px;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      padding: 16px;
+      border-radius: 10px;
+      background: var(--white);
+      color: var(--muted);
+    }
+
+    /* ==============================
+       QR CODE
+    ============================== */
+
+    .qr-panel {
+      text-align: center;
+    }
+
+    .qr-image {
+      display: block;
+      width: 220px;
+      height: 220px;
+      max-width: 100%;
+      margin: 18px auto;
+      object-fit: contain;
+    }
+
+    /* ==============================
+       FOOTER
+    ============================== */
+
+    footer {
+      margin-top: 45px;
+      padding: 28px 0;
+      background: #142d4b;
+      color: #dce6f1;
+    }
+
+    footer a {
+      color: var(--white);
+    }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+
+    @media (max-width: 760px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      nav {
+        gap: 10px;
+      }
+
+      .cards,
+      .list,
+      .people {
+        grid-template-columns: 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .hero {
+        padding: 36px 24px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-    <div class="nav">
-        <div>
-            <span class="logo" id="logo">HK</span>
-            <b id="org">SAINS KIMIA · HIMASAKI</b>
-        </div>
+  <!-- HEADER -->
+  <header id="top">
+    <div class="wrap nav">
 
-        <a href="admin.html">Panel Pengurus ↗</a>
+      <div class="brand">
+        <div class="logo" id="logo">HK</div>
+        <span id="org">SAINS KIMIA · HIMASAKI</span>
+      </div>
+
+      <nav aria-label="Navigasi utama">
+        <a href="#aspirasi">Aspirasi</a>
+        <a href="#pengumuman">Pengumuman</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#struktur">Kepengurusan</a>
+        <a href="#tentang">Tentang</a>
+        <a href="#qrcode">QR Code</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1 id="heroTitle">Suaramu berarti untuk HIMASAKI.</h1>
+
+      <p id="heroText">
+        Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.
+      </p>
+
+      <a class="btn white" href="#aspirasi">Kirim Aspirasi</a>
+    </section>
+
+    <!-- MENU UTAMA -->
+    <div class="cards">
+
+      <a class="card" href="#aspirasi">
+        <div style="font-size:28px">✉️</div>
+        <h3>Kirim Aspirasi</h3>
+        <p>Sampaikan kritik, saran, dan ide.</p>
+      </a>
+
+      <a class="card" href="#pengumuman">
+        <div style="font-size:28px">📢</div>
+        <h3>Pengumuman</h3>
+        <p>Informasi terbaru HIMASAKI.</p>
+      </a>
+
+      <a class="card" href="#galeri">
+        <div style="font-size:28px">🎞️</div>
+        <h3>Galeri & Dokumentasi</h3>
+        <p>Foto dan video kegiatan.</p>
+      </a>
+
     </div>
 
-    <div class="hero">
-        <small>RUANG ASPIRASI MAHASISWA</small>
+    <!-- FORM ASPIRASI -->
+    <section id="aspirasi">
+      <h2 class="heading">Kotak Aspirasi</h2>
 
-        <h1 id="title">
-            Suaramu berarti untuk HIMASAKI.
-        </h1>
+      <div class="panel">
 
-        <p id="intro">
-            Sampaikan kritik, saran, ide, dan masukan untuk membangun
-            himpunan yang lebih terbuka, aktif, dan bermanfaat.
+        <p class="muted">
+          Kamu dapat memilih mengirim secara anonim atau mencantumkan nama.
+          Jika memilih anonim, nama tidak diminta maupun disimpan.
         </p>
+
+        <div id="formNotice" class="notice" role="status" aria-live="polite"></div>
+
+        <form id="aspForm">
+
+          <div class="grid">
+
+            <div class="field">
+              <label for="category">Kategori</label>
+
+              <select id="category" required>
+                <option value="">Pilih kategori</option>
+                <option>Kritik</option>
+                <option>Saran</option>
+                <option>Ide dan Gagasan</option>
+                <option>Pertanyaan</option>
+                <option>Apresiasi</option>
+                <option>Lainnya</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="title">Judul</label>
+              <input id="title" maxlength="120" required>
+            </div>
+
+            <div class="field full">
+              <label for="message">Isi aspirasi</label>
+
+              <textarea
+                id="message"
+                maxlength="2000"
+                required
+              ></textarea>
+
+              <small id="count" class="muted">
+                0/2000 karakter
+              </small>
+            </div>
+
+            <div class="field full">
+
+              <label class="check">
+                <input type="checkbox" id="anonymous" checked>
+                Kirim sebagai anonim
+              </label>
+
+              <div id="nameArea" hidden>
+                <label for="name">Nama pengirim</label>
+                <input id="name" maxlength="100">
+              </div>
+
+            </div>
+
+          </div>
+
+          <button class="btn" id="sendBtn" type="submit">
+            Kirim Aspirasi
+          </button>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- PENGUMUMAN -->
+    <section id="pengumuman">
+      <h2 class="heading">Pengumuman</h2>
+
+      <div class="list" id="announcements">
+        <div class="empty">Memuat pengumuman...</div>
+      </div>
+    </section>
+
+    <!-- GALERI -->
+    <section id="galeri">
+      <h2 class="heading">Galeri dan Dokumentasi</h2>
+
+      <div class="list" id="gallery">
+        <div class="empty">Memuat dokumentasi...</div>
+      </div>
+    </section>
+
+    <!-- STRUKTUR -->
+    <section id="struktur">
+      <h2 class="heading">Struktur Kepengurusan</h2>
+
+      <div class="panel">
+
+        <label for="periodSelect">Pilih periode</label>
+        <select id="periodSelect"></select>
+
+        <div
+          id="officers"
+          class="people"
+          style="margin-top:16px"
+        ></div>
+
+      </div>
+    </section>
+
+    <!-- TENTANG -->
+    <section id="tentang">
+      <h2 class="heading">Tentang HIMASAKI</h2>
+
+      <div class="panel">
+
+        <p id="about"></p>
+
+        <div
+          id="people"
+          class="people"
+          style="margin-top:18px"
+        ></div>
+
+      </div>
+    </section>
+
+    <!-- QR CODE -->
+    <section id="qrcode">
+      <h2 class="heading">QR Code SUARA HIMASAKI</h2>
+
+      <div class="panel qr-panel">
+
+        <p class="muted">
+          Pindai kode QR ini untuk membuka website SUARA HIMASAKI.
+        </p>
+
+        <img
+          id="qrImage"
+          class="qr-image"
+          src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&amp;margin=12&amp;data=https%3A%2F%2Fadegameonly-dotcom.github.io%2Fsuara-himasaki%2F"
+          alt="QR Code SUARA HIMASAKI"
+          width="220"
+          height="220"
+          loading="lazy"
+        >
+
+        <p>
+          <a
+            class="btn"
+            href="https://api.qrserver.com/v1/create-qr-code/?size=800x800&amp;margin=20&amp;data=https%3A%2F%2Fadegameonly-dotcom.github.io%2Fsuara-himasaki%2F"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Buka QR Code ukuran besar
+          </a>
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+
+      <strong id="footerOrg">SAINS KIMIA · HIMASAKI</strong>
+
+      <br>
+
+      <span id="footerText">Himpunan Mahasiswa Sains Kimia</span>
+
+      <p>
+        <a href="#top">Kembali ke atas ↑</a>
+      </p>
+
     </div>
-</header>
+  </footer>
 
-<main>
-    <div class="layout">
+  <script>
+    /* ==============================================
+       KONFIGURASI
+    ============================================== */
 
-        <section class="card">
-            <h2>Kirim Aspirasi</h2>
+    const API = "https://script.google.com/macros/s/AKfycbwPgRnKqwBmIrOMDjfi29fepIEJamprEX_Vv890ZbjV0Ksa-ItONrS4wCow_Y5MBU7hsQ/exec";
+
+    const WEBSITE_URL =
+      "https://adegameonly-dotcom.github.io/suara-himasaki/";
+
+    /* ==============================================
+       UTILITAS
+    ============================================== */
+
+    const $ = id => document.getElementById(id);
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function showNotice(id, message, success) {
+      const element = $(id);
+
+      element.textContent = message;
+      element.className = "notice " + (success ? "ok" : "err");
+    }
+
+    /* ==============================================
+       KOMUNIKASI APPS SCRIPT
+    ============================================== */
+
+    function request(payload) {
+      return new Promise((resolve, reject) => {
+        const id =
+          "pub_" + Date.now() + "_" +
+          Math.random().toString(36).slice(2);
+
+        const frameName = "frame_" + id;
+
+        const frame = document.createElement("iframe");
+        const form = document.createElement("form");
+        const input = document.createElement("input");
+
+        frame.name = frameName;
+        frame.hidden = true;
+        frame.setAttribute("aria-hidden", "true");
+
+        form.method = "POST";
+        form.action = API;
+        form.target = frameName;
+        form.hidden = true;
+
+        input.name = "payload";
+        input.value = JSON.stringify({
+          ...payload,
+          requestId: id
+        });
+
+        form.appendChild(input);
+
+        let completed = false;
+
+        function cleanup() {
+          window.removeEventListener("message", handleMessage);
+          clearTimeout(timer);
+
+          frame.remove();
+          form.remove();
+        }
+
+        function handleMessage(event) {
+          if (event.source !== frame.contentWindow) return;
+
+          const result = event.data;
+
+          if (!result || result.requestId !== id) return;
+
+          completed = true;
+          cleanup();
+
+          if (result.ok) {
+            resolve(result.data);
+          } else {
+            reject(new Error(result.error || "Permintaan gagal."));
+          }
+        }
+
+        const timer = setTimeout(() => {
+          if (completed) return;
+
+          cleanup();
+          reject(new Error("Server belum merespons. Coba lagi."));
+        }, 45000);
+
+        window.addEventListener("message", handleMessage);
+
+        document.body.append(frame, form);
+        form.submit();
+      });
+    }
+
+    /* ==============================================
+       KONTEN DAN MEDIA
+    ============================================== */
+
+    function renderItems(items, target) {
+      const container = $(target);
+
+      if (!Array.isArray(items) || !items.length) {
+        container.innerHTML =
+          '<div class="empty">Belum ada konten.</div>';
+
+        return;
+      }
+
+      container.innerHTML = items.map(item => {
+        let media = "";
+
+        if (target === "gallery") {
+          const url = escapeHTML(item.url || "");
+          const title = escapeHTML(item.title || "");
+
+          if (item.mediaType === "video") {
+            media = `
+              <video
+                controls
+                preload="metadata"
+                playsinline
+              >
+                <source src="${url}">
+                Browser tidak mendukung pemutar video.
+              </video>
+            `;
+          } else if (item.mediaType === "youtube") {
+            media = `
+              <iframe
+                src="${url}"
+                title="${title}"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
+            `;
+          } else {
+            media = `
+              <img
+                src="${url}"
+                alt="${title}"
+                loading="lazy"
+              >
+            `;
+          }
+        }
+
+        return `
+          <article class="content">
+            ${media}
+
+            <div class="body">
+              <span class="tag">
+                ${escapeHTML(item.category || "Umum")}
+              </span>
+
+              <h3>${escapeHTML(item.title || "")}</h3>
+
+              <p>${escapeHTML(item.description || "")}</p>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    /* ==============================================
+       STRUKTUR KEPENGURUSAN
+    ============================================== */
+
+    function renderOfficers(periods, officers) {
+      const select = $("periodSelect");
+
+      select.innerHTML = (periods || []).map(period => `
+        <option value="${escapeHTML(period.id)}">
+          ${escapeHTML(period.name)}
+        </option>
+      `).join("");
+
+      if (!periods || !periods.length) {
+        select.innerHTML =
+          '<option value="">Belum ada periode</option>';
+
+        $("officers").innerHTML =
+          '<div class="empty">Belum ada data kepengurusan.</div>';
+
+        return;
+      }
+
+      const activePeriod = periods.find(period => period.active);
+
+      if (activePeriod) {
+        select.value = activePeriod.id;
+      }
+
+      function drawOfficers() {
+        const periodId = select.value;
+
+        const items = (officers || [])
+          .filter(officer => officer.periodId === periodId)
+          .sort((a, b) => Number(a.order || 0) - Number(b.order || 0));
+
+        $("officers").innerHTML = items.length
+          ? items.map(officer => `
+            <article class="person">
+
+              ${officer.photo
+                ? `<img src="${escapeHTML(officer.photo)}" alt="${escapeHTML(officer.name)}" loading="lazy">`
+                : ""}
+
+              <span class="tag">
+                ${escapeHTML(officer.division)}
+              </span>
+
+              <h3>${escapeHTML(officer.name)}</h3>
+
+              <strong>${escapeHTML(officer.position)}</strong>
+
+              <p class="muted">
+                ${escapeHTML(officer.description || "")}
+              </p>
+
+            </article>
+          `).join("")
+          : '<div class="empty">Belum ada data pengurus untuk periode ini.</div>';
+      }
+
+      select.onchange = drawOfficers;
+
+      drawOfficers();
+    }
+
+    /* ==============================================
+       PENDIRI, PENGEMBANG, PENGELOLA
+    ============================================== */
+
+    function renderPeople(personData) {
+      const people = [];
+
+      if (personData.founderName) {
+        people.push({
+          name: personData.founderName,
+          role: "Pendiri",
+          description: personData.founderDescription,
+          photo: personData.founderPhoto
+        });
+      }
+
+      if (personData.developerName) {
+        people.push({
+          name: personData.developerName,
+          role: "Pengembang",
+          description: personData.developerDescription,
+          photo: personData.developerPhoto
+        });
+      }
+
+      (personData.managers || []).forEach(manager => {
+        people.push({
+          name: manager.name,
+          role: manager.role || "Pengelola",
+          description: manager.description,
+          photo: manager.photo
+        });
+      });
+
+      $("people").innerHTML = people.length
+        ? people.map(person => `
+          <article class="person">
+
+            ${person.photo
+              ? `<img src="${escapeHTML(person.photo)}" alt="${escapeHTML(person.name)}" loading="lazy">`
+              : ""}
+
+            <span class="tag">
+              ${escapeHTML(person.role)}
+            </span>
+
+            <h3>${escapeHTML(person.name)}</h3>
 
             <p class="muted">
-                Tidak perlu login. Kamu boleh mengirim secara anonim.
+              ${escapeHTML(person.description || "")}
             </p>
 
-            <form id="f">
-
-                <div class="row">
-                    <div>
-                        <label>Kategori</label>
-
-                        <select id="cat" required>
-                            <option value="">Pilih kategori</option>
-                            <option>Akademik dan perkuliahan</option>
-                            <option>Program kerja dan kegiatan</option>
-                            <option>Organisasi dan kepengurusan</option>
-                            <option>Fasilitas dan lingkungan</option>
-                            <option>Pengembangan mahasiswa</option>
-                            <option>Lainnya</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label>Judul</label>
-                        <input id="sub" maxlength="90" required>
-                    </div>
-                </div>
-
-                <label>Isi aspirasi</label>
-
-                <textarea
-                    id="msg"
-                    maxlength="3000"
-                    required
-                ></textarea>
-
-                <label class="check">
-                    <input type="checkbox" id="anon" checked>
-                    Kirim sebagai anonim
-                </label>
-
-                <div id="namebox" hidden>
-                    <label>Nama (opsional)</label>
-                    <input id="sender">
-                </div>
-
-                <label class="check">
-                    <input type="checkbox" required>
-                    Saya menyampaikan aspirasi dengan sopan.
-                </label>
-
-                <button>Kirim Aspirasi</button>
-
-                <p id="status" class="muted"></p>
-            </form>
-
-            <div class="note">
-                Aspirasi tidak ditampilkan untuk umum.
-                Hanya pengurus berwenang yang dapat membacanya.
-            </div>
-        </section>
-
-        <aside class="side">
-
-            <div class="card">
-                <h3>Tentang HIMASAKI</h3>
-
-                <p id="about">
-                    Ruang komunikasi mahasiswa Sains Kimia untuk
-                    menyampaikan gagasan dan membangun organisasi bersama.
-                </p>
-            </div>
-
-            <div class="card">
-                <h3>Alur aspirasi</h3>
-
-                <p>
-                    1. Pilih kategori dan tulis aspirasi.<br>
-                    2. Kirim secara anonim atau sertakan nama.<br>
-                    3. Pengurus meninjau dan menindaklanjuti.
-                </p>
-            </div>
-
-        </aside>
-    </div>
-</main>
-
-<section class="content">
-    <h2>Pengumuman HIMASAKI</h2>
-    <div id="ann" class="cards"></div>
-
-    <h2>Dokumentasi Kegiatan</h2>
-    <div id="gal" class="cards"></div>
-</section>
-
-<footer>
-    © HIMASAKI · Ruang Aspirasi Mahasiswa
-</footer>
-
-<script>
-    const API = "https://script.google.com/macros/s/AKfycbzdBWZxrhf8SCZ66J7wKmAHFZ1oO7uMw7X-uxru8Wke3KsP5cbeGX67v4Z9pEIJg6pZGg/exec";
-
-    const E = id => document.getElementById(id);
-
-    // Pengaturan mode anonim
-    E("anon").onchange = () => {
-        E("namebox").hidden = E("anon").checked;
-    };
-
-    // Pengiriman aspirasi
-    E("f").onsubmit = async e => {
-        e.preventDefault();
-
-        if (API.startsWith("TEMPEL_")) {
-            E("status").textContent =
-                "Hubungkan Apps Script terlebih dahulu.";
-            return;
-        }
-
-        const d = {
-            action: "submit",
-            category: E("cat").value,
-            subject: E("sub").value,
-            message: E("msg").value,
-            anonymous: E("anon").checked,
-            sender: E("anon").checked
-                ? ""
-                : E("sender").value
-        };
-
-        try {
-            await fetch(API, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "text/plain"
-                },
-                body: JSON.stringify(d)
-            });
-
-            E("status").textContent =
-                "Permintaan terkirim. Terima kasih!";
-
-            E("f").reset();
-            E("anon").checked = true;
-            E("namebox").hidden = true;
-
-        } catch (x) {
-            E("status").textContent =
-                "Gagal mengirim. Coba lagi.";
-        }
-    };
-
-    // Menampilkan kartu pengumuman dan galeri
-    function cards(id, a) {
-        E(id).innerHTML = a.length
-            ? a.map(x => `
-                <article class="item">
-                    ${x.image
-                        ? `<img src="${x.image}" alt="">`
-                        : ""
-                    }
-
-                    <div>
-                        <b>${safe(x.title)}</b>
-                        <p>${safe(x.text)}</p>
-                    </div>
-                </article>
-            `).join("")
-            : '<p class="muted">Belum ada konten.</p>';
+          </article>
+        `).join("")
+        : '<p class="muted">Informasi pendiri, pengembang, dan pengelola belum ditambahkan.</p>';
     }
 
-    // Mengamankan teks yang ditampilkan
-    function safe(s) {
-        return String(s || "").replace(
-            /[&<>"']/g,
-            c => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#39;"
-            }[c])
+    /* ==============================================
+       MEMUAT PENGATURAN WEBSITE
+    ============================================== */
+
+    async function loadWebsite() {
+      try {
+        const result = await request({
+          action: "public"
+        });
+
+        const settings = result.settings || {};
+
+        $("logo").textContent = settings.logoText || "HK";
+
+        $("org").textContent =
+          settings.orgName || "SAINS KIMIA · HIMASAKI";
+
+        $("footerOrg").textContent =
+          settings.orgName || "SAINS KIMIA · HIMASAKI";
+
+        $("heroTitle").textContent =
+          settings.heroTitle || "Suaramu berarti untuk HIMASAKI.";
+
+        $("heroText").textContent =
+          settings.heroText || "Ruang aspirasi, informasi, dan dokumentasi mahasiswa Sains Kimia.";
+
+        $("about").textContent =
+          settings.aboutText || "";
+
+        $("footerText").textContent =
+          settings.footerText || "Himpunan Mahasiswa Sains Kimia";
+
+        renderItems(result.announcements, "announcements");
+        renderItems(result.gallery, "gallery");
+
+        renderOfficers(
+          result.periods || [],
+          result.officers || []
         );
+
+        renderPeople(result.people || {});
+
+      } catch (error) {
+        console.error("Gagal memuat website:", error);
+
+        [
+          "announcements",
+          "gallery",
+          "officers"
+        ].forEach(id => {
+          $(id).innerHTML = `
+            <div class="empty">
+              Data belum dapat dimuat.
+              Muat ulang halaman beberapa saat lagi.
+            </div>
+          `;
+        });
+      }
     }
 
-    // Mengambil pengaturan dan konten publik
-    async function load() {
-        if (API.startsWith("TEMPEL_")) return;
+    /* ==============================================
+       FORMULIR ANONIM ATAU NAMA
+    ============================================== */
 
-        try {
-            let d = await (await fetch(
-                API + "?action=public"
-            )).json();
+    const anonymous = $("anonymous");
+    const nameArea = $("nameArea");
+    const nameInput = $("name");
 
-            if (!d.ok) return;
+    anonymous.addEventListener("change", () => {
+      nameArea.hidden = anonymous.checked;
 
-            let s = d.settings || {};
+      if (anonymous.checked) {
+        nameInput.value = "";
+      }
+    });
 
-            E("org").textContent =
-                s.orgName || E("org").textContent;
+    /* ==============================================
+       HITUNG KARAKTER
+    ============================================== */
 
-            E("logo").textContent =
-                s.logoText || "HK";
+    $("message").addEventListener("input", event => {
+      $("count").textContent =
+        event.target.value.length + "/2000 karakter";
+    });
 
-            E("title").textContent =
-                s.heroTitle || E("title").textContent;
+    /* ==============================================
+       KIRIM ASPIRASI
+    ============================================== */
 
-            E("intro").textContent =
-                s.heroText || E("intro").textContent;
+    $("aspForm").addEventListener("submit", async event => {
+      event.preventDefault();
 
-            E("about").textContent =
-                s.aboutText || E("about").textContent;
+      const button = $("sendBtn");
+      const isAnonymous = anonymous.checked;
 
-            cards("ann", d.announcements || []);
-            cards("gal", d.gallery || []);
+      const payload = {
+        action: "submit",
 
-        } catch (x) {
-            // Mempertahankan tampilan awal jika gagal memuat data
-        }
-    }
+        category: $("category").value,
 
-    // Memuat data ketika halaman dibuka
-    load();
-</script>
+        title: $("title").value.trim(),
+
+        message: $("message").value.trim(),
+
+        anonymous: isAnonymous,
+
+        name: isAnonymous
+          ? ""
+          : nameInput.value.trim()
+      };
+
+      if (!payload.category || !payload.title || !payload.message) {
+        showNotice(
+          "formNotice",
+          "Lengkapi seluruh bagian formulir.",
+          false
+        );
+
+        return;
+      }
+
+      if (!isAnonymous && !payload.name) {
+        showNotice(
+          "formNotice",
+          "Isi nama atau pilih kirim anonim.",
+          false
+        );
+
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Mengirim...";
+
+      try {
+        const result = await request(payload);
+
+        showNotice(
+          "formNotice",
+          result.message || "Aspirasi berhasil dikirim.",
+          true
+        );
+
+        event.target.reset();
+
+        anonymous.checked = true;
+        nameArea.hidden = true;
+
+        $("count").textContent = "0/2000 karakter";
+
+      } catch (error) {
+        showNotice(
+          "formNotice",
+          error.message + " Data formulir tetap tersedia untuk dicoba kembali.",
+          false
+        );
+
+      } finally {
+        button.disabled = false;
+        button.textContent = "Kirim Aspirasi";
+      }
+    });
+
+    /* ==============================================
+       MULAI WEBSITE
+    ============================================== */
+
+    loadWebsite();
+
+  </script>
 
 </body>
 </html>
