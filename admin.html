@@ -66,10 +66,10 @@
           <h3>Tambah pengumuman</h3>
           <label>Judul</label><input id="at">
           <label>Isi</label><textarea id="ax"></textarea>
-          <label>Unggah gambar PNG (opsional, maksimal 5 MB)</label>
-          <input id="ai" type="file" accept="image/png,.png">
+          <label>Unggah gambar (PNG, JPG/JPEG, WEBP, GIF; opsional; maksimal 5 MB)</label>
+          <input id="ai" type="file" accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif">
           <img id="apreview" class="preview" alt="Pratinjau gambar pengumuman">
-          <p class="muted">Pilih file PNG dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
+          <p class="muted">Pilih PNG, JPG/JPEG, WEBP, atau GIF dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
           <button id="abtn" onclick="add('announcement')">Terbitkan</button>
           <div id="alist"></div>
         </div>
@@ -78,10 +78,10 @@
           <h3>Tambah foto kegiatan</h3>
           <label>Judul kegiatan</label><input id="gt">
           <label>Keterangan</label><textarea id="gx"></textarea>
-          <label>Unggah gambar PNG (maksimal 5 MB)</label>
-          <input id="gi" type="file" accept="image/png,.png">
+          <label>Unggah gambar (PNG, JPG/JPEG, WEBP, GIF; maksimal 5 MB)</label>
+          <input id="gi" type="file" accept="image/png,image/jpeg,image/webp,image/gif,.png,.jpg,.jpeg,.webp,.gif">
           <img id="gpreview" class="preview" alt="Pratinjau foto galeri">
-          <p class="muted">Pilih file PNG dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
+          <p class="muted">Pilih PNG, JPG/JPEG, WEBP, atau GIF dari komputer. Foto akan disimpan di Google Drive dan ditampilkan di website publik.</p>
           <button id="gbtn2" onclick="add('gallery')">Tambah foto</button>
           <div id="glist"></div>
         </div>
@@ -123,8 +123,9 @@
           return;
         }
 
-        if (file.type !== "image/png" || !file.name.toLowerCase().endsWith(".png")) {
-          alert("Pilih file gambar berformat PNG.");
+        const allowedTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
+        if (!allowedTypes.includes(file.type)) {
+          alert("Pilih gambar berformat PNG, JPG/JPEG, WEBP, atau GIF.");
           $(inputId).value = "";
           preview.style.display = "none";
           return;
@@ -253,12 +254,13 @@
       }
 
       if (type === "gallery" && !file) {
-        $("status").textContent = "Pilih foto PNG untuk galeri.";
+        $("status").textContent = "Pilih file gambar untuk galeri.";
         return;
       }
 
-      if (file && (file.type !== "image/png" || !file.name.toLowerCase().endsWith(".png"))) {
-        $("status").textContent = "File harus berformat PNG.";
+      const allowedTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
+      if (file && !allowedTypes.includes(file.type)) {
+        $("status").textContent = "Format yang didukung: PNG, JPG/JPEG, WEBP, dan GIF.";
         return;
       }
 
