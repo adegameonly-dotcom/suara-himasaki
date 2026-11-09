@@ -707,75 +707,86 @@
        KOMUNIKASI APPS SCRIPT
     ============================================== */
 
-    function request(payload) {
-      return new Promise((resolve, reject) => {
-        const id =
-          "pub_" + Date.now() + "_" +
-          Math.random().toString(36).slice(2);
+    
+function request(payload) {
+  return new Promise((resolve, reject) => {
+    const id = "pub_" + (
+      window.crypto && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Date.now() + "_" + Math.random().toString(36).slice(2)
+    );
 
-        const frameName = "frame_" + id;
+    const frameName = "frame_" + id;
 
-        const frame = document.createElement("iframe");
-        const form = document.createElement("form");
-        const input = document.createElement("input");
+    const frame = document.createElement("iframe");
+    const form = document.createElement("form");
+    const input = document.createElement("input");
 
-        frame.name = frameName;
-        frame.hidden = true;
-        frame.setAttribute("aria-hidden", "true");
+    frame.name = frameName;
+    frame.style.display = "none";
+    frame.setAttribute("aria-hidden", "true");
 
-        form.method = "POST";
-        form.action = API;
-        form.target = frameName;
-        form.hidden = true;
+    form.method = "POST";
+    form.action = API;
+    form.target = frameName;
+    form.style.display = "none";
 
-        input.name = "payload";
-        input.value = JSON.stringify({
-          ...payload,
-          requestId: id
-        });
+    input.type = "hidden";
+    input.name = "payload";
+    input.value = JSON.stringify({
+      ...payload,
+      requestId: id
+    });
 
-        form.appendChild(input);
+    form.appendChild(input);
 
-        let completed = false;
+    let completed = false;
 
-        function cleanup() {
-          window.removeEventListener("message", handleMessage);
-          clearTimeout(timer);
-
-          frame.remove();
-          form.remove();
-        }
-
-        function handleMessage(event) {
-          if (event.source !== frame.contentWindow) return;
-
-          const result = event.data;
-
-          if (!result || result.requestId !== id) return;
-
-          completed = true;
-          cleanup();
-
-          if (result.ok) {
-            resolve(result.data);
-          } else {
-            reject(new Error(result.error || "Permintaan gagal."));
-          }
-        }
-
-        const timer = setTimeout(() => {
-          if (completed) return;
-
-          cleanup();
-          reject(new Error("Server belum merespons. Coba lagi."));
-        }, 45000);
-
-        window.addEventListener("message", handleMessage);
-
-        document.body.append(frame, form);
-        form.submit();
-      });
+    function cleanup() {
+      window.removeEventListener("message", handleMessage);
+      clearTimeout(timer);
+      frame.remove();
+      form.remove();
     }
+
+    function handleMessage(event) {
+      const result = event.data;
+
+      // Cocokkan ID acak agar respons hanya diterima
+      // untuk permintaan yang sedang berjalan.
+      if (!result || result.requestId !== id) return;
+      if (typeof result.ok !== "boolean") return;
+
+      completed = true;
+      cleanup();
+
+      if (result.ok) {
+        resolve(result.data);
+      } else {
+        reject(
+          new Error(result.error || "Permintaan gagal.")
+        );
+      }
+    }
+
+    const timer = setTimeout(() => {
+      if (completed) return;
+
+      cleanup();
+      reject(
+        new Error("Server belum merespons. Coba lagi.")
+      );
+    }, 45000);
+
+    window.addEventListener("message", handleMessage);
+
+    document.body.appendChild(frame);
+    document.body.appendChild(form);
+
+    form.submit();
+  });
+}
+
 
     /* ==============================================
        KONTEN DAN MEDIA
