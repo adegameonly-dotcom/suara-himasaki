@@ -1176,6 +1176,8 @@
         "pub_" +
         Date.now() +
         "_" +
+        Math.random().toString(36).slice(2) +
+        "_" +
         Math.random().toString(36).slice(2);
 
       const frameName = "frame_" + id;
@@ -1187,6 +1189,7 @@
       frame.name = frameName;
       frame.hidden = true;
       frame.setAttribute("aria-hidden","true");
+      frame.title = "Koneksi SUARA HIMASAKI";
 
       form.method = "POST";
       form.action = API;
@@ -1207,13 +1210,17 @@
       function cleanup() {
         window.removeEventListener("message",handleMessage);
         clearTimeout(timer);
-        frame.remove();
-        form.remove();
+
+        if (frame.parentNode) {
+          frame.parentNode.removeChild(frame);
+        }
+
+        if (form.parentNode) {
+          form.parentNode.removeChild(form);
+        }
       }
 
       function handleMessage(event) {
-        if (event.source !== frame.contentWindow) return;
-
         let result = event.data;
 
         if (typeof result === "string") {
@@ -1224,16 +1231,28 @@
           }
         }
 
-        if (!result || result.requestId !== id) return;
+        // Respons harus memiliki requestId yang sama.
+        // Ini mencegah respons permintaan lain ikut diproses.
+        if (!result || result.requestId !== id) {
+          return;
+        }
+
+        if (completed) return;
 
         completed = true;
         cleanup();
 
-        if (result.ok) {
-          resolve(result.data);
+        if (result.ok === true) {
+          // Apps Script mengirim data dalam bentuk:
+          // { requestId, ok, data }
+          resolve(result.data ?? {});
         } else {
           reject(
-            new Error(result.error || "Permintaan gagal.")
+            new Error(
+              result.error ||
+              result.message ||
+              "Permintaan ke server gagal."
+            )
           );
         }
       }
@@ -1241,17 +1260,34 @@
       const timer = setTimeout(() => {
         if (completed) return;
 
+        completed = true;
         cleanup();
 
         reject(
-          new Error("Server belum merespons. Coba lagi.")
+          new Error(
+            "Server belum merespons dalam 45 detik. Periksa koneksi API atau deployment Apps Script."
+          )
         );
       },45000);
 
       window.addEventListener("message",handleMessage);
 
       document.body.append(frame,form);
-      form.submit();
+
+      try {
+        form.submit();
+      } catch (error) {
+        if (!completed) {
+          completed = true;
+          cleanup();
+          reject(
+            new Error(
+              "Tidak dapat mengirim permintaan ke server: " +
+              error.message
+            )
+          );
+        }
+      }
     });
   }
 
@@ -1786,10 +1822,15 @@
 
   async function loadWebsite() {
     try {
+      console.log("Menghubungkan ke API SUARA HIMASAKI...");
+
       const result = await request({
         action:"public"
       });
 
+      console.log("Respons API berhasil diterima:",result);
+
+      // Data dari request() sudah dibuka dari result.data.
       const settings = result.settings || {};
 
       setText(
@@ -1843,14 +1884,20 @@
         "announcements"
       );
 
-      // Memastikan properti galeri dibaca dari respons publik.
+      // Data galeri diambil dari properti gallery.
       const galleryData = Array.isArray(result.gallery)
         ? result.gallery
-        : Array.isArray(result.data?.gallery)
-          ? result.data.gallery
-          : [];
+        : [];
 
-      console.log("Data galeri dari API:",galleryData);
+      console.log(
+        "Jumlah galeri diterima:",
+        galleryData.length
+      );
+
+      console.log(
+        "Data galeri dari API:",
+        galleryData
+      );
 
       renderItems(
         galleryData,
@@ -1871,6 +1918,8 @@
         settings
       );
 
+      console.log("Seluruh data website berhasil dimuat.");
+
     } catch (error) {
       console.error("Gagal memuat website:",error);
 
@@ -1885,6 +1934,11 @@
 
       $("officers").innerHTML =
         '<div class="empty">Data kepengurusan belum dapat dimuat.</div>';
+
+      console.error(
+        "Detail kesalahan pemuatan:",
+        error.message
+      );
     }
   }
 
